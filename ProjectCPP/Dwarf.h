@@ -13,17 +13,18 @@ public:
 
 	int getNumberOfDwarf() { return this->number; }
 
-	void setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY);
+	void setInstructionsMove(int pathPosX, int pathPosY);
 
 private:
 	int number;
 
 	void moveDwarf();
-	std::vector<int> m_pathPosX; std::vector<int> m_pathPosY;
+	//std::vector<int> m_pathPosX; std::vector<int> m_pathPosY;
+	int m_pathPosX, m_pathPosY;
 	sf::IntRect rectTexture;
 	sf::Texture m_texture;
 	sf::Sprite m_sprite;
 
-	float velX, velY;
+	int velX, velY;
 };
 

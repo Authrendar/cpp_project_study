@@ -23,11 +23,14 @@ Dwarf::~Dwarf()
 
 void Dwarf::update(const float& dt)
 {
+	std::cout << "Dwarf update" << std::endl;
 	moveDwarf();
+	
 	this->m_sprite.move(this->velX, this->velY);
-	this->m_pathPosX.clear();
-	this->m_pathPosY.clear();
-	std::cout << std::endl;
+	this->velX = 0;
+	this->velY = 0;
+	
+	//std::cout << std::endl;
 }
 
 void Dwarf::render(sf::RenderTarget* target)
@@ -35,46 +38,42 @@ void Dwarf::render(sf::RenderTarget* target)
 	target->draw(this->m_sprite);
 }
 
-void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY)
+void Dwarf::setInstructionsMove(int pathPosX, int pathPosY /*std::vector<int> pathPosX, std::vector<int> pathPosY */ )
 {
-	for (int i = 0; i < pathPosX.size(); i++) {
-		this->m_pathPosX.push_back(pathPosX[i]);
-		this->m_pathPosY.push_back(pathPosY[i]);
-		
-	}
+	this->m_pathPosX = pathPosX;
+	this->m_pathPosY = pathPosY;
 }
 
 void Dwarf::moveDwarf()
 {
-	for (int i = 0; i < this->m_pathPosX.size(); i++) {
-		if (m_pathPosX[i] > this->m_sprite.getPosition().x / 12)
+	std::cout <<"DWARF PATHPOSX " <<m_pathPosX << std::endl;
+	
+		if (m_pathPosX < this->getPosX())
 		{
-			this->velX = 12;
-			this->velY = 0;
-		}
-		if (m_pathPosX[i] < this->m_sprite.getPosition().x / 12)
-		{
+			//std::cout << "Pos: " << this->getPosX() << std::endl;
 			this->velX = -12;
 			this->velY = 0;
 		}
-		if (m_pathPosY[i] > this->m_sprite.getPosition().y / 12)
+		if (m_pathPosX > this->getPosX())
 		{
-			this->velX = 0;
-			this->velY = 12;
+			//std::cout << "Pos: " << this->getPosX() << std::endl;
+			this->velX = 12;
+			this->velY = 0;
 		}
-		if (m_pathPosY[i] < this->m_sprite.getPosition().y / 12)
-		{
+		if (m_pathPosY < this->getPosY()) {
 			this->velX = 0;
 			this->velY = -12;
 		}
-		if ((m_pathPosX[i] == this->m_sprite.getPosition().x / 12) && (m_pathPosY[i] == this->m_sprite.getPosition().y / 12))
-		{
+		if (m_pathPosY > this->getPosY()) {
 			this->velX = 0;
-			this->velY = 0;
+			this->velY = 12;
 		}
-
-	}
 		
+		
+	
+	
+	
+	
 			
 	
 

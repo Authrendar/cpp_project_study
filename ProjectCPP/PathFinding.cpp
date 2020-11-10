@@ -67,7 +67,7 @@ void PathFinding::setStartEndNodes(int x1, int y1, int x2, int y2)
 	
 }
 
-/*void PathFinding::toggleDiagnols()
+void PathFinding::toggleDiagnols()
 {
 	for (auto x = 0; x < nMapWidth; x++) {
 		for (auto y = 0; y < nMapHeight; y++) {
@@ -106,10 +106,11 @@ void PathFinding::setStartEndNodes(int x1, int y1, int x2, int y2)
 			}
 		}
 	}
-}*/
+}
 
 bool PathFinding::SolveAStar()
 {
+		
 		// reset navigation graph - default all node states
 		for (int x = 0; x < nMapWidth; x++) {
 			for (int y = 0; y < nMapHeight; y++) {
@@ -117,7 +118,8 @@ bool PathFinding::SolveAStar()
 				nodes[y * nMapWidth + x].fGlobalGoal = INFINITY;
 				nodes[y * nMapWidth + x].fLocalGoal = INFINITY;
 				nodes[y * nMapWidth + x].parent = nullptr;			// No Parents
-
+				if (this->levelVec[y * nMapWidth + x] == 3)
+					nodes[y * nMapWidth + x].bObstacle = true;
 
 			}
 		}
@@ -197,7 +199,6 @@ void PathFinding::update()
 {
 	if (nodeEnd != nullptr) {
 		sNode* p = nodeEnd;
-		int counter = 0;
 		while (p->parent != nullptr) {
 
 
@@ -224,15 +225,18 @@ void PathFinding::update()
 			}
 			*/
 			
-			counter++;
+			
 			if ((p->x != nodeStart->x) || (p->y != nodeStart->y))
 			{
 				std::cout << "x: " << p->x << "| y: " << p->y << std::endl;
+				//std::cout << "x-parent: " <<p->parent->x << "| y-parent" << p->parent->y << std::endl;
 				this->posX.push_back(p->x);
 				this->posY.push_back(p->y);
 				//std::cout << "X: " << p->x << std::endl;
+				this->xPos = p->x;
+				this->yPos = p->y;
 			}
-			
+			std::cout << "SIZE: " << this->posX.size() << std::endl;
 			p = p->parent;
 		}
 
@@ -245,6 +249,22 @@ void PathFinding::clearPathVector()
 {
 	this->posX.clear();
 	this->posY.clear();
+}
+
+int PathFinding::getXPos()
+{
+	if(this->posX.size()>1)
+	return this->xPos=this->posX[1];
+	else
+	return this->xPos;
+}
+
+int PathFinding::getYPos()
+{
+	if(this->posY.size() > 1)
+		return this->yPos = this->posY[1];
+	else
+	return this->yPos;
 }
 
 std::vector<int> PathFinding::getPathPosX()

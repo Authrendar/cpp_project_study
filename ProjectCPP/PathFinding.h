@@ -19,12 +19,14 @@ public:
 	void setLevelData(std::vector<int> map);
 	void setStartEndNodes(int x1, int y1, int x2, int y2);
 
-	//void toggleDiagnols();
+	void toggleDiagnols();
 	bool SolveAStar();
 
 	void update();
 	void clearPathVector();
 
+	int getXPos();
+	int getYPos();
 	std::vector<int> getPathPosX(); //{ return this->posX; }
 	std::vector<int> getPathPosY(); //{ return this->posY; }
 	//float d = 0.f;
@@ -66,6 +68,8 @@ private:
 
 	bool b8Connection = false;
 
+
+	int xPos, yPos;
 
 };
 

@@ -37,27 +37,18 @@ void GameState::update(const float& dt)
 		gameClock.restart();
 	}
 
-	if (pathTime > 1.f) {
-		this->pathSystem->setStartEndNodes(trees[0]->getPosX(), trees[0]->getPosY(), dwarves[0]->getPosX(), dwarves[0]->getPosY());
-		for (auto& dwarf : dwarves) {
-
-			dwarf->setInstructionsMove(this->pathPosX, this->pathPosY);
-			dwarf->update(dt);
-			this->pathPosX.clear();
-			this->pathPosY.clear();
-		}
-
+	if (pathTime > 0.5f) {
 		
+		this->pathSystem->setStartEndNodes(trees[0]->getPosX(), trees[0]->getPosY(), dwarves[0]->getPosX(), dwarves[0]->getPosY());
+
 		this->pathSystem->SolveAStar();
 		this->pathSystem->update();
-		for (int i = 0; i < this->pathSystem->getPathPosX().size(); i++) {
-			this->pathPosX.push_back(this->pathSystem->getPathPosX()[i]);
-			this->pathPosY.push_back(this->pathSystem->getPathPosY()[i]);
-			
-		}
-		//std::cout << this->pathPosX.size() << std::endl;
-		this->pathSystem->clearPathVector();
+
+
+		dwarves[0]->setInstructionsMove(this->pathSystem->getXPos(), this->pathSystem->getYPos());
+		dwarves[0]->update(dt);
 		
+		this->pathSystem->clearPathVector();
 		this->pathFindingClock.restart();
 		
 	}
@@ -80,7 +71,7 @@ void GameState::render(sf::RenderTarget* target)
 
 void GameState::initMap()
 {
-	
+
 	this->map = new Map();
 	this->m_view = sf::View(sf::FloatRect(0, 0, 400.f, 300.f));
 
@@ -88,12 +79,13 @@ void GameState::initMap()
 	this->pathSystem->setLevelData(this->map->getLevelData());
 	
 	
-	
-}
 
+	
+
+}
 void GameState::initObjects()
 {
-	dwarves.push_back(new Dwarf(0, sf::Vector2f(this->grid_map_size * 8, this->grid_map_size * 1)));
+	dwarves.push_back(new Dwarf(0, sf::Vector2f(this->grid_map_size * 5, this->grid_map_size * 4)));
 	trees.push_back(new Tree(sf::Vector2f(this->grid_map_size * 0, this->grid_map_size * 6)));
 
 }
