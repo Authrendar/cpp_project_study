@@ -18,7 +18,7 @@ Tree::~Tree()
 {
 }
 
-void Tree::update(float& dt)
+void Tree::update(const float& dt)
 {
 }
 

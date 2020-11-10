@@ -19,7 +19,7 @@ public:
 	virtual void checkForQuit();
 
 	const bool& getQuit() const;
-	virtual sf::View getView()=0;
+	//virtual sf::View getView()=0;
 
 	virtual void updateKeybinds(const float& dt) = 0;
 	virtual void update(const float& dt) = 0;

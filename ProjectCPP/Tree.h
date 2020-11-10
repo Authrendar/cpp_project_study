@@ -7,7 +7,7 @@ public:
 	virtual ~Tree();
 
 
-	virtual void update(float& dt);
+	virtual void update(const float& dt);
 	virtual void render(sf::RenderTarget* target);
 
 	virtual float getPosX() { return this->m_sprite.getPosition().x/12; }

@@ -62,12 +62,12 @@ void PathFinding::setLevelData(std::vector<int> map)
 
 void PathFinding::setStartEndNodes(int x1, int y1, int x2, int y2)
 {
-	nodeStart = &nodes[y1 * 10 + x1];
-	nodeEnd = &nodes[y2 * 10 + x2];
+	this->nodeStart = &nodes[y1 * 10 + x1];
+	this->nodeEnd = &nodes[y2 * 10 + x2];
 	
 }
 
-void PathFinding::toggleDiagnols()
+/*void PathFinding::toggleDiagnols()
 {
 	for (auto x = 0; x < nMapWidth; x++) {
 		for (auto y = 0; y < nMapHeight; y++) {
@@ -106,7 +106,7 @@ void PathFinding::toggleDiagnols()
 			}
 		}
 	}
-}
+}*/
 
 bool PathFinding::SolveAStar()
 {
@@ -197,6 +197,7 @@ void PathFinding::update()
 {
 	if (nodeEnd != nullptr) {
 		sNode* p = nodeEnd;
+		int counter = 0;
 		while (p->parent != nullptr) {
 
 
@@ -210,10 +211,50 @@ void PathFinding::update()
 			//this->window->draw(line, 2, sf::Lines);
 
 			// Set next node to this node's parent */
-			std::cout << "cords: " << p->x << ":"<<p->y << ", ";
+	
+			//std::cout << "pxy: " << p->x<<":"<<p->y << ", ";
+			//std::cout << "parentx: " << p->parent->x <<":" <<p->parent->y <<", " << std::endl;
+			//std::cout << this->nodeStart->x << std::endl;
+			/*if ((p->parent->x != nodeStart->x)&&(!p->parent->y != nodeStart->y)) {
+				this->posX.push_back(p->parent->x);
+				this->posY.push_back(p->parent->y);
+				//std::cout << p->parent->x << std::endl;
+				//std::cout << p->parent->y << std::endl;
+				std::cout << "parentx: " << p->parent->x << ":" << p->parent->y << ", " << std::endl;
+			}
+			*/
+			
+			counter++;
+			if ((p->x != nodeStart->x) || (p->y != nodeStart->y))
+			{
+				std::cout << "x: " << p->x << "| y: " << p->y << std::endl;
+				this->posX.push_back(p->x);
+				this->posY.push_back(p->y);
+				//std::cout << "X: " << p->x << std::endl;
+			}
+			
 			p = p->parent;
 		}
+
+		std::cout << std::endl;
+		//std::cout << this->posX.size() << std::endl;
 	}
+}
+
+void PathFinding::clearPathVector()
+{
+	this->posX.clear();
+	this->posY.clear();
+}
+
+std::vector<int> PathFinding::getPathPosX()
+{
+	return this->posX;
+}
+
+std::vector<int> PathFinding::getPathPosY()
+{
+	return this->posY;
 }
 
 void PathFinding::drawMap()

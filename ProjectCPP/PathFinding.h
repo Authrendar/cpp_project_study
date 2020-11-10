@@ -19,11 +19,14 @@ public:
 	void setLevelData(std::vector<int> map);
 	void setStartEndNodes(int x1, int y1, int x2, int y2);
 
-	void toggleDiagnols();
+	//void toggleDiagnols();
 	bool SolveAStar();
 
 	void update();
+	void clearPathVector();
 
+	std::vector<int> getPathPosX(); //{ return this->posX; }
+	std::vector<int> getPathPosY(); //{ return this->posY; }
 	//float d = 0.f;
 	void drawMap();
 
@@ -40,6 +43,7 @@ private:
 		sNode* parent;
 	};
 	std::vector<int>levelVec;
+	std::vector<int>posX; std::vector<int>posY;
 
 	sf::Vector2u WINDOW_SIZE;
 	int nMapWidth;
