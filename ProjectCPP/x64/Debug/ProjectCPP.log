@@ -1,2 +1,5 @@
-﻿  Game.cpp
+﻿  PathFinding.cpp
+D:\sfml projects\ProjectCPP\ProjectCPP\PathFinding.cpp(137,37): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\PathFinding.cpp(173,30): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\PathFinding.cpp(184,59): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
   ProjectCPP.vcxproj -> D:\sfml projects\ProjectCPP\x64\Debug\ProjectCPP.exe

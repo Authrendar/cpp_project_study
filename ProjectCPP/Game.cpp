@@ -32,6 +32,11 @@ void Game::run()
 			if (event.type == sf::Event::Closed) {
 				this->window->close(); /*Obsluga podstawowych zdarzen - wy³aczenie aplikacji poprzez krzyzyk na pasku*/
 			}
+			/*if (event.type == sf::Event::Resized) {
+				sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+				
+				this->window->setView(sf::View(visibleArea));
+			}*/
 		}
 
 
@@ -82,6 +87,7 @@ void Game::initWindow()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(W_WIDTH, W_HEIGHT), TITLE);
 	this->window->setFramerateLimit(30);
+	
 }
 
 void Game::initStates()

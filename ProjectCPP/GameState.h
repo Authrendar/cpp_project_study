@@ -1,9 +1,12 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-
 #include "State.h"
 
+#include "PathFinding.h"
+#include "Dwarf.h"
+#include "Map.h"
+#include "Tree.h"
 class GameState :
 	public State
 {
@@ -16,10 +19,22 @@ public:
 	void update(const float& dt);
 	void render(sf::RenderTarget* target);
 
+	sf::View getView();
+
+
 private:
 
+	void initMap();
+	void initObjects();
+	Map *map;
+	sf::View m_view;
+	const int grid_map_size = 12;
 
-
+	PathFinding* pathSystem;
+	std::vector<Dwarf*> dwarves;
+	std::vector<Tree*> trees;
+	
+	std::vector<int> dupa;
 
 
 };
