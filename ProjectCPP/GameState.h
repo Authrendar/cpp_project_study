@@ -27,14 +27,14 @@ private:
 	//Init functions
 	void initMap();
 	void initObjects();
-
+	void keyboardUpdate();
 	//Map variables
 	Map *map;
 	sf::View m_view;
 	const int grid_map_size = 12;
 
 	PathFinding* pathSystem;
-
+	std::vector<int> pathLength;
 	//Objects
 	std::vector<Dwarf*> dwarves;
 	std::vector<Tree*> trees;
@@ -48,6 +48,10 @@ private:
 	float pathTime;
 
 
+	//Dwarves variables
+	
+
+	
 };
 
 #endif // !GAMESTATE_H

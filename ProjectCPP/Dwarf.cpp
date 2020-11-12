@@ -15,6 +15,8 @@ Dwarf::Dwarf(int number, sf::Vector2f pos)
 	this->m_sprite.setColor(sf::Color::Blue);
 	
 	this->velX = 0; this->velY = 0;
+	this->dwarf_states = IDLE;
+	
 }
 
 Dwarf::~Dwarf()
@@ -23,13 +25,14 @@ Dwarf::~Dwarf()
 
 void Dwarf::update(const float& dt)
 {
-	std::cout << "Dwarf update" << std::endl;
+	//std::cout << "Dwarf update" << std::endl;
 	moveDwarf();
 	
 	this->m_sprite.move(this->velX, this->velY);
 	this->velX = 0;
 	this->velY = 0;
 	
+
 	//std::cout << std::endl;
 }
 
@@ -44,31 +47,62 @@ void Dwarf::setInstructionsMove(int pathPosX, int pathPosY /*std::vector<int> pa
 	this->m_pathPosY = pathPosY;
 }
 
+void Dwarf::setDwarfState(int states)
+{
+	switch (states) {
+	case 0:
+		this->dwarf_states = IDLE;
+		break;
+	case 1:
+		this->dwarf_states = WALK;
+		break;
+	case 2:
+		this->dwarf_states = CUTTING;
+		break;
+	}
+}
+
 void Dwarf::moveDwarf()
 {
-	std::cout <<"DWARF PATHPOSX " <<m_pathPosX << std::endl;
 	
-		if (m_pathPosX < this->getPosX())
-		{
-			//std::cout << "Pos: " << this->getPosX() << std::endl;
-			this->velX = -12;
-			this->velY = 0;
+	
+	switch (this->dwarf_states) {
+	case States::IDLE:
+		//std::cout << "Dwarf standing " << ", ";
+		break;
+
+	case States::WALK:
+		//std::cout << "Dwarf walking " << ", ";
+		if ((m_pathPosX > 0) || (m_pathPosY > 0)) {
+			if (m_pathPosX < this->getPosX())
+			{
+				this->velX = -12;
+				this->velY = 0;
+			}
+			if (m_pathPosX > this->getPosX())
+			{
+				this->velX = 12;
+				this->velY = 0;
+			}
+			if (m_pathPosY < this->getPosY()) {
+				this->velX = 0;
+				this->velY = -12;
+			}
+			if (m_pathPosY > this->getPosY()) {
+				this->velX = 0;
+				this->velY = 12;
+			}
+
 		}
-		if (m_pathPosX > this->getPosX())
-		{
-			//std::cout << "Pos: " << this->getPosX() << std::endl;
-			this->velX = 12;
-			this->velY = 0;
-		}
-		if (m_pathPosY < this->getPosY()) {
-			this->velX = 0;
-			this->velY = -12;
-		}
-		if (m_pathPosY > this->getPosY()) {
-			this->velX = 0;
-			this->velY = 12;
-		}
-		
+			
+
+		break;
+	case States::CUTTING:
+
+		break;
+	}
+
+	
 		
 	
 	

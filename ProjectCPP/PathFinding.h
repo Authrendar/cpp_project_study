@@ -30,7 +30,6 @@ public:
 	std::vector<int> getPathPosX(); //{ return this->posX; }
 	std::vector<int> getPathPosY(); //{ return this->posY; }
 	//float d = 0.f;
-	void drawMap();
 
 
 private:

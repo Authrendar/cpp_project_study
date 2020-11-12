@@ -10,7 +10,7 @@ PathFinding::PathFinding(sf::RenderWindow* window, sf::Vector2u WINDOW_SIZE):win
 	
 	nodes = new sNode[nMapWidth * nMapHeight];
 	
-	std::cout << nMapWidth * nMapHeight << std::endl;
+	//std::cout << nMapWidth * nMapHeight << std::endl;
 	for (auto x = 0; x < nMapWidth; x++) {
 		for (auto y = 0; y < nMapHeight; y++) {
 			nodes[y * nMapWidth + x].x = x;
@@ -118,7 +118,7 @@ bool PathFinding::SolveAStar()
 				nodes[y * nMapWidth + x].fGlobalGoal = INFINITY;
 				nodes[y * nMapWidth + x].fLocalGoal = INFINITY;
 				nodes[y * nMapWidth + x].parent = nullptr;			// No Parents
-				if (this->levelVec[y * nMapWidth + x] == 3)
+				if ((this->levelVec[y * nMapWidth + x] == 3)||(this->levelVec[y * nMapWidth + x] == 4))
 					nodes[y * nMapWidth + x].bObstacle = true;
 
 			}
@@ -190,45 +190,19 @@ bool PathFinding::SolveAStar()
 			}
 		}
 
-
-
 		return true;
 }
 
 void PathFinding::update()
 {
 	if (nodeEnd != nullptr) {
+		
 		sNode* p = nodeEnd;
 		while (p->parent != nullptr) {
-
-
-			/*sf::Vertex line[]
-			{
-				sf::Vertex(sf::Vector2f(p->x * this->nNodeSize + this->nNodeSize / 2 + 3, p->y * this->nNodeSize + this->nNodeSize / 2 + 3)),
-				sf::Vertex(sf::Vector2f(p->parent->x * this->nNodeSize + this->nNodeSize / 2 + 3, p->parent->y * this->nNodeSize + this->nNodeSize / 2 + 3))
-			};
-			line->color = sf::Color{ 255,218,185,255 };
-
-			//this->window->draw(line, 2, sf::Lines);
-
-			// Set next node to this node's parent */
-	
-			//std::cout << "pxy: " << p->x<<":"<<p->y << ", ";
-			//std::cout << "parentx: " << p->parent->x <<":" <<p->parent->y <<", " << std::endl;
-			//std::cout << this->nodeStart->x << std::endl;
-			/*if ((p->parent->x != nodeStart->x)&&(!p->parent->y != nodeStart->y)) {
-				this->posX.push_back(p->parent->x);
-				this->posY.push_back(p->parent->y);
-				//std::cout << p->parent->x << std::endl;
-				//std::cout << p->parent->y << std::endl;
-				std::cout << "parentx: " << p->parent->x << ":" << p->parent->y << ", " << std::endl;
-			}
-			*/
-			
 			
 			if ((p->x != nodeStart->x) || (p->y != nodeStart->y))
 			{
-				std::cout << "x: " << p->x << "| y: " << p->y << std::endl;
+				//std::cout << "x: " << p->x << "| y: " << p->y << std::endl;
 				//std::cout << "x-parent: " <<p->parent->x << "| y-parent" << p->parent->y << std::endl;
 				this->posX.push_back(p->x);
 				this->posY.push_back(p->y);
@@ -236,11 +210,11 @@ void PathFinding::update()
 				this->xPos = p->x;
 				this->yPos = p->y;
 			}
-			std::cout << "SIZE: " << this->posX.size() << std::endl;
+			//std::cout << "SIZE: " << this->posX.size() << std::endl;
 			p = p->parent;
 		}
 
-		std::cout << std::endl;
+		
 		//std::cout << this->posX.size() << std::endl;
 	}
 }
@@ -253,10 +227,10 @@ void PathFinding::clearPathVector()
 
 int PathFinding::getXPos()
 {
-	if(this->posX.size()>1)
-	return this->xPos=this->posX[1];
+	if (this->posX.size() > 1)
+		return this->xPos = this->posX[1];
 	else
-	return this->xPos;
+		return  - 1;
 }
 
 int PathFinding::getYPos()
@@ -264,7 +238,7 @@ int PathFinding::getYPos()
 	if(this->posY.size() > 1)
 		return this->yPos = this->posY[1];
 	else
-	return this->yPos;
+	return -1;
 }
 
 std::vector<int> PathFinding::getPathPosX()
@@ -277,13 +251,3 @@ std::vector<int> PathFinding::getPathPosY()
 	return this->posY;
 }
 
-void PathFinding::drawMap()
-{
-	// Draw Nodes on top
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
-		SolveAStar();
-	}
-
-	
-}

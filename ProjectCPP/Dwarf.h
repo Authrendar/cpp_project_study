@@ -2,6 +2,24 @@
 #include "Entity.h"
 class Dwarf :public Entity
 {
+private:
+	enum States :signed int {
+		IDLE = 0,
+		WALK = 1,
+		CUTTING = 2
+	};
+	int number;
+	States dwarf_states;
+	void moveDwarf();
+	//std::vector<int> m_pathPosX; std::vector<int> m_pathPosY;
+	int m_pathPosX, m_pathPosY;
+	sf::IntRect rectTexture;
+	sf::Texture m_texture;
+	sf::Sprite m_sprite;
+
+	int velX, velY;
+
+
 public:
 	Dwarf(int number, sf::Vector2f pos);
 	virtual ~Dwarf();
@@ -14,17 +32,14 @@ public:
 	int getNumberOfDwarf() { return this->number; }
 
 	void setInstructionsMove(int pathPosX, int pathPosY);
+	void setDwarfState(int state);
+	
 
-private:
-	int number;
+	
 
-	void moveDwarf();
-	//std::vector<int> m_pathPosX; std::vector<int> m_pathPosY;
-	int m_pathPosX, m_pathPosY;
-	sf::IntRect rectTexture;
-	sf::Texture m_texture;
-	sf::Sprite m_sprite;
+protected:
+	
 
-	int velX, velY;
+	
 };
 
