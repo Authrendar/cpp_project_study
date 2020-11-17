@@ -216,6 +216,7 @@ void PathFinding::update()
 
 		
 		//std::cout << this->posX.size() << std::endl;
+		//std::cout << std::endl;
 	}
 }
 

@@ -16,7 +16,8 @@ Dwarf::Dwarf(int number, sf::Vector2f pos)
 	
 	this->velX = 0; this->velY = 0;
 	this->dwarf_states = IDLE;
-	
+	this->dwarf_job = FREE;
+	isSelected = false;
 }
 
 Dwarf::~Dwarf()
@@ -27,7 +28,7 @@ void Dwarf::update(const float& dt)
 {
 	//std::cout << "Dwarf update" << std::endl;
 	moveDwarf();
-	
+	setSelectedDwarfColor();
 	this->m_sprite.move(this->velX, this->velY);
 	this->velX = 0;
 	this->velY = 0;
@@ -62,6 +63,29 @@ void Dwarf::setDwarfState(int states)
 	}
 }
 
+void Dwarf::setDwarfJob(int job)
+{
+	switch(job) {
+	case 0:
+		this->dwarf_job = FREE;
+		break;
+	case 1:
+		this->dwarf_job = LUMBERJACK;
+		break;
+	case 2:
+		this->dwarf_job = MINER;
+		break;
+	}
+}
+
+void Dwarf::setSelectedDwarfColor()
+{	
+	if (getIsSelected())
+		this->m_sprite.setColor(sf::Color::Red);
+	else
+		this->m_sprite.setColor(sf::Color::Blue);
+}
+
 void Dwarf::moveDwarf()
 {
 	
@@ -72,7 +96,7 @@ void Dwarf::moveDwarf()
 		break;
 
 	case States::WALK:
-		//std::cout << "Dwarf walking " << ", ";
+		std::cout << "Dwarf x: " << this->m_pathPosX << " y: " << this->m_pathPosY << std::endl;
 		if ((m_pathPosX > 0) || (m_pathPosY > 0)) {
 			if (m_pathPosX < this->getPosX())
 			{

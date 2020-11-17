@@ -34,12 +34,14 @@ private:
 	const int grid_map_size = 12;
 
 	PathFinding* pathSystem;
+	std::vector<PathFinding*> pathSystemVec;
 	std::vector<int> pathLength;
 	//Objects
 	std::vector<Dwarf*> dwarves;
 	std::vector<Tree*> trees;
 	
-	std::vector<int> pathPosX; std::vector <int> pathPosY;
+	std::vector<std::vector<int>> pathPosX; std::vector <std::vector<int>> pathPosY;
+	std::vector<int> insX; std::vector<int> insY;
 
 	sf::Clock gameClock;
 	float gameTime;
@@ -47,7 +49,7 @@ private:
 	sf::Clock pathFindingClock;
 	float pathTime;
 
-
+	void lumberjackUpdate();
 	//Dwarves variables
 	
 
