@@ -39,7 +39,7 @@ public:
 
 	int getNumberOfDwarf() { return this->number; }
 
-	void setInstructionsMove(int pathPosX, int pathPosY);
+	void setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY);
 
 	void setDwarfState(int state);
 	void setDwarfJob(int job);
@@ -49,9 +49,35 @@ public:
 	
 	bool isSelected;
 
+	std::vector<int> d_posX;
+	std::vector<int> d_posY;
+	std::vector<int> pathLength;
+	void clearPathVec();
+
+	void setIns();
+	//std::vector<int> getLengthPath() { return this->d_posX; }
+	
+	
+	//void sortPathVec();
+
 	bool getIsSelected() {  return this->isSelected; }
 	
 
+
+	int getPathPosX() {
+		for (int i = 0; i < this->vecInsX[0].size(); i++) {
+			return this->vecInsX[0][i];
+		}
+		
+	}
+	int getPathPosY() {
+		for (int i = 0; i < this->vecInsY[0].size(); i++) {
+			return this->vecInsY[0][i];
+		}
+
+	}
+	std::vector<std::vector<int>> vecInsX;
+	std::vector<std::vector<int>> vecInsY;
 protected:
 	
 

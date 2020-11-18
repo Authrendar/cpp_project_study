@@ -41,7 +41,7 @@ private:
 	std::vector<Tree*> trees;
 	
 	std::vector<std::vector<int>> pathPosX; std::vector <std::vector<int>> pathPosY;
-	std::vector<int> insX; std::vector<int> insY;
+
 
 	sf::Clock gameClock;
 	float gameTime;

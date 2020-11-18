@@ -45,72 +45,29 @@ void GameState::update(const float& dt)
 		dwarves[2]->setDwarfJob(1);
 
 		for (auto& dwarf : dwarves) {
+			int pX = 0; int pY = 0;
 			if (dwarf->getCurrentJob() == 1)
 			{
+				
 				for (int i = 0; i < trees.size(); i++) {
 					this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
 					this->pathSystem->SolveAStar();
 					this->pathSystem->update();
-					this->pathPosX.push_back(this->pathSystem->getPathPosX());
-					this->pathPosY.push_back(this->pathSystem->getPathPosY());
-					this->pathSystem->clearPathVector();
-					//dwarf->setInstructionsMove(this->pathSystem->getXPos(), this->pathSystem->getYPos());
-					
-				}
+					if(this->pathSystem->getPathPosX().size()>0)
+					dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY());
 				
-			}
-		}
-		
-		
-		for (auto& dwarf : dwarves) {
-			int pX = 0; int pY = 0;
-			if (dwarf->getCurrentJob() == 1) {
-				
-				std::cout << "sajz: " << this->pathPosX[1].size() << std::endl;
-				for (int i = 0; i < this->pathPosX.size(); i++) {
-					for (int j = 1; j < this->pathPosX[i].size(); j++) {
-							if ((dwarf->getPosX() == this->pathPosX[i][j - 1]) && (dwarf->getPosY() == this->pathPosY[i][j - 1])) {
-									pX = pathPosX[i][j];
-									pY = pathPosY[i][j];
-									//std::cout << "Pozycja X: " << dwarf->getPosX() << std::endl;
-									std::cout << "i: " << i << " j:" << j;
-								
-						}
+					for (int i = 0; i < this->pathSystem->getPathPosX().size(); i++) {
+						//std::cout << "x: " << this->pathSystem->getPathPosX()[i] << " y:" << this->pathSystem->getPathPosY()[i] << std::endl;
 					}
-					
 					std::cout << std::endl;
+					this->pathSystem->clearPathVector();
+					
+					//std::cout << i << std::endl;
 				}
-				std::cout <<"number : "<<dwarf->getNumberOfDwarf() << std::endl;
-				dwarf->setInstructionsMove(pX, pY);
-				
 			}
+			dwarf->clearPathVec();
 		}
-
-		this->pathPosX.clear();
-		this->pathPosY.clear();
-		
-		//std::cout << std::endl;
-		
-		
-		/*for (int i = 0; i < this->trees.size(); i++) {
-			this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarves[0]->getPosX(), dwarves[0]->getPosY());
-			this->pathSystem->SolveAStar();
-			this->pathSystem->update();
-			if(this->pathSystem->getPathPosX().size()>0)
-			this->pathLength.push_back(this->pathSystem->getPathPosX().size());	
-
-			if (i == this->trees.size() - 1) {
-				std::sort(this->pathLength.begin(), this->pathLength.end());
-				std::cout << this->pathLength[0] << std::endl;
-				//std::cout << this->pathSystem->getXPos() << std::endl;
-				
-				this->dwarves[0]->setInstructionsMove(this->pathSystem->getXPos(), this->pathSystem->getYPos());
-				
-			}
-			
-		}
-		
-		*/
+	
 		
 		
 		this->pathLength.clear();	
@@ -158,10 +115,13 @@ void GameState::initMap()
 void GameState::initObjects()
 {
 	//dwarves.push_back(new Dwarf(0, sf::Vector2f(this->grid_map_size * 0, this->grid_map_size * 3)));
-	
-	for (int i = 0; i < 3; i++) {
-		dwarves.push_back(new Dwarf(i + 1, sf::Vector2f(this->grid_map_size * 5 + grid_map_size*(i + 1), this->grid_map_size * 4 + grid_map_size*(i + 1))));
-	}
+	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size*6, this->grid_map_size*5)));
+	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size * 8, this->grid_map_size * 2)));
+	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size * 7, this->grid_map_size * 4)));
+
+	/*for (int i = 0; i < 3; i++) {
+		dwarves.push_back(new Dwarf(i + 1, sf::Vector2f(this->grid_map_size * 5 + grid_map_size*(i + 2), this->grid_map_size * 4 + grid_map_size*(i + 1))));
+	} */
 	for (int i = 0; i < this->map->getLevelData().size() / 8; i++) {
 		for (int j = 0; j < this->map->getLevelData().size() / 10; j++) {
 			if (this->map->getLevelData()[i + j * this->map->getLevelData().size() / 8] == 4) {
