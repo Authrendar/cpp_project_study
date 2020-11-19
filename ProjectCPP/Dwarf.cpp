@@ -30,8 +30,8 @@ void Dwarf::update(const float& dt)
 	//std::cout << this->m_pathPosX << " : " << this->m_pathPosY << std::endl;
 	//std::cout << std::endl;
 	
-	std::cout << "m_posX: " << this->m_pathPosX << std::endl;
-	std::cout << "m_posY: " << this->m_pathPosY << std::endl;
+//	std::cout << "m_posX: " << this->m_pathPosX << std::endl;
+	//std::cout << "m_posY: " << this->m_pathPosY << std::endl;
 	moveDwarf();
 	setSelectedDwarfColor();
 	this->m_sprite.move(this->velX, this->velY);
@@ -47,23 +47,26 @@ void Dwarf::render(sf::RenderTarget* target)
 	target->draw(this->m_sprite);
 }
 
-void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY)
-{
+void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY, int index)
+{	
 
+	this->vecSizes.push_back(pathPosX.size());
 	this->vecInsX.push_back(pathPosX);
 	this->vecInsY.push_back(pathPosY);
-	for (int i = 1; i < this->vecInsX[0].size(); i++) {
-		std::cout << "x : " << this->vecInsX[0][i] << " y:" << this->vecInsY[0][i] << std::endl;
-		if ((this->getPosX() == this->vecInsX[0][i-1])&&(this->getPosY() == this->vecInsY[0][i-1])) {
-			m_pathPosX = this->vecInsX[0][i];
-			m_pathPosY = this->vecInsY[0][i];
-		}
-	}
 
-	//this->m_pathPosX = pathPosX;
-	//this->m_pathPosY = pathPosY;
-	
-	
+
+	if (vecSizes.size() == index) {
+		std::sort(this->vecSizes.begin(), std::partition(vecSizes.begin(), vecSizes.end(), [](int n) { return n != 0; }));
+		for (int i = 0; i < this->vecInsX.size(); i++) {
+			if ((this->vecSizes[0] == this->vecInsX[i].size()) && (this->vecSizes[0] == this->vecInsY[i].size()))
+				for (int j = 1; j < this->vecInsX[i].size(); j++) {
+					if ((this->getPosX() == this->vecInsX[i][j - 1]) && (this->getPosY() == this->vecInsY[i][j - 1])) {
+						this->m_pathPosX = this->vecInsX[i][j];
+						this->m_pathPosY = this->vecInsY[i][j];
+					}
+				}
+		}	
+	}
 }
 
 void Dwarf::setDwarfState(int states)
@@ -106,7 +109,7 @@ void Dwarf::setSelectedDwarfColor()
 
 void Dwarf::clearPathVec()
 {
-	
+	this->vecSizes.clear();
 	this->vecInsX.clear();
 	this->vecInsY.clear();
 	
@@ -127,10 +130,7 @@ void Dwarf::moveDwarf()
 		break;
 
 	case States::WALK:
-		//std::cout << "Dwarf x: " << this->m_pathPosX << " y: " << this->m_pathPosY << std::endl;
-		for (int i = 0; i < pathLength.size(); i++) {
-			//std::cout << "Path length: " << this->pathLength[i] << std::endl;
-		}
+		
 		
 		
 		if ((m_pathPosX > 0) || (m_pathPosY > 0)) {
@@ -166,5 +166,3 @@ void Dwarf::moveDwarf()
 
 
 }	
-
-

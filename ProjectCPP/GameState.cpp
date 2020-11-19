@@ -31,11 +31,6 @@ void GameState::update(const float& dt)
 	this->pathTime = this->pathFindingClock.getElapsedTime().asSeconds();
 	this->gameTime = this->gameClock.getElapsedTime().asSeconds();
 
-	
-
-
-
-
 	if (pathTime >0.5f) {
 		dwarves[0]->setDwarfState(1);
 		dwarves[0]->setDwarfJob(1);
@@ -45,30 +40,22 @@ void GameState::update(const float& dt)
 		dwarves[2]->setDwarfJob(1);
 
 		for (auto& dwarf : dwarves) {
-			int pX = 0; int pY = 0;
+			
 			if (dwarf->getCurrentJob() == 1)
 			{
-				
+				//int a = 0;
 				for (int i = 0; i < trees.size(); i++) {
+
 					this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
 					this->pathSystem->SolveAStar();
 					this->pathSystem->update();
-					if(this->pathSystem->getPathPosX().size()>0)
-					dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY());
-				
-					for (int i = 0; i < this->pathSystem->getPathPosX().size(); i++) {
-						//std::cout << "x: " << this->pathSystem->getPathPosX()[i] << " y:" << this->pathSystem->getPathPosY()[i] << std::endl;
-					}
-					std::cout << std::endl;
+					dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), this->trees.size());
 					this->pathSystem->clearPathVector();
-					
-					//std::cout << i << std::endl;
 				}
+				dwarf->clearPathVec();
 			}
-			dwarf->clearPathVec();
 		}
-	
-		
+
 		
 		this->pathLength.clear();	
 		for (auto& dwarf : dwarves) {
@@ -115,9 +102,9 @@ void GameState::initMap()
 void GameState::initObjects()
 {
 	//dwarves.push_back(new Dwarf(0, sf::Vector2f(this->grid_map_size * 0, this->grid_map_size * 3)));
-	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size*6, this->grid_map_size*5)));
+	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size*6, this->grid_map_size*7)));
 	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size * 8, this->grid_map_size * 2)));
-	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size * 7, this->grid_map_size * 4)));
+	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size * 4, this->grid_map_size * 7)));
 
 	/*for (int i = 0; i < 3; i++) {
 		dwarves.push_back(new Dwarf(i + 1, sf::Vector2f(this->grid_map_size * 5 + grid_map_size*(i + 2), this->grid_map_size * 4 + grid_map_size*(i + 1))));

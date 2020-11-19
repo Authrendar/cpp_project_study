@@ -40,7 +40,7 @@ private:
 	std::vector<Dwarf*> dwarves;
 	std::vector<Tree*> trees;
 	
-	std::vector<std::vector<int>> pathPosX; std::vector <std::vector<int>> pathPosY;
+	//std::vector<std::vector<int>> pathPosX; std::vector <std::vector<int>> pathPosY;
 
 
 	sf::Clock gameClock;

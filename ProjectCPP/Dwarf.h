@@ -39,7 +39,7 @@ public:
 
 	int getNumberOfDwarf() { return this->number; }
 
-	void setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY);
+	void setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY, int index);
 
 	void setDwarfState(int state);
 	void setDwarfJob(int job);
@@ -78,6 +78,10 @@ public:
 	}
 	std::vector<std::vector<int>> vecInsX;
 	std::vector<std::vector<int>> vecInsY;
+
+
+	std::vector<int> vecSizes;
+	
 protected:
 	
 
