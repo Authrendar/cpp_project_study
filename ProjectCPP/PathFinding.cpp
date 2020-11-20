@@ -202,21 +202,11 @@ void PathFinding::update()
 			
 			if ((p->x != nodeStart->x) || (p->y != nodeStart->y))
 			{
-				//std::cout << "x: " << p->x << "| y: " << p->y << std::endl;
-				//std::cout << "x-parent: " <<p->parent->x << "| y-parent" << p->parent->y << std::endl;
 				this->posX.push_back(p->x);
 				this->posY.push_back(p->y);
-				//std::cout << "X: " << p->x << std::endl;
-				this->xPos = p->x;
-				this->yPos = p->y;
 			}
-			//std::cout << "SIZE: " << this->posX.size() << std::endl;
 			p = p->parent;
 		}
-
-		
-		//std::cout << this->posX.size() << std::endl;
-		//std::cout << std::endl;
 	}
 }
 
@@ -226,21 +216,6 @@ void PathFinding::clearPathVector()
 	this->posY.clear();
 }
 
-int PathFinding::getXPos()
-{
-	if (this->posX.size() > 1)
-		return this->xPos = this->posX[1];
-	else
-		return  - 1;
-}
-
-int PathFinding::getYPos()
-{
-	if(this->posY.size() > 1)
-		return this->yPos = this->posY[1];
-	else
-	return -1;
-}
 
 std::vector<int> PathFinding::getPathPosX()
 {

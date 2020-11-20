@@ -32,32 +32,9 @@ void GameState::update(const float& dt)
 	this->gameTime = this->gameClock.getElapsedTime().asSeconds();
 
 	if (pathTime >0.5f) {
-		dwarves[0]->setDwarfState(1);
-		dwarves[0]->setDwarfJob(1);
-		dwarves[1]->setDwarfState(1);
-		dwarves[1]->setDwarfJob(1);
-		dwarves[2]->setDwarfState(1);
-		dwarves[2]->setDwarfJob(1);
-
-		for (auto& dwarf : dwarves) {
-			
-			if (dwarf->getCurrentJob() == 1)
-			{
-				//int a = 0;
-				for (int i = 0; i < trees.size(); i++) {
-
-					this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
-					this->pathSystem->SolveAStar();
-					this->pathSystem->update();
-					dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), this->trees.size());
-					this->pathSystem->clearPathVector();
-				}
-				dwarf->clearPathVec();
-			}
-		}
-
+	
+		this->lumberjackUpdate();
 		
-		this->pathLength.clear();	
 		for (auto& dwarf : dwarves) {
 			dwarf->update(dt);
 		}
@@ -103,8 +80,8 @@ void GameState::initObjects()
 {
 	//dwarves.push_back(new Dwarf(0, sf::Vector2f(this->grid_map_size * 0, this->grid_map_size * 3)));
 	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size*6, this->grid_map_size*7)));
-	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size * 8, this->grid_map_size * 2)));
-	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size * 4, this->grid_map_size * 7)));
+	dwarves.push_back(new Dwarf(2, sf::Vector2f(this->grid_map_size * 8, this->grid_map_size * 2)));
+	dwarves.push_back(new Dwarf(3, sf::Vector2f(this->grid_map_size * 4, this->grid_map_size * 7)));
 
 	/*for (int i = 0; i < 3; i++) {
 		dwarves.push_back(new Dwarf(i + 1, sf::Vector2f(this->grid_map_size * 5 + grid_map_size*(i + 2), this->grid_map_size * 4 + grid_map_size*(i + 1))));
@@ -145,6 +122,17 @@ void GameState::keyboardUpdate()
 				}
 			}
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+		{
+			dwarf->isSelected = false;
+			if (dwarf->getNumberOfDwarf() == 3) {
+
+				if (!dwarf->getIsSelected()) {
+					std::cout << "wybrales dwarfa o numerze " << dwarf->getNumberOfDwarf() << std::endl;
+					dwarf->isSelected = true;
+				}
+			}
+		}
 		if (dwarf->getIsSelected()) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
 			
@@ -165,5 +153,53 @@ void GameState::keyboardUpdate()
 
 	
 	
+}
+
+void GameState::lumberjackUpdate()
+{
+	for (auto& dwarf : dwarves) { //Path to tree
+
+		if (dwarf->getCurrentJob() == 1)
+		{
+			//int a = 0;
+			for (int i = 0; i < trees.size(); i++) {
+
+				this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
+				this->pathSystem->SolveAStar();
+				this->pathSystem->update();
+				dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), this->trees.size(), 2); //2 to wartosc stanu dwarfa - w tym przypadku to CUTTING
+				this->pathSystem->clearPathVector();
+				
+
+			}
+			dwarf->clearPathVec();
+		}
+	}
+
+	/* #####################*/
+
+	//Cutting trees
+
+	for (auto& dwarf : dwarves) {
+		for (int i = 0; i < trees.size(); i++) {
+			
+			if ((this->trees[i]->getPosX() + 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
+			{
+				
+			}
+			if ((this->trees[i]->getPosX() - 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
+			{
+
+			}
+			if ((this->trees[i]->getPosY() - 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
+			{
+
+			}
+			if ((this->trees[i]->getPosY() + 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
+			{
+
+			}
+		}
+	}
 }
 

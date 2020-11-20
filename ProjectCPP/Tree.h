@@ -17,5 +17,7 @@ private:
 	sf::IntRect rectTexture;
 	sf::Texture m_texture;
 	sf::Sprite m_sprite;
+
+	int hp;
 };
 
