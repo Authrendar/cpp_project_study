@@ -28,24 +28,20 @@ void GameState::update(const float& dt)
 	this->updateKeybinds(dt);
 	this->keyboardUpdate();
 
-	this->pathTime = this->pathFindingClock.getElapsedTime().asSeconds();
 	this->gameTime = this->gameClock.getElapsedTime().asSeconds();
 
-	if (pathTime >0.5f) {
 	
-		this->lumberjackUpdate();
+	if (gameTime > 0.5f) {
+
 		
+		this->lumberjackUpdate();
+		this->pathSystem->setLevelData(this->map->getLevelData());
 		for (auto& dwarf : dwarves) {
 			dwarf->update(dt);
 		}
-		this->pathFindingClock.restart();
-		
-	}
-	if (gameTime > 2.f) {
-
-
-		
 		this->gameClock.restart();
+
+		
 	}
 }
 
@@ -78,8 +74,8 @@ void GameState::initMap()
 }
 void GameState::initObjects()
 {
-	//dwarves.push_back(new Dwarf(0, sf::Vector2f(this->grid_map_size * 0, this->grid_map_size * 3)));
-	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size*6, this->grid_map_size*7)));
+	
+	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size*1, this->grid_map_size*2)));
 	dwarves.push_back(new Dwarf(2, sf::Vector2f(this->grid_map_size * 8, this->grid_map_size * 2)));
 	dwarves.push_back(new Dwarf(3, sf::Vector2f(this->grid_map_size * 4, this->grid_map_size * 7)));
 
@@ -89,7 +85,9 @@ void GameState::initObjects()
 	for (int i = 0; i < this->map->getLevelData().size() / 8; i++) {
 		for (int j = 0; j < this->map->getLevelData().size() / 10; j++) {
 			if (this->map->getLevelData()[i + j * this->map->getLevelData().size() / 8] == 4) {
-				this->trees.push_back(new Tree(sf::Vector2f(this->grid_map_size * i, this->grid_map_size * j)));
+				this->trees.push_back(new Tree(sf::Vector2f(this->grid_map_size * i, this->grid_map_size * j), i * this->map->getLevelData().size() / 10 + j));
+				
+				
 			}
 		}
 	}
@@ -161,7 +159,7 @@ void GameState::lumberjackUpdate()
 
 		if (dwarf->getCurrentJob() == 1)
 		{
-			//int a = 0;
+			
 			for (int i = 0; i < trees.size(); i++) {
 
 				this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
@@ -181,23 +179,39 @@ void GameState::lumberjackUpdate()
 	//Cutting trees
 
 	for (auto& dwarf : dwarves) {
-		for (int i = 0; i < trees.size(); i++) {
+		if (dwarf->getCurrentJob() == 1) {
 			
-			if ((this->trees[i]->getPosX() + 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
-			{
+			for (int i = 0; i < trees.size(); i++) {
 				
-			}
-			if ((this->trees[i]->getPosX() - 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
-			{
+				
+					if ((this->trees[i]->getPosX() + 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
+					{
+						//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
+						this->trees[i]->cutTheTree(dwarf->getDwarfStrength());
+					}
+					if ((this->trees[i]->getPosX() - 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
+					{
+						//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
+						this->trees[i]->cutTheTree(dwarf->getDwarfStrength());
+					}
+					if ((this->trees[i]->getPosY() - 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
+					{
+						//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
+						this->trees[i]->cutTheTree(dwarf->getDwarfStrength());
+					}
+					if ((this->trees[i]->getPosY() + 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
+					{
+						//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
+						this->trees[i]->cutTheTree(dwarf->getDwarfStrength());
+					}
 
-			}
-			if ((this->trees[i]->getPosY() - 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
-			{
+					if (trees[i]->getHpOfTree() == 0) {
+						this->map->updateMapTitle(trees[i]->getPosX(), trees[i]->getPosY(), 2);
+						this->trees.erase(trees.begin() + i);
 
-			}
-			if ((this->trees[i]->getPosY() + 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
-			{
-
+					}
+					
+				
 			}
 		}
 	}

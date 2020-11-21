@@ -7,57 +7,20 @@ PathFinding::PathFinding(sf::RenderWindow* window, sf::Vector2u WINDOW_SIZE):win
 	this->nMapWidth = WINDOW_SIZE.x / 80;
 	this->nMapHeight = WINDOW_SIZE.y / 75;
 
-	
-	nodes = new sNode[nMapWidth * nMapHeight];
-	
-	//std::cout << nMapWidth * nMapHeight << std::endl;
-	for (auto x = 0; x < nMapWidth; x++) {
-		for (auto y = 0; y < nMapHeight; y++) {
-			nodes[y * nMapWidth + x].x = x;
-			nodes[y * nMapWidth + x].y = y;
-			nodes[y * nMapWidth + x].bObstacle = false;
-			nodes[y * nMapWidth + x].parent = nullptr;
-			nodes[y * nMapWidth + x].bVisited = false;
-		}
-	}
-
-
-	for (auto x = 0; x < nMapWidth; x++) {
-		for (auto y = 0; y < nMapHeight; y++) {
-			if (y > 0)
-				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y - 1) * nMapWidth + (x + 0)]);
-			if (y < nMapHeight - 1)
-				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 1) * nMapWidth + (x + 0)]);
-			if (x > 0)
-				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 0) * nMapWidth + (x - 1)]);
-			if (x < nMapWidth - 1)
-				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 0) * nMapWidth + (x + 1)]);
-
-
-
-			if (b8Connection) {
-				// We can also connect diagonally
-				if (y > 0 && x > 0)
-					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y - 1) * nMapWidth + (x - 1)]);
-				if (y < nMapHeight - 1 && x>0)
-					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 1) * nMapWidth + (x - 1)]);
-				if (y > 0 && x < nMapWidth - 1)
-					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y - 1) * nMapWidth + (x + 1)]);
-				if (y < nMapHeight - 1 && x < nMapWidth - 1)
-					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 1) * nMapWidth + (x + 1)]);
-			}
-		}
-	}
-
-	
+	this->updateDataLevel();
 	
 }
 
 void PathFinding::setLevelData(std::vector<int> map)
 {
+	this->levelVec.clear();
+
 	for (int i = 0; i < map.size(); i++) {
 		this->levelVec.push_back(map[i]);
 	}
+	
+
+;
 }
 
 void PathFinding::setStartEndNodes(int x1, int y1, int x2, int y2)
@@ -118,9 +81,12 @@ bool PathFinding::SolveAStar()
 				nodes[y * nMapWidth + x].fGlobalGoal = INFINITY;
 				nodes[y * nMapWidth + x].fLocalGoal = INFINITY;
 				nodes[y * nMapWidth + x].parent = nullptr;			// No Parents
-				if ((this->levelVec[y * nMapWidth + x] == 3)||(this->levelVec[y * nMapWidth + x] == 4))
+				if ((this->levelVec[y * nMapWidth + x] == 2) || (this->levelVec[y * nMapWidth + x] == 1))
+					nodes[y * nMapWidth + x].bObstacle = false;
+				if ((this->levelVec[y * nMapWidth + x] == 3) || (this->levelVec[y * nMapWidth + x] == 4))
 					nodes[y * nMapWidth + x].bObstacle = true;
-
+				
+				
 			}
 		}
 		auto distance = [](sNode* a, sNode* b)	// for convenience
@@ -191,6 +157,50 @@ bool PathFinding::SolveAStar()
 		}
 
 		return true;
+}
+
+void PathFinding::updateDataLevel()
+{
+	nodes = new sNode[nMapWidth * nMapHeight];
+
+	//std::cout << nMapWidth * nMapHeight << std::endl;
+	for (auto x = 0; x < nMapWidth; x++) {
+		for (auto y = 0; y < nMapHeight; y++) {
+			nodes[y * nMapWidth + x].x = x;
+			nodes[y * nMapWidth + x].y = y;
+			nodes[y * nMapWidth + x].bObstacle = false;
+			nodes[y * nMapWidth + x].parent = nullptr;
+			nodes[y * nMapWidth + x].bVisited = false;
+		}
+	}
+
+
+	for (auto x = 0; x < nMapWidth; x++) {
+		for (auto y = 0; y < nMapHeight; y++) {
+			if (y > 0)
+				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y - 1) * nMapWidth + (x + 0)]);
+			if (y < nMapHeight - 1)
+				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 1) * nMapWidth + (x + 0)]);
+			if (x > 0)
+				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 0) * nMapWidth + (x - 1)]);
+			if (x < nMapWidth - 1)
+				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 0) * nMapWidth + (x + 1)]);
+
+
+
+			if (b8Connection) {
+				// We can also connect diagonally
+				if (y > 0 && x > 0)
+					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y - 1) * nMapWidth + (x - 1)]);
+				if (y < nMapHeight - 1 && x>0)
+					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 1) * nMapWidth + (x - 1)]);
+				if (y > 0 && x < nMapWidth - 1)
+					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y - 1) * nMapWidth + (x + 1)]);
+				if (y < nMapHeight - 1 && x < nMapWidth - 1)
+					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 1) * nMapWidth + (x + 1)]);
+			}
+		}
+	}
 }
 
 void PathFinding::update()

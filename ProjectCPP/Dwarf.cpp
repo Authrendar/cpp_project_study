@@ -18,6 +18,10 @@ Dwarf::Dwarf(int number, sf::Vector2f pos)
 	this->dwarf_states = IDLE;
 	this->dwarf_job = FREE;
 	isSelected = false;
+
+	this->m_stats.hp = 100;
+	this->m_stats.strength = 10;
+	this->m_stats.lvl = 1;
 }
 
 Dwarf::~Dwarf()
@@ -63,7 +67,6 @@ void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> path
 						this->m_pathPosY = this->vecInsY[i][j];
 						
 					}
-					//std::cout << this->vecSizes[0] << std::endl;
 				}
 		}	
 	}

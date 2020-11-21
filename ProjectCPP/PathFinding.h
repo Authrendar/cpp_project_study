@@ -22,6 +22,8 @@ public:
 	void toggleDiagnols();
 	bool SolveAStar();
 
+	void updateDataLevel();
+
 	void update();
 	void clearPathVector();
 
