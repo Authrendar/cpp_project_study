@@ -155,6 +155,10 @@ void Dwarf::moveDwarf()
 			}
 
 		}
+		//std::cout << this->m_pathPosX << std::endl;
+		if ((m_pathPosX < 0) || (m_pathPosY < 0) ){
+			this->dwarf_states = IDLE;
+		}
 		
 		
 			

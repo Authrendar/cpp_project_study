@@ -30,6 +30,12 @@ void PathFinding::setStartEndNodes(int x1, int y1, int x2, int y2)
 	
 }
 
+void PathFinding::setObstacleNode(int posX, int posY)
+{
+	this->dwarfPosX = posX;
+	this->dwarfPosY = posY;
+}
+
 void PathFinding::toggleDiagnols()
 {
 	for (auto x = 0; x < nMapWidth; x++) {
@@ -81,11 +87,12 @@ bool PathFinding::SolveAStar()
 				nodes[y * nMapWidth + x].fGlobalGoal = INFINITY;
 				nodes[y * nMapWidth + x].fLocalGoal = INFINITY;
 				nodes[y * nMapWidth + x].parent = nullptr;			// No Parents
-				if ((this->levelVec[y * nMapWidth + x] == 2) || (this->levelVec[y * nMapWidth + x] == 1))
+				
+				if ((this->levelVec[y * nMapWidth + x] == 2))
 					nodes[y * nMapWidth + x].bObstacle = false;
+				
 				if ((this->levelVec[y * nMapWidth + x] == 3) || (this->levelVec[y * nMapWidth + x] == 4))
 					nodes[y * nMapWidth + x].bObstacle = true;
-				
 				
 			}
 		}
