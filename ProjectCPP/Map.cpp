@@ -71,6 +71,7 @@ void Map::updateMapTitle(int posX, int posY, int numberOfTitle)
 	
 	
 	tileValues[posY][posX] = numberOfTitle; 
+	this->mapTitle[posY * m_width + posX] = numberOfTitle;
 	map.initBoard(m_width, m_height, tileSize, tileValues);
 	//this->mapTitle[posX * WIDTH + posY] = numberOfTitle;
 	//this->mapTitle[0] = 0;

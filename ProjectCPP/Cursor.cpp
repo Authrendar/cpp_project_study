@@ -11,6 +11,7 @@ Cursor::Cursor()
 	this->m_cursorSprite.setColor(sf::Color::Yellow);
 	this->m_cursorSprite.setPosition(sf::Vector2f(0,0));
 	this->isActive = false;
+	this->tileActive = false;
 }
 
 Cursor::~Cursor()
@@ -33,6 +34,10 @@ void Cursor::update(const float &dt)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 			this->m_cursorSprite.move(0, this->grid_map_size);
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+			setTileActive(true);
+		}
 		//std::cout << currentTile << std::endl;
 	}
 }
@@ -49,20 +54,31 @@ void Cursor::setCurrnetTile(int tile)
 	{
 	case 0:
 		currentTile = STONE;
+		mn_currentTile = 0;
 		break;
 	case 1:
 		currentTile = TREE;
+		mn_currentTile = 1;
 		break;
 	case 2:
 		currentTile = GRASS;
+		mn_currentTile = 2;
 		break;
 	case 3:
 		currentTile = SAND;
+		mn_currentTile = 3;
 		break;
 	case 4:
 		currentTile = WATER;
+		mn_currentTile = 4;
 		break;
 	default:
 		break;
 	}
+}
+
+void Cursor::setTileActive(bool tileActive)
+{
+	this->tileActive = tileActive;
+	std::cout << tileActive << std::endl;
 }

@@ -37,13 +37,15 @@ void GameState::update(const float& dt)
 	if (gameTime > 0.1f) {
 
 		this->m_cursor->update(dt);
+		this->m_cursor->setCurrnetTile(this->map->getCurrentTile(this->m_cursor->getPosX(), this->m_cursor->getPosY()));
+		this->createObjects();
 		this->lumberjackUpdate();
 		this->pathSystem->setLevelData(this->map->getLevelData());
 		for (auto& dwarf : dwarves) {
 			dwarf->update(dt);
 		}
 		
-		this->m_cursor->setCurrnetTile(this->map->getCurrentTile(this->m_cursor->getPosX(), this->m_cursor->getPosY()));
+		
 		this->gameClock.restart();
 
 		
@@ -161,6 +163,17 @@ void GameState::keyboardUpdate()
 
 	
 	
+}
+
+void GameState::createObjects()
+{
+	if (this->m_cursor->getCurrentTile() == 1) {
+		if (this->m_cursor->getTileActive()) {
+			this->trees.push_back(new Tree(sf::Vector2f(this->grid_map_size * this->m_cursor->getPosX(), this->grid_map_size * this->m_cursor->getPosY()), this->m_cursor->getPosX() * this->map->getLevelData().size() / 20 + this->m_cursor->getPosY()));
+			this->m_cursor->setTileActive(false);
+		}
+	}
+	std::cout << "Trees: " << trees.size() << std::endl;
 }
 
 void GameState::lumberjackUpdate()

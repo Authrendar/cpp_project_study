@@ -27,6 +27,8 @@ private:
 	void initMap();
 	void initObjects();
 	void keyboardUpdate();
+
+	void createObjects();
 	//Map variables
 	Map *map;
 	sf::View m_view;

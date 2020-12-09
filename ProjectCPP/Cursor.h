@@ -17,6 +17,10 @@ public:
 	int getPosY() { return this->m_cursorSprite.getPosition().y / 12; }
 
 	void setCurrnetTile(int tile);
+	int getCurrentTile() { return this->mn_currentTile; }
+
+	void setTileActive(bool tileActive);
+	bool getTileActive() { return this->tileActive; }
 private:
 
 	sf::Texture m_cursorTexture;
@@ -25,6 +29,8 @@ private:
 
 	int grid_map_size = 12;
 	bool isActive;
+	bool tileActive;
+	int mn_currentTile;
 
 	enum Tile :signed int {
 		STONE,

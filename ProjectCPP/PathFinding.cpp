@@ -85,16 +85,19 @@ bool PathFinding::SolveAStar()
 				nodes[y * nMapWidth + x].fGlobalGoal = INFINITY;
 				nodes[y * nMapWidth + x].fLocalGoal = INFINITY;
 				nodes[y * nMapWidth + x].parent = nullptr;			// No Parents
-				
-				if ((this->levelVec[y * nMapWidth + x] == 2))
+				if ((this->levelVec[y * nMapWidth + x] == 2)) {
 					nodes[y * nMapWidth + x].bObstacle = false;
-				
-				//if ((this->levelVec[y * nMapWidth + x] == 0) || (this->levelVec[y * nMapWidth + x] == 1))
-					//nodes[y * nMapWidth + x].bObstacle = true;
+				}
 				if ((this->levelVec[y * nMapWidth + x] == 1)) {
 					//std::cout << x << " : " << y << std::endl;
 					nodes[y * nMapWidth + x].bObstacle = true;
+
 				}
+				
+				
+				//if ((this->levelVec[y * nMapWidth + x] == 0) || (this->levelVec[y * nMapWidth + x] == 1))
+					//nodes[y * nMapWidth + x].bObstacle = true;
+				
 				
 			}
 		}
@@ -180,6 +183,7 @@ void PathFinding::updateDataLevel()
 			nodes[y * nMapWidth + x].bObstacle = false;
 			nodes[y * nMapWidth + x].parent = nullptr;
 			nodes[y * nMapWidth + x].bVisited = false;
+
 		}
 	}
 
@@ -214,6 +218,7 @@ void PathFinding::updateDataLevel()
 
 void PathFinding::update()
 {
+
 	if (nodeEnd != nullptr) {
 		
 		sNode* p = nodeEnd;
