@@ -3,7 +3,7 @@
 Dwarf::Dwarf(int number, sf::Vector2f pos)
 {
 	this->number = number;
-	this->rectTexture = sf::IntRect(12, 0, 12, 12);
+	this->rectTexture = sf::IntRect(12, 12, 12, 12);
 	
 
 	if (!this->m_texture.loadFromFile("tileset.png", this->rectTexture)) {
@@ -26,6 +26,9 @@ Dwarf::Dwarf(int number, sf::Vector2f pos)
 
 Dwarf::~Dwarf()
 {
+	this->vecInsX.clear();
+	this->vecInsY.clear();
+	this->vecSizes.clear();
 }
 
 void Dwarf::update(const float& dt)
@@ -54,9 +57,11 @@ void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> path
 	this->vecInsX.push_back(pathPosX);
 	this->vecInsY.push_back(pathPosY);
 
-	 
+	
 	if (vecSizes.size() == index) {
 		std::sort(this->vecSizes.begin(), std::partition(vecSizes.begin(), vecSizes.end(), [](int n) { return n != 0; }));
+		vecSizes.resize(1);
+		std::cout << vecSizes.size() << std::endl;
 		if (this->vecSizes[0] < 2)
 			this->setDwarfState(dwarfState);
 		for (int i = 0; i < this->vecInsX.size(); i++) {

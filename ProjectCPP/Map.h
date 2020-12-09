@@ -3,6 +3,8 @@
 #include <vector>
 #include <iostream>
 #include "TileMap.h"
+#include "PerlinNoiseGenerator.h"
+#include <ctime>
 class Map
 {
 public:
@@ -14,11 +16,21 @@ public:
 	void updateMapTitle(int posX, int posY, int numberOfTitle);
 	std::vector<int> getLevelData() { return this->mapTitle; }
 
+	int getCurrentTile(int posX, int posY);
+
 private:
 
 	TileMap map;
 	std::vector<int> mapTitle;
+	std::vector<std::vector<int> > tileValues;
+	sf::Texture tileset;
 	int lengthOfMap;
-	int WIDTH=10, HEIGHT=8;
+	const unsigned int WIDTH=10, HEIGHT=8;
+	const unsigned int m_width = 20, m_height = 20;
+	const unsigned int tileSize = 12, numTiles = 5;				
+	const double xMin = 6.0f, xMax = 10.f, zMin = 1.f, zMax = 5.0f;
+		
+	unsigned int getTile(const double& frac, const unsigned int& divisions);
+	
 };
 

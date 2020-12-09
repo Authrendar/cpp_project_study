@@ -55,7 +55,7 @@ private:
 
 	
 
-	const int nNodeSize = 10; //32
+	const int nNodeSize = 4; //32
 	//const int nNodeBorder = 9; //9
 	sNode* nodes = nullptr;
 	sNode* nodeStart = nullptr;

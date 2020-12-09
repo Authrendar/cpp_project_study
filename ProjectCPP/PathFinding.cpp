@@ -4,8 +4,8 @@ PathFinding::PathFinding(sf::RenderWindow* window, sf::Vector2u WINDOW_SIZE):win
 {
 	this->WINDOW_SIZE = WINDOW_SIZE;
 
-	this->nMapWidth = WINDOW_SIZE.x / 80;
-	this->nMapHeight = WINDOW_SIZE.y / 75;
+	this->nMapWidth = WINDOW_SIZE.x / 40;
+	this->nMapHeight = WINDOW_SIZE.y / 30;
 
 	this->updateDataLevel();
 	
@@ -19,14 +19,12 @@ void PathFinding::setLevelData(std::vector<int> map)
 		this->levelVec.push_back(map[i]);
 	}
 	
-
-;
 }
 
 void PathFinding::setStartEndNodes(int x1, int y1, int x2, int y2)
 {
-	this->nodeStart = &nodes[y1 * 10 + x1];
-	this->nodeEnd = &nodes[y2 * 10 + x2];
+	this->nodeStart = &nodes[y1 * 20 + x1];
+	this->nodeEnd = &nodes[y2 * 20 + x2];
 	
 }
 
@@ -91,8 +89,12 @@ bool PathFinding::SolveAStar()
 				if ((this->levelVec[y * nMapWidth + x] == 2))
 					nodes[y * nMapWidth + x].bObstacle = false;
 				
-				if ((this->levelVec[y * nMapWidth + x] == 3) || (this->levelVec[y * nMapWidth + x] == 4))
+				//if ((this->levelVec[y * nMapWidth + x] == 0) || (this->levelVec[y * nMapWidth + x] == 1))
+					//nodes[y * nMapWidth + x].bObstacle = true;
+				if ((this->levelVec[y * nMapWidth + x] == 1)) {
+					//std::cout << x << " : " << y << std::endl;
 					nodes[y * nMapWidth + x].bObstacle = true;
+				}
 				
 			}
 		}

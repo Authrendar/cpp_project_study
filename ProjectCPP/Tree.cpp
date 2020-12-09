@@ -19,6 +19,7 @@ Tree::Tree(sf::Vector2f pos, int index)
 
 Tree::~Tree()
 {
+	
 }
 
 void Tree::update(const float& dt)

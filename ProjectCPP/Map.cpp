@@ -7,33 +7,53 @@ Map::Map()
 
 Map::~Map()
 {
+	this->mapTitle.clear();
 }
 
 void Map::initMap()
 {
 	int level[] = {
-	   2,2,3,3,2,2,2,2,2,2,
-	   2,4,2,3,2,3,3,4,2,2,
-	   4,2,2,2,3,2,2,3,2,2,
-	   4,4,2,4,4,4,4,4,4,4,
-	   4,4,4,3,3,2,2,2,3,4,
-	   2,4,2,2,2,2,2,2,2,4,
-	   2,2,2,2,2,3,2,2,2,2,
-	   2,2,3,3,2,2,2,2,2,3
+	   2,2,0,0,2,2,2,2,2,2,
+	   2,1,2,3,2,3,3,1,2,2,
+	   1,2,2,2,3,2,2,3,2,2,
+	   1,1,2,1,1,1,1,1,1,1,
+	   1,1,1,3,3,2,2,2,3,1,
+	   2,1,2,2,2,2,2,2,2,1,
+	   2,2,2,2,2,3,2,3,4,3,
+	   2,2,3,3,2,2,2,3,3,3
 	};
 
-	this->lengthOfMap = sizeof(level) / sizeof(*level);
+	srand(time(0));
+	PerlinNoiseGenerator generator;
+	utils::NoiseMap noiseMap = generator.setBounds(xMin, xMax, zMin, zMax).buildMap(this->m_width, this->m_height, rand());
+	
+	
+	std::cout.precision(1);
+	for (int x = 0; x < m_width; ++x)
+	{
+		tileValues.push_back(std::vector<int>());
+		for (int y = 0; y < m_height; ++y)
+		{
+			double noiseValue = noiseMap.GetValue(x, y);
 
-	for (int i = 0; i < this->lengthOfMap; i++) {
-		this->mapTitle.push_back(level[i]);
+			int tile = getTile(noiseValue, numTiles);
+			tileValues[x].push_back(tile);
+
+			//levelData.push_back(tile);
+			//std::cout << tile << ", ";
+			mapTitle.push_back(tile);
+			
+		}
+		
 	}
+	if (!tileset.loadFromFile("tileset.png"))
+		std::cout << "cannot load" << std::endl;
+	
+	map.setTileSet(tileset);
+	map.initBoard(m_width, m_height, tileSize, tileValues);
+	std::cout << mapTitle.size() << std::endl;
 
 	
-	if (this->lengthOfMap == this->mapTitle.size()) {
-		if (!map.load("tileset.png", sf::Vector2u(12, 12), this->mapTitle, 10, 8)) {
-			std::cout << "cannot load..";
-		}
-	}
 }
 
 void Map::render(sf::RenderTarget* target)
@@ -46,12 +66,49 @@ void Map::render(sf::RenderTarget* target)
 void Map::updateMapTitle(int posX, int posY, int numberOfTitle)
 {
 
+	if (!tileset.loadFromFile("tileset.png"))
+		std::cout << "cannot load" << std::endl;
+	
+	
+	tileValues[posY][posX] = numberOfTitle; 
+	map.initBoard(m_width, m_height, tileSize, tileValues);
+	//this->mapTitle[posX * WIDTH + posY] = numberOfTitle;
+	//this->mapTitle[0] = 0;
 
-	//std::cout << posY * WIDTH+ posX << std::endl;
-	this->mapTitle[posY * WIDTH + posX] = numberOfTitle;
-	if (!map.load("tileset.png", sf::Vector2u(12, 12), this->mapTitle, 10, 8)) {
-		std::cout << "cannot load..";
-	}
-	///std::cout << "Title: " << this->mapTitle.at(posY * WIDTH + posX) << std::endl;
+	//std::cout << mapTitle[0] << std::endl;
+	
+	//map.initBoard(m_width, m_height, tileSize, tileValues);
+	
+	//map.initBoard(m_width, m_height, tileSize, tileValues);
+	
+
+}
+
+int Map::getCurrentTile(int posX, int posY)
+{	
+	int currentTile;
+	currentTile = tileValues[posY][posX];
+	return currentTile;
+}
+
+unsigned int Map::getTile(const double& frac, const unsigned int& divisions)
+{
+	// Noise value is [-1, +1]
+	double tileSize = 2.5f / (double)divisions;
+
+	double currentTile = -1.f;
+	unsigned int ret = 0;
+	do {
+		currentTile += tileSize;
+
+		if (frac <= currentTile)
+		{
+
+			return ret;
+		}
+		ret++;
+	} while (ret < divisions);
+
+	return ret - 1;
 
 }

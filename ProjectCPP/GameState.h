@@ -7,6 +7,7 @@
 #include "Dwarf.h"
 #include "Map.h"
 #include "Tree.h"
+#include "Cursor.h"
 class GameState :
 	public State
 {
@@ -36,8 +37,10 @@ private:
 	//Objects
 	std::vector<Dwarf*> dwarves;
 	std::vector<Tree*> trees;
-	
+	Cursor *m_cursor;
 	sf::Clock gameClock;
+
+
 	float gameTime;
 
 	sf::Clock pathFindingClock;
