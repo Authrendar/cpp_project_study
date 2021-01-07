@@ -2,7 +2,7 @@
 
 Tree::Tree(sf::Vector2f pos, int index)
 {
-	this->rectTexture = sf::IntRect(48, 0, 12, 12);
+	this->rectTexture = sf::IntRect(24, 12, 12, 12);
 
 
 	if (!this->m_texture.loadFromFile("tileset.png", this->rectTexture)) {
@@ -11,7 +11,7 @@ Tree::Tree(sf::Vector2f pos, int index)
 	this->m_sprite.setTexture(m_texture);
 	this->m_sprite.setOrigin(0, 0);
 	this->m_sprite.setPosition(pos);
-	this->m_sprite.setColor(sf::Color::Green);
+	//this->m_sprite.setColor(sf::Color::Green);
 
 	this->m_Stats.index = index;
 	this->m_Stats.hp = 20;

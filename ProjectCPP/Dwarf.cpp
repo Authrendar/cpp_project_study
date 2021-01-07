@@ -12,7 +12,8 @@ Dwarf::Dwarf(int number, sf::Vector2f pos)
 	this->m_sprite.setTexture(m_texture);
 	this->m_sprite.setOrigin(0, 0);
 	this->m_sprite.setPosition(pos);
-	this->m_sprite.setColor(sf::Color::Blue);
+	//this->m_sprite.setColor(sf::Color::Blue);
+	sf::Color color = this->m_sprite.getColor();
 	
 	this->velX = 0; this->velY = 0;
 	this->dwarf_states = IDLE;
@@ -52,29 +53,30 @@ void Dwarf::render(sf::RenderTarget* target)
 
 void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY, int index, int dwarfState)
 {	
+		this->vecSizes.push_back(pathPosX.size());
+		this->vecInsX.push_back(pathPosX);
+		this->vecInsY.push_back(pathPosY);
 
-	this->vecSizes.push_back(pathPosX.size());
-	this->vecInsX.push_back(pathPosX);
-	this->vecInsY.push_back(pathPosY);
+		
+		if (vecSizes.size() == index) {
+			std::sort(this->vecSizes.begin(), std::partition(vecSizes.begin(), vecSizes.end(), [](int n) { return n != 0; }));
+			vecSizes.resize(1);
+			std::cout << vecSizes.size() << std::endl;
+			if (this->vecSizes[0] < 2)
+				this->setDwarfState(dwarfState);
+			for (int i = 0; i < this->vecInsX.size(); i++) {
+				if ((this->vecSizes[0] == this->vecInsX[i].size()) && (this->vecSizes[0] == this->vecInsY[i].size()))
+					for (int j = 1; j < this->vecInsX[i].size(); j++) {
+						if ((this->getPosX() == this->vecInsX[i][j - 1]) && (this->getPosY() == this->vecInsY[i][j - 1])) {
+							this->m_pathPosX = this->vecInsX[i][j];
+							this->m_pathPosY = this->vecInsY[i][j];
 
-	
-	if (vecSizes.size() == index) {
-		std::sort(this->vecSizes.begin(), std::partition(vecSizes.begin(), vecSizes.end(), [](int n) { return n != 0; }));
-		vecSizes.resize(1);
-		std::cout << vecSizes.size() << std::endl;
-		if (this->vecSizes[0] < 2)
-			this->setDwarfState(dwarfState);
-		for (int i = 0; i < this->vecInsX.size(); i++) {
-			if ((this->vecSizes[0] == this->vecInsX[i].size()) && (this->vecSizes[0] == this->vecInsY[i].size()))
-				for (int j = 1; j < this->vecInsX[i].size(); j++) {
-					if ((this->getPosX() == this->vecInsX[i][j - 1]) && (this->getPosY() == this->vecInsY[i][j - 1])) {
-						this->m_pathPosX = this->vecInsX[i][j];
-						this->m_pathPosY = this->vecInsY[i][j];
-						
+						}
 					}
-				}
-		}	
-	}
+			}
+		}
+		
+
 }
 
 void Dwarf::setDwarfState(int states)
@@ -170,7 +172,7 @@ void Dwarf::moveDwarf()
 
 		break;
 	case States::CUTTING:
-		std::cout << "CUTTING" << std::endl;
+		//std::cout << "CUTTING" << std::endl;
 		break;
 	}
 

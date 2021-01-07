@@ -28,10 +28,11 @@ private:
 	void initObjects();
 	void keyboardUpdate();
 
+
 	void createObjects();
 	//Map variables
 	Map *map;
-	sf::View m_view;
+	sf::View *m_view;
 	const int grid_map_size = 12;
 
 	PathFinding* pathSystem;
@@ -39,6 +40,9 @@ private:
 	//Objects
 	std::vector<Dwarf*> dwarves;
 	std::vector<Tree*> trees;
+
+	
+
 	Cursor *m_cursor;
 	sf::Clock gameClock;
 
@@ -50,8 +54,6 @@ private:
 
 	void lumberjackUpdate();
 	//Dwarves variables
-	
-
 	
 };
 

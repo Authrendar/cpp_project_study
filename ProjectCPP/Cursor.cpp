@@ -1,5 +1,5 @@
 #include "Cursor.h"
-#include <iostream>
+
 Cursor::Cursor()
 	:rectTexture(sf::FloatRect(0,12,12,12))
 {
@@ -9,9 +9,10 @@ Cursor::Cursor()
 
 	this->m_cursorSprite.setTexture(m_cursorTexture);
 	this->m_cursorSprite.setColor(sf::Color::Yellow);
-	this->m_cursorSprite.setPosition(sf::Vector2f(0,0));
+	this->m_cursorSprite.setPosition(sf::Vector2f(16*12,12*12)); // Tworzy sie zawsze "na œrodku"
 	this->isActive = false;
-	this->tileActive = false;
+	
+
 }
 
 Cursor::~Cursor()
@@ -34,11 +35,18 @@ void Cursor::update(const float &dt)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 			this->m_cursorSprite.move(0, this->grid_map_size);
 		}
+		this->keyTime = this->keyClock.getElapsedTime().asSeconds();
+		if (keyTime > 0.2f) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+				
+				this->isButtonQClicked = true;
+				
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-			setTileActive(true);
+				keyClock.restart();
+
+			}
 		}
-		//std::cout << currentTile << std::endl;
+		//std::cout <<"TILE SIZE: " <<tiles.size() << std::endl;
 	}
 }
 
@@ -46,6 +54,11 @@ void Cursor::render(sf::RenderTarget* target)
 {
 	if(this->isActive)
 		target->draw(this->m_cursorSprite);
+}
+
+void Cursor::viewController(sf::View &map_View)
+{
+	
 }
 
 void Cursor::setCurrnetTile(int tile)
@@ -77,8 +90,5 @@ void Cursor::setCurrnetTile(int tile)
 	}
 }
 
-void Cursor::setTileActive(bool tileActive)
-{
-	this->tileActive = tileActive;
-	std::cout << tileActive << std::endl;
-}
+
+

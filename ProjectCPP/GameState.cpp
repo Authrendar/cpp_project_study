@@ -6,6 +6,7 @@ GameState::GameState(sf::RenderWindow* window)
 	m_cursor = new Cursor();
 	initMap();
 	initObjects();
+	
 }
 
 GameState::~GameState()
@@ -55,14 +56,16 @@ void GameState::update(const float& dt)
 void GameState::render(sf::RenderTarget* target)
 {	
 	this->map->render(window);
-	this->window->setView(this->m_view);
+	this->window->setView(*m_view);
+	this->m_cursor->viewController(*this->m_view);
 	for (auto& dwarf : dwarves) {
 		dwarf->render(window);
 	}
 	this->m_cursor->render(target);
-	/*for (auto& tree : trees) {
+	for (auto& tree : trees) {
 		tree->render(window);
-	}*/
+	}
+	
 
 	
 }
@@ -71,8 +74,9 @@ void GameState::initMap()
 {
 
 	this->map = new Map();
-	this->m_view = sf::View(sf::FloatRect(0, 0, 400.f, 300.f));
-
+	this->m_view =new sf::View(sf::FloatRect(0, 0, 400.f, 300.f));
+	
+	
 	pathSystem = new PathFinding(this->window, sf::Vector2u(800.f, 600.f));
 	this->pathSystem->setLevelData(this->map->getLevelData());
 	
@@ -160,20 +164,27 @@ void GameState::keyboardUpdate()
 
 		}
 	}
-
-	
-	
 }
 
 void GameState::createObjects()
 {
-	if (this->m_cursor->getCurrentTile() == 1) {
-		if (this->m_cursor->getTileActive()) {
-			this->trees.push_back(new Tree(sf::Vector2f(this->grid_map_size * this->m_cursor->getPosX(), this->grid_map_size * this->m_cursor->getPosY()), this->m_cursor->getPosX() * this->map->getLevelData().size() / 20 + this->m_cursor->getPosY()));
-			this->m_cursor->setTileActive(false);
+
+	if (this->m_cursor->getIsButtonClicked()) {
+		if (this->m_cursor->getCurrentTile() == 1) {
+			for (int i = 0; i < trees.size(); i++) {
+				if ((this->m_cursor->getPosX() == trees[i]->getPosX()) && (this->m_cursor->getPosY() == trees[i]->getPosY())) {
+					trees.erase(trees.begin() + i);
+				}
+			}
+
+			this->trees.push_back(new Tree(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0));
+			
 		}
+		this->m_cursor->setButtonState(false);
+		
 	}
-	std::cout << "Trees: " << trees.size() << std::endl;
+
+	//std::cout << "Tree size: " << trees.size() << std::endl;
 }
 
 void GameState::lumberjackUpdate()
@@ -188,7 +199,7 @@ void GameState::lumberjackUpdate()
 				this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
 				//this->pathSystem->setObstacleNode(dwarf->getPosX(), dwarf->getPosY());
 				
-				this->pathSystem->SolveAStar();
+				this->pathSystem->SolveAStar(dwarf->getPosX(),dwarf->getPosY());
 				this->pathSystem->update();
 				dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), this->trees.size(), 2); //2 to wartosc stanu dwarfa - w tym przypadku to CUTTING
 				this->pathSystem->clearPathVector();

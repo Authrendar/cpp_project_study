@@ -20,8 +20,7 @@ public:
 	void setStartEndNodes(int x1, int y1, int x2, int y2);
 	void setObstacleNode(int posX, int posY);
 
-	void toggleDiagnols();
-	bool SolveAStar();
+	bool SolveAStar(int nMapWidth, int nMapHeight);
 
 	void updateDataLevel();
 

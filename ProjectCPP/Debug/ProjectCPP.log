@@ -1,90 +1,16 @@
-﻿  Map.cpp
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,53): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,53): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,53): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,53): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,53): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,39): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,39): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,39): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,39): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(30,39): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,59): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,59): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,59): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,59): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,59): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,45): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,45): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,45): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,45): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(31,45): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,65): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,65): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,65): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,65): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,65): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,45): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,45): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,45): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,45): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(32,45): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,59): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,59): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,59): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,59): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,59): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,39): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,39): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,39): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,39): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(33,39): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,56): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,56): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,56): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,56): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,56): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,41): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,41): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,41): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,41): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(36,41): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,62): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,62): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,62): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,62): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,62): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,47): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,47): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,47): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,47): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(37,47): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,68): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,68): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,68): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,68): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,68): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,47): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,47): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,47): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,47): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(38,47): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,62): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,62): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,62): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,62): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,62): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,41): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,41): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,41): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,41): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\TileMap.h(39,41): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\Map.cpp(26,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\Map.cpp(28,67): warning C4244:  'argument': conversion from 'const double' to 'float', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\Map.cpp(28,61): warning C4244:  'argument': conversion from 'const double' to 'float', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\Map.cpp(28,55): warning C4244:  'argument': conversion from 'const double' to 'float', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\Map.cpp(28,49): warning C4244:  'argument': conversion from 'const double' to 'float', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\Map.cpp(28,117): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\Map.cpp(32,20): warning C4018:  '<': signed/unsigned mismatch
-D:\sfml projects\ProjectCPP\ProjectCPP\Map.cpp(35,21): warning C4018:  '<': signed/unsigned mismatch
+﻿  Cursor.cpp
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(19,62): warning C4244:  'return': conversion from 'T' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(19,62): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(19,62): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(19,62): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(19,62): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(20,62): warning C4244:  'return': conversion from 'T' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(20,62): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(20,62): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(20,62): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(20,62): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.cpp(27,34): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.cpp(30,30): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.cpp(33,33): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.cpp(36,37): warning C4244:  'argument': conversion from 'int' to 'float', possible loss of data
   ProjectCPP.vcxproj -> D:\sfml projects\ProjectCPP\Debug\ProjectCPP.exe

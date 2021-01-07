@@ -69,6 +69,8 @@ private:
 	States dwarf_states;
 	Job dwarf_job;
 	
+	sf::Clock pathDwarfClock;
+	float pathTime;
 
 	
 

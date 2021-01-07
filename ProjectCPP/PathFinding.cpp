@@ -4,8 +4,8 @@ PathFinding::PathFinding(sf::RenderWindow* window, sf::Vector2u WINDOW_SIZE):win
 {
 	this->WINDOW_SIZE = WINDOW_SIZE;
 
-	this->nMapWidth = WINDOW_SIZE.x / 40;
-	this->nMapHeight = WINDOW_SIZE.y / 30;
+	this->nMapWidth = 50; //Width of map title, now window 
+	this->nMapHeight = 50; // same here but height
 
 	this->updateDataLevel();
 	
@@ -23,8 +23,8 @@ void PathFinding::setLevelData(std::vector<int> map)
 
 void PathFinding::setStartEndNodes(int x1, int y1, int x2, int y2)
 {
-	this->nodeStart = &nodes[y1 * 20 + x1];
-	this->nodeEnd = &nodes[y2 * 20 + x2];
+	this->nodeStart = &nodes[y1 * 50 + x1];
+	this->nodeEnd = &nodes[y2 * 50 + x2];
 	
 }
 
@@ -34,52 +34,13 @@ void PathFinding::setObstacleNode(int posX, int posY)
 	this->dwarfPosY = posY;
 }
 
-void PathFinding::toggleDiagnols()
+
+bool PathFinding::SolveAStar(int posX, int posY)
 {
-	for (auto x = 0; x < nMapWidth; x++) {
-		for (auto y = 0; y < nMapHeight; y++) {
-			nodes[y * nMapWidth + x].x = x;		// ...because we give each node its own coordinates
-			nodes[y * nMapWidth + x].y = y;
-			nodes[y * nMapWidth + x].bObstacle = nodes[y * nMapWidth + x].bObstacle;
-			nodes[y * nMapWidth + x].parent = nullptr;
-			nodes[y * nMapWidth + x].bVisited = false;
-			nodes[y * nMapWidth + x].vecNeighbors.clear();
-
-		}
-	}
-	// Create connections - in this case nodes are on a regular grid
-	for (auto x = 0; x < nMapWidth; x++) {
-		for (auto y = 0; y < nMapHeight; y++) {
-			if (y > 0)
-				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y - 1) * nMapWidth + (x + 0)]);
-			if (y < nMapHeight - 1)
-				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 1) * nMapWidth + (x + 0)]);
-			if (x > 0)
-				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 0) * nMapWidth + (x - 1)]);
-			if (x < nMapWidth - 1)
-				nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 0) * nMapWidth + (x + 1)]);
-
-			// if diagnals are included
-			if (b8Connection) {
-				// We can also connect diagonally
-				if (y > 0 && x > 0)
-					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y - 1) * nMapWidth + (x - 1)]);
-				if (y < nMapHeight - 1 && x>0)
-					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 1) * nMapWidth + (x - 1)]);
-				if (y > 0 && x < nMapWidth - 1)
-					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y - 1) * nMapWidth + (x + 1)]);
-				if (y < nMapHeight - 1 && x < nMapWidth - 1)
-					nodes[y * nMapWidth + x].vecNeighbors.push_back(&nodes[(y + 1) * nMapWidth + (x + 1)]);
-			}
-		}
-	}
-}
-
-bool PathFinding::SolveAStar()
-{
-		
+	
+	std::cout << "Current pos of dwarf: " << posX << " : " << posY << std::endl;
 		// reset navigation graph - default all node states
-		for (int x = 0; x < nMapWidth; x++) {
+		for (int x = 0; x < nMapWidth; x++) { //TUTAJ TRZEBA ZMIENIC!!!
 			for (int y = 0; y < nMapHeight; y++) {
 				nodes[y * nMapWidth + x].bVisited = false;
 				nodes[y * nMapWidth + x].fGlobalGoal = INFINITY;
