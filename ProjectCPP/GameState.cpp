@@ -57,7 +57,8 @@ void GameState::render(sf::RenderTarget* target)
 {	
 	this->map->render(window);
 	this->window->setView(*m_view);
-	this->m_cursor->viewController(*this->m_view);
+	if(this->m_cursor->getCursorActive())
+		this->m_cursor->viewController(*this->m_view);
 	for (auto& dwarf : dwarves) {
 		dwarf->render(window);
 	}
@@ -74,7 +75,7 @@ void GameState::initMap()
 {
 
 	this->map = new Map();
-	this->m_view =new sf::View(sf::FloatRect(0, 0, 400.f, 300.f));
+	this->m_view =new sf::View(sf::FloatRect(0, 0, 396.f, 300.f));
 	
 	
 	pathSystem = new PathFinding(this->window, sf::Vector2u(800.f, 600.f));
@@ -176,8 +177,8 @@ void GameState::createObjects()
 					trees.erase(trees.begin() + i);
 				}
 			}
-
-			this->trees.push_back(new Tree(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0));
+			if(this->trees.size()<6)
+				this->trees.push_back(new Tree(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0));
 			
 		}
 		this->m_cursor->setButtonState(false);

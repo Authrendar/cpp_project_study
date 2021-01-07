@@ -86,7 +86,7 @@ int Map::getCurrentTile(int posX, int posY)
 unsigned int Map::getTile(const double& frac, const unsigned int& divisions)
 {
 	// Noise value is [-1, +1]
-	double tileSize = 2.5f / (double)divisions;
+	double tileSize = 2.f / (double)divisions;
 
 	double currentTile = -1.f;
 	unsigned int ret = 0;

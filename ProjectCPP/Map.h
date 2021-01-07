@@ -27,7 +27,7 @@ private:
 	int lengthOfMap;
 	const unsigned int m_width = 50, m_height = 50;
 	const unsigned int tileSize = 12, numTiles = 5;				
-	const double xMin = 1.0f, xMax = 10.f, zMin = 1.f, zMax = 5.0f;
+	const double xMin = 1.0f, xMax = 5.f, zMin = 1.f, zMax = 5.0f;
 		
 	unsigned int getTile(const double& frac, const unsigned int& divisions);
 	
