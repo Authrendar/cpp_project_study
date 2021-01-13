@@ -23,6 +23,10 @@ Dwarf::Dwarf(int number, sf::Vector2f pos)
 	this->m_stats.hp = 100;
 	this->m_stats.strength = 10;
 	this->m_stats.lvl = 1;
+
+
+
+
 }
 
 Dwarf::~Dwarf()
@@ -42,7 +46,7 @@ void Dwarf::update(const float& dt)
 	if (dwarf_job == LUMBERJACK) {
 		dwarf_states = WALK;
 	}
-
+	
 	
 }
 
@@ -53,15 +57,18 @@ void Dwarf::render(sf::RenderTarget* target)
 
 void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY, int index, int dwarfState)
 {	
+	
+		
+
 		this->vecSizes.push_back(pathPosX.size());
 		this->vecInsX.push_back(pathPosX);
 		this->vecInsY.push_back(pathPosY);
 
 		
+		
 		if (vecSizes.size() == index) {
 			std::sort(this->vecSizes.begin(), std::partition(vecSizes.begin(), vecSizes.end(), [](int n) { return n != 0; }));
 			vecSizes.resize(1);
-			std::cout << vecSizes.size() << std::endl;
 			if (this->vecSizes[0] < 2)
 				this->setDwarfState(dwarfState);
 			for (int i = 0; i < this->vecInsX.size(); i++) {
@@ -70,13 +77,14 @@ void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> path
 						if ((this->getPosX() == this->vecInsX[i][j - 1]) && (this->getPosY() == this->vecInsY[i][j - 1])) {
 							this->m_pathPosX = this->vecInsX[i][j];
 							this->m_pathPosY = this->vecInsY[i][j];
-
+							//std::cout << this->m_pathPosX << ":" << m_pathPosY << std::endl;
+							//std::cout << int(this->getPosX()) << ":" << int(this->getPosY()) << std::endl;
 						}
 					}
 			}
 		}
 		
-
+		
 }
 
 void Dwarf::setDwarfState(int states)
@@ -137,6 +145,7 @@ void Dwarf::moveDwarf()
 	switch (this->dwarf_states) {
 	case States::IDLE:
 		//std::cout << "Dwarf standing " << ", ";
+		//this->setIsGoing(false);
 		break;
 
 	case States::WALK:
@@ -162,17 +171,13 @@ void Dwarf::moveDwarf()
 			}
 
 		}
+		
 		//std::cout << this->m_pathPosX << std::endl;
-		if ((m_pathPosX < 0) || (m_pathPosY < 0) ){
-			this->dwarf_states = IDLE;
-		}
 		
-		
-			
 
 		break;
 	case States::CUTTING:
-		//std::cout << "CUTTING" << std::endl;
+		std::cout << "CUTTING" << std::endl;
 		break;
 	}
 

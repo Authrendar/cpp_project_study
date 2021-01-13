@@ -28,16 +28,15 @@ public:
 
 	virtual void update(const float& dt);
 	virtual void render(sf::RenderTarget* target);
-	virtual float getPosX() { return this->m_sprite.getPosition().x / 12; }
-	virtual float getPosY() { return this->m_sprite.getPosition().y / 12; }
+	virtual float getPosX() { return this->m_sprite.getPosition().x /12; }
+	virtual float getPosY() { return this->m_sprite.getPosition().y/12; }
 
 	void setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY, int index, int dwarfState);
 
 	void setDwarfState(int state);
 	void setDwarfJob(int job);
 
-
-
+	
 	
 	bool getIsSelected() { return this->isSelected; }
 
@@ -57,6 +56,14 @@ public:
 	std::vector<std::vector<int>> vecInsY;
 	std::vector<int> vecSizes;
 
+	void setIsGoing(bool isGoing) {
+		this->m_isGoing = isGoing;
+	}
+
+	bool getIsGoing() {
+		return this->m_isGoing;
+	}
+
 private:
 
 	void moveDwarf();
@@ -73,14 +80,14 @@ private:
 	float pathTime;
 
 	
-
+	
 	sf::IntRect rectTexture;
 	sf::Texture m_texture;
 	sf::Sprite m_sprite;
 
 
+	bool m_isGoing;
 	
-
 
 protected:
 	

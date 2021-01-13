@@ -2,7 +2,7 @@
 
 PathFinding::PathFinding(sf::RenderWindow* window, sf::Vector2u WINDOW_SIZE):window{window}
 {
-	this->WINDOW_SIZE = WINDOW_SIZE;
+	//this->WINDOW_SIZE = WINDOW_SIZE;
 
 	this->nMapWidth = 50; //Width of map title, now window 
 	this->nMapHeight = 50; // same here but height
@@ -19,6 +19,24 @@ void PathFinding::setLevelData(std::vector<int> map)
 		this->levelVec.push_back(map[i]);
 	}
 	
+}
+
+void PathFinding::setEntitySphere(int posX, int posY)
+{
+	
+
+	/*for (int x = posX - 5; x < posX+5; x++) {
+		for (int y = posY - 5; y < posY + 5; y++) {
+			if (x < 0) x = 0;
+			if (x > 50) x = 50;
+			if (y < 0) y = 0;
+			if (y > 50) y = 50;
+			//std::cout << x << ":" << y << std::endl;
+			
+			
+		}
+	}
+	std::cout << std::endl;*/
 }
 
 void PathFinding::setStartEndNodes(int x1, int y1, int x2, int y2)
@@ -38,7 +56,7 @@ void PathFinding::setObstacleNode(int posX, int posY)
 bool PathFinding::SolveAStar(int posX, int posY)
 {
 	
-	std::cout << "Current pos of dwarf: " << posX << " : " << posY << std::endl;
+	//std::cout << "Current pos of dwarf: " << posX << " : " << posY << std::endl;
 		// reset navigation graph - default all node states
 		for (int x = 0; x < nMapWidth; x++) { //TUTAJ TRZEBA ZMIENIC!!!
 			for (int y = 0; y < nMapHeight; y++) {

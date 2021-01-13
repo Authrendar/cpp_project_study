@@ -44,6 +44,7 @@ void GameState::update(const float& dt)
 		this->setTileToRemove();
 		this->lumberjackUpdate();
 		this->pathSystem->setLevelData(this->map->getLevelData());
+		
 		for (auto& dwarf : dwarves) {
 			dwarf->update(dt);
 		}
@@ -188,6 +189,8 @@ void GameState::keyboardUpdate()
 					}
 					else {
 						dwarf->setDwarfJob(0);
+						
+						
 					}
 					this->keyPressClock.restart();
 				}
@@ -209,6 +212,9 @@ void GameState::setTileToRemove()
 
 	if (this->m_cursor->getIsButtonClicked()) {
 		if (this->m_cursor->getCurrentTile() == 1) {
+			for (auto& dwarf : dwarves) {
+				dwarf->setIsGoing(false);
+			}
 			for (int i = 0; i < trees.size(); i++) {
 				if ((this->m_cursor->getPosX() == trees[i]->getPosX()) && (this->m_cursor->getPosY() == trees[i]->getPosY())) {
 					trees.erase(trees.begin() + i);
@@ -227,27 +233,40 @@ void GameState::setTileToRemove()
 
 void GameState::lumberjackUpdate()
 {
-	for (auto& dwarf : dwarves) { //Path to tree
 
+	
+	
+	
+	//DOpiero jak dojdzie, to znowu wykonaj petle kurwa z tymi drzewami zasranymi :)
+
+
+	
+	
+
+	
+	for (auto& dwarf : dwarves) { //Path to tree
 		if (dwarf->getCurrentJob() == 1)
 		{
-			
-			for (int i = 0; i < trees.size(); i++) {
+				for (int i = 0; i < trees.size(); i++) {
 
-				this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
-				//this->pathSystem->setObstacleNode(dwarf->getPosX(), dwarf->getPosY());
+					if (!dwarf->getIsGoing()) {
+						this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
+						this->pathSystem->SolveAStar(dwarf->getPosX(), dwarf->getPosY());
+						this->pathSystem->update();
+					}
+					
+					dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), this->trees.size(), 2); //2 to wartosc stanu dwarfa - w tym przypadku to CUTTING
 				
-				this->pathSystem->SolveAStar(dwarf->getPosX(),dwarf->getPosY());
-				this->pathSystem->update();
-				dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), this->trees.size(), 2); //2 to wartosc stanu dwarfa - w tym przypadku to CUTTING
-				this->pathSystem->clearPathVector();
-				
-
+					if (i == trees.size() - 1)
+						dwarf->setIsGoing(true);
 			}
+			
 			dwarf->clearPathVec();
+			
 		}
+		
 	}
-
+	
 	/* #####################*/
 
 	//Cutting trees
@@ -262,24 +281,27 @@ void GameState::lumberjackUpdate()
 					{
 						indexVec.push_back(i);
 						//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
-
+						dwarf->setDwarfState(2);
 						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
 					}
 					if ((this->trees[i]->getPosX() - 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
 					{
 						indexVec.push_back(i);
+						dwarf->setDwarfState(2);
 					//	std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
 						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
 					}
 					if ((this->trees[i]->getPosY() - 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
 					{
 						indexVec.push_back(i);
+						dwarf->setDwarfState(2);
 						//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
 						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
 					}
 					if ((this->trees[i]->getPosY() + 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
 					{
 						indexVec.push_back(i);
+						dwarf->setDwarfState(2);
 						//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
 						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
 					}
@@ -288,6 +310,13 @@ void GameState::lumberjackUpdate()
 						this->map->updateMapTitle(trees[i]->getPosX(), trees[i]->getPosY(), 2);
 						//std::cout << "Trees: " << trees[i]->getPosX() << ":" << trees[i]->getPosY() << std::endl;
 						this->trees.erase(trees.begin() + i);
+						
+						this->pathSystem->clearPathVector();
+						
+						dwarf->setDwarfState(0);
+						dwarf->setIsGoing(false);
+						
+
 						indexVec.clear();
 						
 					}

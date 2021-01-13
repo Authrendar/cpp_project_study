@@ -17,6 +17,8 @@ public:
 	PathFinding(sf::RenderWindow* window, sf::Vector2u WINDOW_SIZE);
 
 	void setLevelData(std::vector<int> map);
+
+	void setEntitySphere(int posX, int posY);
 	void setStartEndNodes(int x1, int y1, int x2, int y2);
 	void setObstacleNode(int posX, int posY);
 
@@ -47,14 +49,14 @@ private:
 	std::vector<int>posX; std::vector<int>posY;
 
 	int dwarfPosX, dwarfPosY;
-	sf::Vector2u WINDOW_SIZE;
+	//sf::Vector2u WINDOW_SIZE;
 	int nMapWidth;
 	int nMapHeight;
 
 
 	
 
-	const int nNodeSize = 4; //32
+	const int nNodeSize = 12; //32
 	//const int nNodeBorder = 9; //9
 	sNode* nodes = nullptr;
 	sNode* nodeStart = nullptr;
