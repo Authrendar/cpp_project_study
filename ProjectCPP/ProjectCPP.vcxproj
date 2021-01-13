@@ -135,34 +135,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animal.cpp" />
+    <ClCompile Include="Beaver.cpp" />
+    <ClCompile Include="Bushes.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="DetectionSphere.cpp" />
     <ClCompile Include="Dwarf.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="Grass.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="noiseutils.cpp" />
+    <ClCompile Include="ObjectRenderMenager.cpp" />
     <ClCompile Include="PathFinding.cpp" />
     <ClCompile Include="PerlinNoiseGenerator.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="Water.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animal.h" />
+    <ClInclude Include="Beaver.h" />
+    <ClInclude Include="Bushes.h" />
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="DetectionSphere.h" />
     <ClInclude Include="Dwarf.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="Grass.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="noiseutils.h" />
+    <ClInclude Include="ObjectRenderMenager.h" />
     <ClInclude Include="PathFinding.h" />
     <ClInclude Include="PerlinNoiseGenerator.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="Water.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

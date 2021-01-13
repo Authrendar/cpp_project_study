@@ -63,9 +63,7 @@ void Cursor::render(sf::RenderTarget* target)
 
 void Cursor::viewController(sf::View &map_View)
 {
-	//map_View.move(12.f,0);
-	std::cout << int(map_View.getCenter().y) << std::endl;
-	//std::cout << this->getPosX()*12 << std::endl;
+	
 	if ((this->getPosX() * 12 >= 100) && (this->getPosX() * 12 < 500)) {
 		if (this->getPosX() * 12 >= int(map_View.getCenter().x + 100)) {
 			map_View.move(12.f, 0);

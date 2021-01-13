@@ -2,12 +2,17 @@
 #define GAMESTATE_H
 
 #include "State.h"
-
+#include <cstdlib>
+#include <cstdio>
+#include <ctime>
 #include "PathFinding.h"
 #include "Dwarf.h"
 #include "Map.h"
 #include "Tree.h"
 #include "Cursor.h"
+#include "ObjectRenderMenager.h"
+#include "Beaver.h"
+#include "Bushes.h"
 class GameState :
 	public State
 {
@@ -29,7 +34,7 @@ private:
 	void keyboardUpdate();
 
 
-	void createObjects();
+	void setTileToRemove();
 	//Map variables
 	Map *map;
 	sf::View *m_view;
@@ -40,17 +45,22 @@ private:
 	//Objects
 	std::vector<Dwarf*> dwarves;
 	std::vector<Tree*> trees;
+	std::vector<Animal*> animals;
+	std::vector<Bushes*> bushes;
 
-	
 
 	Cursor *m_cursor;
 	sf::Clock gameClock;
 
-
+	ObjectRenderMenager objRenderMen;
 	float gameTime;
 
 	sf::Clock pathFindingClock;
 	float pathTime;
+
+
+	sf::Clock keyPressClock;
+	float keyPressTime;
 
 	void lumberjackUpdate();
 	//Dwarves variables

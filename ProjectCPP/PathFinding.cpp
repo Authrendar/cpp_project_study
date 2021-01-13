@@ -54,6 +54,12 @@ bool PathFinding::SolveAStar(int posX, int posY)
 					nodes[y * nMapWidth + x].bObstacle = true;
 
 				}
+				if ((this->levelVec[y * nMapWidth + x] == 4)) {
+					//std::cout << x << " : " << y << std::endl;
+					nodes[y * nMapWidth + x].bObstacle = true;
+
+				}
+				
 				
 				
 				//if ((this->levelVec[y * nMapWidth + x] == 0) || (this->levelVec[y * nMapWidth + x] == 1))

@@ -6,6 +6,8 @@ GameState::GameState(sf::RenderWindow* window)
 	m_cursor = new Cursor();
 	initMap();
 	initObjects();
+
+	srand(time(NULL));
 	
 }
 
@@ -39,7 +41,7 @@ void GameState::update(const float& dt)
 
 		this->m_cursor->update(dt);
 		this->m_cursor->setCurrnetTile(this->map->getCurrentTile(this->m_cursor->getPosX(), this->m_cursor->getPosY()));
-		this->createObjects();
+		this->setTileToRemove();
 		this->lumberjackUpdate();
 		this->pathSystem->setLevelData(this->map->getLevelData());
 		for (auto& dwarf : dwarves) {
@@ -57,17 +59,23 @@ void GameState::render(sf::RenderTarget* target)
 {	
 	this->map->render(window);
 	this->window->setView(*m_view);
+	
 	if(this->m_cursor->getCursorActive())
 		this->m_cursor->viewController(*this->m_view);
 	for (auto& dwarf : dwarves) {
 		dwarf->render(window);
 	}
-	this->m_cursor->render(target);
 	for (auto& tree : trees) {
 		tree->render(window);
 	}
-	
+	for (auto& animal : animals) {
+		animal->render(window);
+	}
+	for (auto& bush : bushes) {
+		bush->render(window);
+	}
 
+	this->m_cursor->render(target);
 	
 }
 
@@ -86,26 +94,50 @@ void GameState::initMap()
 }
 void GameState::initObjects()
 {
+	//Create Dwarves by random positions
+	int posX;
+	int posY;
+	for (int i = 0; i < 3; i++) {
+		do {
+			posX = rand() % 15+5;
+			posY = rand() % 15+5;
+		} while (this->map->getCurrentTile(posX, posY) != 2);
+		std::cout << posX << " : " << posY << std::endl;
+		dwarves.push_back(new Dwarf(i+1, sf::Vector2f(this->grid_map_size * posX, this->grid_map_size * posY)));
+	}
 	
-	dwarves.push_back(new Dwarf(1, sf::Vector2f(this->grid_map_size*2, this->grid_map_size*2)));
-	dwarves.push_back(new Dwarf(2, sf::Vector2f(this->grid_map_size * 8, this->grid_map_size * 2)));
-	dwarves.push_back(new Dwarf(3, sf::Vector2f(this->grid_map_size * 4, this->grid_map_size * 7)));
-	
+	int valueOfBeavers = rand() % 4 + 2;
+	posX = 0;
+	posY = 0;
+	for (int i = 0; i < valueOfBeavers; i++) {
+		do {
+			posX = rand() % 48 + 1;
+			posY = rand() % 48 + 1;
+		} while (this->map->getCurrentTile(posX, posY) != 3);
+		this->animals.push_back(new Beaver(sf::Vector2f(this->grid_map_size *posX, this->grid_map_size * posY)));
+	}
 
-	/*for (int i = 0; i < 3; i++) {
-		dwarves.push_back(new Dwarf(i + 1, sf::Vector2f(this->grid_map_size * 5 + grid_map_size*(i + 2), this->grid_map_size * 4 + grid_map_size*(i + 1))));
-	} */
-	/*for (int i = 0; i < this->map->getLevelData().size() / 20; i++) {
-		for (int j = 0; j < this->map->getLevelData().size() / 20; j++) {
-			if (this->map->getLevelData()[i + j * this->map->getLevelData().size() / 20] == 1) {
-				this->trees.push_back(new Tree(sf::Vector2f(this->grid_map_size * i, this->grid_map_size * j), i * this->map->getLevelData().size() / 20 + j));
-				std::cout << "Drzewko " <<   i <<":" << j <<std::endl;
-				
-			}
-		}
-	}*/
-	//std::cout << "Tree: " << trees.size() << std::endl;
-	//std::cout << "Size of one dwarf object: " << sizeof(trees[0]) << std::endl;
+	int valueOfBushes= rand() % 20 + 5;
+	posX = 0;
+	posY = 0;
+	int withBerries = 0;
+	for (int i = 0; i < valueOfBushes; i++) {
+		do {
+			posX = rand() % 48 + 1;
+			posY = rand() % 48 + 1;
+			withBerries = rand() % 2 + 0;
+		} while (this->map->getCurrentTile(posX, posY) != 2);
+		std::cout << withBerries << std::endl;
+		this->bushes.push_back(new Bushes(sf::Vector2f(this->grid_map_size * posX, this->grid_map_size * posY),withBerries));
+	}
+	
+	//m_beaver = new Beaver(sf::Vector2f(this->grid_map_size*10, this->grid_map_size*10));
+	//Beaver m_beaver(sf::Vector2f(this->grid_map_size*10, this->grid_map_size*10));
+	
+	
+	this->objRenderMen.setLevelData(this->map->getLevelData());
+	this->objRenderMen.setObjectsOnMap();
+	
 	
 }
 
@@ -121,7 +153,6 @@ void GameState::keyboardUpdate()
 			dwarf->isSelected = false;
 			if (dwarf->getNumberOfDwarf() == 1) {
 				if (!dwarf->getIsSelected()) {
-					std::cout << "wybrales dwarfa o numerze " << dwarf->getNumberOfDwarf() << std::endl;
 					dwarf->isSelected = true;
 				}
 			}
@@ -132,7 +163,6 @@ void GameState::keyboardUpdate()
 			if (dwarf->getNumberOfDwarf() == 2) {
 				
 				if (!dwarf->getIsSelected()) {
-					std::cout << "wybrales dwarfa o numerze "<<dwarf->getNumberOfDwarf() << std::endl;
 					dwarf->isSelected = true;
 				}
 			}
@@ -143,23 +173,30 @@ void GameState::keyboardUpdate()
 			if (dwarf->getNumberOfDwarf() == 3) {
 
 				if (!dwarf->getIsSelected()) {
-					std::cout << "wybrales dwarfa o numerze " << dwarf->getNumberOfDwarf() << std::endl;
 					dwarf->isSelected = true;
 				}
 			}
 		}
 		if (dwarf->getIsSelected()) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
-			
-				std::cout << "Dwarf number : " << dwarf->getNumberOfDwarf() << " is now a lumberjack!" << std::endl;
-				dwarf->setDwarfJob(1);
+			this->keyPressTime = this->keyPressClock.getElapsedTime().asSeconds();
+			if (this->keyPressTime > 0.2f){
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+
+					if (dwarf->getCurrentJob() != 1)
+					{
+						dwarf->setDwarfJob(1);
+					}
+					else {
+						dwarf->setDwarfJob(0);
+					}
+					this->keyPressClock.restart();
+				}
 			}
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 		{	
 			if (dwarf->getIsSelected())
 			{
-				std::cout << "Odznaczeni" << std::endl;
 				dwarf->isSelected = false;
 			}
 
@@ -167,7 +204,7 @@ void GameState::keyboardUpdate()
 	}
 }
 
-void GameState::createObjects()
+void GameState::setTileToRemove()
 {
 
 	if (this->m_cursor->getIsButtonClicked()) {
