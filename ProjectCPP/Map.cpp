@@ -2,7 +2,7 @@
 
 Map::Map()
 {
-	initMap();
+	
 }
 
 Map::~Map()

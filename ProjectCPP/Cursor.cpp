@@ -73,7 +73,7 @@ void Cursor::viewController(sf::View &map_View)
 		}
 	}
 
-		if ((this->getPosY() * 12 >= 60) && (this->getPosY() * 12 < 550)) {
+		if ((this->getPosY() * 12 >= 108) && (this->getPosY() * 12 < 502)) {
 
 			if (this->getPosY() * 12 >= int(map_View.getCenter().y + 100)) {
 				map_View.move(0, 12.f);

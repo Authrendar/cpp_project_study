@@ -3,7 +3,7 @@
 Game::Game()
 {
 	W_WIDTH = 800;
-	W_HEIGHT = 600;
+	W_HEIGHT = 900;
 	TITLE = "PROJECT CPP 1.0v";
 	/*Przypisanie ustawien okna gry*/
 }

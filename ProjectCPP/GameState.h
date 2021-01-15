@@ -2,15 +2,14 @@
 #define GAMESTATE_H
 
 #include "State.h"
-#include <cstdlib>
-#include <cstdio>
-#include <ctime>
+#include "Interface.h"
 #include "PathFinding.h"
 #include "Dwarf.h"
 #include "Map.h"
 #include "Tree.h"
 #include "Cursor.h"
 #include "ObjectRenderMenager.h"
+#include "Animal.h"
 #include "Beaver.h"
 #include "Bushes.h"
 class GameState :
@@ -48,6 +47,8 @@ private:
 	std::vector<Animal*> animals;
 	std::vector<Bushes*> bushes;
 
+	//Interface
+	Interface* m_interface;
 
 	Cursor *m_cursor;
 	sf::Clock gameClock;

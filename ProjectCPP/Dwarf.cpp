@@ -177,7 +177,7 @@ void Dwarf::moveDwarf()
 
 		break;
 	case States::CUTTING:
-		std::cout << "CUTTING" << std::endl;
+	
 		break;
 	}
 

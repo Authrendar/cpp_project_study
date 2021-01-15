@@ -41,12 +41,20 @@ void GameState::update(const float& dt)
 
 		this->m_cursor->update(dt);
 		this->m_cursor->setCurrnetTile(this->map->getCurrentTile(this->m_cursor->getPosX(), this->m_cursor->getPosY()));
+
+		if(this->m_cursor->getCursorActive())
+			this->m_interface->setCursorPosition(this->m_cursor->getPosX(), this->m_cursor->getPosY());
+
 		this->setTileToRemove();
 		this->lumberjackUpdate();
 		this->pathSystem->setLevelData(this->map->getLevelData());
 		
 		for (auto& dwarf : dwarves) {
 			dwarf->update(dt);
+		}
+		for (auto& animal : animals) {
+			animal->movementController(*this->map);
+			animal->update(dt);
 		}
 		
 		
@@ -57,8 +65,11 @@ void GameState::update(const float& dt)
 }
 
 void GameState::render(sf::RenderTarget* target)
-{	
+{
+	
 	this->map->render(window);
+	this->window->setView(this->m_interface->getInterfaceView());
+	this->m_interface->render(target);
 	this->window->setView(*m_view);
 	
 	if(this->m_cursor->getCursorActive())
@@ -78,17 +89,28 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->m_cursor->render(target);
 	
+	
+	
 }
 
 void GameState::initMap()
 {
 
 	this->map = new Map();
-	this->m_view =new sf::View(sf::FloatRect(0, 0, 396.f, 300.f));
+	this->map->initMap();
+	this->m_view =new sf::View(sf::FloatRect(0, 0, 396.f, 396.f));
+	
+	this->m_interface = new Interface();
+	
+	this->m_view->setViewport(sf::FloatRect(0.f, 0.f, 1.f, 0.85f));
+	
+
 	
 	
 	pathSystem = new PathFinding(this->window, sf::Vector2u(800.f, 600.f));
 	this->pathSystem->setLevelData(this->map->getLevelData());
+	
+
 	
 	
 
@@ -107,7 +129,7 @@ void GameState::initObjects()
 		dwarves.push_back(new Dwarf(i+1, sf::Vector2f(this->grid_map_size * posX, this->grid_map_size * posY)));
 	}
 	
-	int valueOfBeavers = rand() % 4 + 2;
+	int valueOfBeavers = rand() % 6 + 2;
 	posX = 0;
 	posY = 0;
 	for (int i = 0; i < valueOfBeavers; i++) {
@@ -233,16 +255,6 @@ void GameState::setTileToRemove()
 
 void GameState::lumberjackUpdate()
 {
-
-	
-	
-	
-	//DOpiero jak dojdzie, to znowu wykonaj petle kurwa z tymi drzewami zasranymi :)
-
-
-	
-	
-
 	
 	for (auto& dwarf : dwarves) { //Path to tree
 		if (dwarf->getCurrentJob() == 1)
@@ -309,6 +321,8 @@ void GameState::lumberjackUpdate()
 					if (trees[i]->getHpOfTree() == 0) {
 						this->map->updateMapTitle(trees[i]->getPosX(), trees[i]->getPosY(), 2);
 						//std::cout << "Trees: " << trees[i]->getPosX() << ":" << trees[i]->getPosY() << std::endl;
+						this->m_interface->updateWoodValue(trees[i]->getValueOfWood());
+						
 						this->trees.erase(trees.begin() + i);
 						
 						this->pathSystem->clearPathVector();

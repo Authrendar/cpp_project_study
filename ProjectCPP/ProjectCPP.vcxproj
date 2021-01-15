@@ -139,12 +139,12 @@
     <ClCompile Include="Beaver.cpp" />
     <ClCompile Include="Bushes.cpp" />
     <ClCompile Include="Cursor.cpp" />
-    <ClCompile Include="DetectionSphere.cpp" />
     <ClCompile Include="Dwarf.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Grass.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="noiseutils.cpp" />
@@ -161,12 +161,12 @@
     <ClInclude Include="Beaver.h" />
     <ClInclude Include="Bushes.h" />
     <ClInclude Include="Cursor.h" />
-    <ClInclude Include="DetectionSphere.h" />
     <ClInclude Include="Dwarf.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Grass.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="noiseutils.h" />
     <ClInclude Include="ObjectRenderMenager.h" />

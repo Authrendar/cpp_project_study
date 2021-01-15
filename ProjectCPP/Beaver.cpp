@@ -15,6 +15,14 @@ Beaver::Beaver(sf::Vector2f pos)
 	this->m_hp = 100;
 	this->m_panicLevel = false;
 	this->m_strength = 1;
+
+	
+
+	this->m_isWalking = false;
+	this->m_canSetRandom = false;
+	this->randomTimeRestart = this->RandomFloat(0.5f, 4.f);
+
+	this->moveBeaverTime = 0.f;
 }
 
 Beaver::~Beaver()
@@ -23,6 +31,16 @@ Beaver::~Beaver()
 
 void Beaver::update(const float& dt)
 {
+	this->moveBeaverTime = this->moveBeaverClock.getElapsedTime().asSeconds();
+
+
+	if (this->moveBeaverTime > this->randomTimeRestart) {
+		//std::cout << this->randomTimeRestart << std::endl;
+		this->moveAnimal();
+		this->m_sprite.move(this->getVelX(), this->getVelY());
+		this->randomTimeRestart = this->RandomFloat(1.f, 3.f);
+		this->moveBeaverClock.restart();
+	}
 }
 
 void Beaver::render(sf::RenderTarget* target)
@@ -30,12 +48,12 @@ void Beaver::render(sf::RenderTarget* target)
 	target->draw(this->m_sprite);
 }
 
-float Beaver::getPosX()
+int Beaver::getPosX()
 {
 	return this->m_sprite.getPosition().x/12;
 }
 
-float Beaver::getPosY()
+int Beaver::getPosY()
 {
 	return this->m_sprite.getPosition().y / 12;
 }
@@ -50,11 +68,8 @@ int Beaver::getStrength()
 	return this->m_strength;
 }
 
-void Beaver::movementController()
-{
-}
-
 bool Beaver::getPanicFactor()
 {
 	return this->m_panicLevel;
 }
+

@@ -15,6 +15,7 @@ public:
 
 	int getIndexOfTree() { return this->m_Stats.index; }
 	int getHpOfTree() { return this->m_Stats.hp; }
+	int getValueOfWood() { return this->m_Stats.valueOfWood; }
 
 	void cutTheTree(int strength);
 
@@ -30,6 +31,7 @@ private:
 	struct stats {
 		int hp;
 		int index;
+		int valueOfWood;
 	};
 	stats m_Stats;
 };
