@@ -50,6 +50,14 @@ void Cursor::update(const float &dt)
 				keyClock.restart();
 
 			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+
+				this->isButtonRClicked = true;
+
+
+				keyClock.restart();
+
+			}
 		}
 		//std::cout <<"TILE SIZE: " <<tiles.size() << std::endl;
 	}
@@ -110,6 +118,26 @@ void Cursor::setCurrnetTile(int tile)
 		break;
 	default:
 		break;
+	}
+}
+
+void Cursor::setCurrentObject(Object& obj)
+{
+	if ((this->getPosX() == obj.getPosX()) && (this->getPosY() == obj.getPosY()))
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+			if (obj.getObjectType() == "bushesBerries")
+				if (!obj.getAbilityToInteraction())
+					obj.setAbilityToInteraction(true);
+				else
+					obj.setAbilityToInteraction(false);
+		
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+			if (obj.getObjectType() == "building")
+				obj.setAbilityToInteraction(true);
+				
+		}
 	}
 }
 

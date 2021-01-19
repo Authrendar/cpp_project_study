@@ -25,12 +25,6 @@
     <Filter Include="Source Files\Entities">
       <UniqueIdentifier>{8da9dd52-2528-4fe4-8aa6-9eaaafcdc732}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Animals">
-      <UniqueIdentifier>{cf0f5a6f-1aab-4763-aa85-d0a9e6eeaf01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Animals">
-      <UniqueIdentifier>{98bef2f8-b0af-44bb-8e40-151343ca95ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Map">
       <UniqueIdentifier>{7cd6ca71-ab14-42fc-9a7b-9e375ca39968}</UniqueIdentifier>
     </Filter>
@@ -42,6 +36,24 @@
     </Filter>
     <Filter Include="Source Files\Interface">
       <UniqueIdentifier>{183983e6-1ecc-4728-9c51-23184141e3b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object">
+      <UniqueIdentifier>{46837ca1-72a2-4add-b7cd-ce1d811457ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object">
+      <UniqueIdentifier>{a2e81c9b-1c2b-48f0-99ed-1bf6f8c13825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object\Animals">
+      <UniqueIdentifier>{98bef2f8-b0af-44bb-8e40-151343ca95ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object\Animals">
+      <UniqueIdentifier>{cf0f5a6f-1aab-4763-aa85-d0a9e6eeaf01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object\Buildings">
+      <UniqueIdentifier>{b4e1d66e-dc10-4328-8219-0e351dd07243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object\Buildings">
+      <UniqueIdentifier>{382fb3a9-efef-457d-ac24-39995bd204ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,17 +78,11 @@
     <ClCompile Include="noiseutils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectRenderMenager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Grass.cpp">
       <Filter>Source Files\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="Water.cpp">
       <Filter>Source Files\Tiles</Filter>
-    </ClCompile>
-    <ClCompile Include="Bushes.cpp">
-      <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Dwarf.cpp">
       <Filter>Source Files\Entities</Filter>
@@ -88,10 +94,10 @@
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Beaver.cpp">
-      <Filter>Source Files\Animals</Filter>
+      <Filter>Source Files\Object\Animals</Filter>
     </ClCompile>
     <ClCompile Include="Animal.cpp">
-      <Filter>Source Files\Animals</Filter>
+      <Filter>Source Files\Object\Animals</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files\Tiles</Filter>
@@ -104,6 +110,18 @@
     </ClCompile>
     <ClCompile Include="Interface.cpp">
       <Filter>Source Files\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Bushes.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Source Files\Object\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Stock.cpp">
+      <Filter>Source Files\Object\Buildings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +143,6 @@
     <ClInclude Include="noiseutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectRenderMenager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Grass.h">
       <Filter>Header Files\Tiles</Filter>
     </ClInclude>
@@ -140,17 +155,14 @@
     <ClInclude Include="Dwarf.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Bushes.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Animal.h">
-      <Filter>Header Files\Animals</Filter>
+      <Filter>Header Files\Object\Animals</Filter>
     </ClInclude>
     <ClInclude Include="Beaver.h">
-      <Filter>Header Files\Animals</Filter>
+      <Filter>Header Files\Object\Animals</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header Files\Tiles</Filter>
@@ -166,6 +178,18 @@
     </ClInclude>
     <ClInclude Include="Interface.h">
       <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Bushes.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files\Object\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Stock.h">
+      <Filter>Header Files\Object\Buildings</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

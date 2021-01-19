@@ -13,7 +13,17 @@ GameState::GameState(sf::RenderWindow* window)
 
 GameState::~GameState()
 {
-	m_cursor->~Cursor();
+	delete this->m_cursor;
+	delete this->map;
+	delete this->m_interface;
+	delete this->m_view;
+
+	this->dwarves.clear();
+	this->animals.clear();
+	this->bushes.clear();
+	this->trees.clear();
+	
+	
 }
 
 void GameState::endState()
@@ -46,15 +56,25 @@ void GameState::update(const float& dt)
 			this->m_interface->setCursorPosition(this->m_cursor->getPosX(), this->m_cursor->getPosY());
 
 		this->setTileToRemove();
-		this->lumberjackUpdate();
-		this->pathSystem->setLevelData(this->map->getLevelData());
 		
+		this->pathSystem->setLevelData(this->map->getLevelData());
+		//this->setBuildingToBuild(); // XD
+		
+		this->lumberjackUpdate();
+		this->setBuildingToBuild();
 		for (auto& dwarf : dwarves) {
 			dwarf->update(dt);
+			if (dwarf->getIsSelected())
+				this->m_interface->setDataFromDwarf(dwarf->getNumberOfDwarf(), dwarf->getDwarfHp(), dwarf->getCurrentJob(), dwarf->getCurrentState(), dwarf->getDwarfStrength(), dwarf->getDwarfLvl());
+			
+
 		}
 		for (auto& animal : animals) {
 			animal->movementController(*this->map);
 			animal->update(dt);
+		}
+		for (auto& bush : bushes) {
+			this->m_cursor->setCurrentObject(*bush);
 		}
 		
 		
@@ -86,7 +106,8 @@ void GameState::render(sf::RenderTarget* target)
 	for (auto& bush : bushes) {
 		bush->render(window);
 	}
-
+	if(this->m_preparedBuilding!= nullptr)
+		this->m_preparedBuilding->render(target);
 	this->m_cursor->render(target);
 	
 	
@@ -125,10 +146,9 @@ void GameState::initObjects()
 			posX = rand() % 15+5;
 			posY = rand() % 15+5;
 		} while (this->map->getCurrentTile(posX, posY) != 2);
-		std::cout << posX << " : " << posY << std::endl;
 		dwarves.push_back(new Dwarf(i+1, sf::Vector2f(this->grid_map_size * posX, this->grid_map_size * posY)));
 	}
-	
+	//Create Beavers by random 
 	int valueOfBeavers = rand() % 6 + 2;
 	posX = 0;
 	posY = 0;
@@ -140,6 +160,7 @@ void GameState::initObjects()
 		this->animals.push_back(new Beaver(sf::Vector2f(this->grid_map_size *posX, this->grid_map_size * posY)));
 	}
 
+	//Create bushes by random
 	int valueOfBushes= rand() % 20 + 5;
 	posX = 0;
 	posY = 0;
@@ -150,16 +171,14 @@ void GameState::initObjects()
 			posY = rand() % 48 + 1;
 			withBerries = rand() % 2 + 0;
 		} while (this->map->getCurrentTile(posX, posY) != 2);
-		std::cout << withBerries << std::endl;
 		this->bushes.push_back(new Bushes(sf::Vector2f(this->grid_map_size * posX, this->grid_map_size * posY),withBerries));
 	}
 	
 	//m_beaver = new Beaver(sf::Vector2f(this->grid_map_size*10, this->grid_map_size*10));
 	//Beaver m_beaver(sf::Vector2f(this->grid_map_size*10, this->grid_map_size*10));
 	
-	
-	this->objRenderMen.setLevelData(this->map->getLevelData());
-	this->objRenderMen.setObjectsOnMap();
+	// ostatnia liczba to typ skladu zapasow
+
 	
 	
 }
@@ -177,6 +196,8 @@ void GameState::keyboardUpdate()
 			if (dwarf->getNumberOfDwarf() == 1) {
 				if (!dwarf->getIsSelected()) {
 					dwarf->isSelected = true;
+					this->m_cursor->setPosition(dwarf->getPosX(), dwarf->getPosY());
+						
 				}
 			}
 		}
@@ -187,6 +208,7 @@ void GameState::keyboardUpdate()
 				
 				if (!dwarf->getIsSelected()) {
 					dwarf->isSelected = true;
+					this->m_cursor->setPosition(dwarf->getPosX(), dwarf->getPosY());
 				}
 			}
 		}
@@ -196,7 +218,9 @@ void GameState::keyboardUpdate()
 			if (dwarf->getNumberOfDwarf() == 3) {
 
 				if (!dwarf->getIsSelected()) {
+
 					dwarf->isSelected = true;
+					this->m_cursor->setPosition(dwarf->getPosX(), dwarf->getPosY());
 				}
 			}
 		}
@@ -216,13 +240,28 @@ void GameState::keyboardUpdate()
 					}
 					this->keyPressClock.restart();
 				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+
+					if (dwarf->getCurrentJob() != 3)
+					{
+						dwarf->setDwarfJob(3);
+					}
+					else {
+						dwarf->setDwarfJob(0);
+
+
+					}
+					this->keyPressClock.restart();
+				}
 			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 		{	
 			if (dwarf->getIsSelected())
 			{
 				dwarf->isSelected = false;
+				this->m_interface->resetData();
+					
 			}
 
 		}
@@ -232,7 +271,7 @@ void GameState::keyboardUpdate()
 void GameState::setTileToRemove()
 {
 
-	if (this->m_cursor->getIsButtonClicked()) {
+	if (this->m_cursor->getIsQButtonClicked()) {
 		if (this->m_cursor->getCurrentTile() == 1) {
 			for (auto& dwarf : dwarves) {
 				dwarf->setIsGoing(false);
@@ -246,49 +285,133 @@ void GameState::setTileToRemove()
 				this->trees.push_back(new Tree(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0));
 			
 		}
-		this->m_cursor->setButtonState(false);
+
+		
+		this->m_cursor->setButtonQState(false);
 		
 	}
 
 	//std::cout << "Tree size: " << trees.size() << std::endl;
 }
 
-void GameState::lumberjackUpdate()
+void GameState::setBuildingToBuild()
 {
 	
+	
+	if (this->m_cursor->getIsRButtonClicked()) {
+
+		if (this->m_cursor->getCurrentTile() == 2) {
+			this->m_preparedBuilding = new Stock(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0); // ostatnia liczba to typ skladu zapaso
+
+			
+		}
+		this->m_cursor->setButtonRState(false);
+	}
+	
+
+	for (auto& dwarf : dwarves) {
+		if (dwarf->getCurrentJob() == 3) {
+			if (this->m_preparedBuilding != nullptr) {
+				if (!dwarf->getIsGoing()) {
+					this->pathSystem->setStartEndNodes(this->m_preparedBuilding->getPosX(), this->m_preparedBuilding->getPosY(), dwarf->getPosX(), dwarf->getPosY());
+					this->pathSystem->SolveAStar();
+					this->pathSystem->update();
+
+					dwarf->setIsGoing(true);
+				}
+				
+				dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), 1, 1); 
+				
+				
+				
+				
+			}
+			dwarf->clearPathVec();
+		}
+	}
+
+
+	//Build the building
+	for (auto& dwarf : dwarves) {
+		if (dwarf->getCurrentJob() == 3) {
+			if (this->m_preparedBuilding != nullptr) {
+				if ((this->m_preparedBuilding->getPosX() + 1 == int(dwarf->getPosX())) && (this->m_preparedBuilding->getPosY() == int(dwarf->getPosY())))
+				{
+					//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
+					std::cout << "No elo" << std::endl;
+					dwarf->setDwarfState(1);
+					
+				}
+				if ((this->m_preparedBuilding->getPosX() - 1 == int(dwarf->getPosX())) && (this->m_preparedBuilding->getPosY() == int(dwarf->getPosY())))
+				{
+					std::cout << "No elo" << std::endl;
+					//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
+					dwarf->setDwarfState(1);
+
+				}
+				if ((this->m_preparedBuilding->getPosY() - 1 == int(dwarf->getPosY())) && (this->m_preparedBuilding->getPosX() == int(dwarf->getPosX())))
+				{
+					std::cout << "No elo" << std::endl;
+					//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
+					dwarf->setDwarfState(1);
+
+				}
+				if ((this->m_preparedBuilding->getPosY() + 1 ==int( dwarf->getPosY())) && (this->m_preparedBuilding->getPosX() == int(dwarf->getPosX())))
+				{
+					std::cout << "No elo" << std::endl;
+					//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
+					dwarf->setDwarfState(1);
+
+				}
+			}
+		}
+	}
+
+
+	
+}
+
+void GameState::lumberjackUpdate()
+{
+
 	for (auto& dwarf : dwarves) { //Path to tree
-		if (dwarf->getCurrentJob() == 1)
-		{
+		if (!dwarf->isDwarfMustPutAway()) {
+			if (dwarf->getCurrentJob() == 1)
+			{
 				for (int i = 0; i < trees.size(); i++) {
 
 					if (!dwarf->getIsGoing()) {
 						this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
-						this->pathSystem->SolveAStar(dwarf->getPosX(), dwarf->getPosY());
+						this->pathSystem->SolveAStar();
 						this->pathSystem->update();
 					}
 					
-					dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), this->trees.size(), 2); //2 to wartosc stanu dwarfa - w tym przypadku to CUTTING
-				
+					dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), this->trees.size(), 1); //2 to wartosc stanu dwarfa - w tym przypadku to CUTTING
+
 					if (i == trees.size() - 1)
 						dwarf->setIsGoing(true);
+
+					
+				}
+				dwarf->clearPathVec();
+				
+
 			}
-			
-			dwarf->clearPathVec();
-			
+
 		}
-		
 	}
-	
+
 	/* #####################*/
 
 	//Cutting trees
 
 	for (auto& dwarf : dwarves) {
-		if ((dwarf->getCurrentJob() == 1)&&(trees.size()>0)) {
-			std::vector <int> indexVec;
-			for (int i = 0; i < trees.size(); i++) {
-				
-				
+		if (!dwarf->isDwarfMustPutAway()){
+			if ((dwarf->getCurrentJob() == 1) && (trees.size() > 0)) {
+				std::vector <int> indexVec;
+				for (int i = 0; i < trees.size(); i++) {
+
+
 					if ((this->trees[i]->getPosX() + 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
 					{
 						indexVec.push_back(i);
@@ -300,7 +423,7 @@ void GameState::lumberjackUpdate()
 					{
 						indexVec.push_back(i);
 						dwarf->setDwarfState(2);
-					//	std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
+						//	std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
 						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
 					}
 					if ((this->trees[i]->getPosY() - 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
@@ -317,31 +440,32 @@ void GameState::lumberjackUpdate()
 						//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
 						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
 					}
-					
+
 					if (trees[i]->getHpOfTree() == 0) {
 						this->map->updateMapTitle(trees[i]->getPosX(), trees[i]->getPosY(), 2);
 						//std::cout << "Trees: " << trees[i]->getPosX() << ":" << trees[i]->getPosY() << std::endl;
 						this->m_interface->updateWoodValue(trees[i]->getValueOfWood());
-						
+						dwarf->setWoodValue(trees[i]->getValueOfWood());
 						this->trees.erase(trees.begin() + i);
-						
+
 						this->pathSystem->clearPathVector();
-						
+
 						dwarf->setDwarfState(0);
 						dwarf->setIsGoing(false);
-						
+
 
 						indexVec.clear();
-						
+
 					}
-					
-				
+
+
+				}
 			}
-		}
-		else
-		{
-			dwarf->setDwarfState(0);
-		}
+			else
+			{
+				dwarf->setDwarfState(0);
+			}
 	}
+}
 }
 

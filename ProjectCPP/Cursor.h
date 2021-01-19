@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
+#include "Object.h"
 class Cursor
 {
 public:
@@ -22,9 +23,19 @@ public:
 	void setCurrnetTile(int tile);
 	int getCurrentTile() { return this->mn_currentTile; }
 
-	bool isButtonQClicked = false;
-	void setButtonState(bool button) { this->isButtonQClicked = button; }
-	bool getIsButtonClicked() { return this->isButtonQClicked; }
+	void setPosition(int x, int y) {
+		this->m_cursorSprite.setPosition(sf::Vector2f(x * 12, y * 12));
+	}
+
+	void setCurrentObject(Object &obj);
+
+	
+	//buttons
+	void setButtonQState(bool button) { this->isButtonQClicked = button; }
+	bool getIsQButtonClicked() { return this->isButtonQClicked; }
+
+	void setButtonRState(bool button) { this->isButtonRClicked = button; }
+	bool getIsRButtonClicked() { return this->isButtonRClicked; }
 
 	
 private:
@@ -50,6 +61,8 @@ private:
 
 	Tile currentTile;
 	
-
+	//Buttons
+	bool isButtonQClicked = false;
+	bool isButtonRClicked = false;
 	
 };

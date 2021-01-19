@@ -1,8 +1,13 @@
 #include "Dwarf.h"
 
 Dwarf::Dwarf(int number, sf::Vector2f pos)
+	:m_woodValue(0),
+	m_stoneValue(0),
+	m_berriesValue(0),
+	m_meatValue(0),
+	mustPutAway(false)
 {
-	this->number = number;
+	this->m_number = number;
 	this->rectTexture = sf::IntRect(12, 12, 12, 12);
 	
 
@@ -43,9 +48,6 @@ void Dwarf::update(const float& dt)
 	this->m_sprite.move(this->velX, this->velY);
 	this->velX = 0;
 	this->velY = 0;
-	if (dwarf_job == LUMBERJACK) {
-		dwarf_states = WALK;
-	}
 	
 	
 }
@@ -66,19 +68,21 @@ void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> path
 
 		
 		
+		//if (this->vecInsX.size() > 0)
+		this->setDwarfState(dwarfState);
+		
 		if (vecSizes.size() == index) {
 			std::sort(this->vecSizes.begin(), std::partition(vecSizes.begin(), vecSizes.end(), [](int n) { return n != 0; }));
 			vecSizes.resize(1);
-			if (this->vecSizes[0] < 2)
-				this->setDwarfState(dwarfState);
+			
 			for (int i = 0; i < this->vecInsX.size(); i++) {
 				if ((this->vecSizes[0] == this->vecInsX[i].size()) && (this->vecSizes[0] == this->vecInsY[i].size()))
 					for (int j = 1; j < this->vecInsX[i].size(); j++) {
 						if ((this->getPosX() == this->vecInsX[i][j - 1]) && (this->getPosY() == this->vecInsY[i][j - 1])) {
 							this->m_pathPosX = this->vecInsX[i][j];
 							this->m_pathPosY = this->vecInsY[i][j];
-							//std::cout << this->m_pathPosX << ":" << m_pathPosY << std::endl;
-							//std::cout << int(this->getPosX()) << ":" << int(this->getPosY()) << std::endl;
+							
+							
 						}
 					}
 			}
@@ -114,7 +118,20 @@ void Dwarf::setDwarfJob(int job)
 	case 2:
 		this->dwarf_job = MINER;
 		break;
+	case 3:
+		this->dwarf_job = BUILDER;
+		break;
 	}
+}
+
+void Dwarf::setWoodValue(int woodValue)
+{
+	this->m_woodValue += woodValue;
+
+	if (m_woodValue == 30)
+		this->mustPutAway = true;
+
+	std::cout << "Dwarf value of wood: " << this->m_woodValue << " is he must put away? " << this->mustPutAway << std::endl;
 }
 
 void Dwarf::setDwarfColor()
@@ -126,7 +143,15 @@ void Dwarf::setDwarfColor()
 
 	if (dwarf_job == LUMBERJACK) {
 		if(this->m_sprite.getColor() == sf::Color::Blue)
-		this->m_sprite.setColor(sf::Color::Cyan);
+			this->m_sprite.setColor(sf::Color::Cyan);
+		if (this->getIsSelected())
+			this->m_sprite.setColor(sf::Color::Yellow);
+	}
+	if (dwarf_job == BUILDER) {
+		if (this->m_sprite.getColor() == sf::Color::Blue)
+			this->m_sprite.setColor(sf::Color(255, 69, 0));
+		if (this->getIsSelected())
+			this->m_sprite.setColor(sf::Color(165, 42, 42));
 	}
 }
 
@@ -144,12 +169,12 @@ void Dwarf::moveDwarf()
 	
 	switch (this->dwarf_states) {
 	case States::IDLE:
-		//std::cout << "Dwarf standing " << ", ";
-		//this->setIsGoing(false);
+		if (this->dwarf_job == BUILDER)
+			std::cout << "Stoi se " << std::endl;
 		break;
 
 	case States::WALK:
-		
+		std::cout << "no idzie" << std::endl;
 		if ((m_pathPosX > 0) || (m_pathPosY > 0)) {
 			if (m_pathPosX < this->getPosX())
 			{

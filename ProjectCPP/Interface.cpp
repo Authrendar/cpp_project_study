@@ -8,28 +8,34 @@ Interface::Interface()
 	else
 		std::cout << "Font found" << std::endl;
 
+	if (!this->interfaceTexture.loadFromFile("interface.png")) {
+		std::cout << "Could not find interface texture..." << std::endl;
+	}
 	
-
-	this->m_interfaceText = this->createText(30, sf::Vector2f(10, 30), "Interface menu", sf::Color::White);
+	this->interfaceSprite.setTexture(this->interfaceTexture);
+	this->interfaceSprite.setPosition(sf::Vector2f(0, 5));
 	
-	this->lineBetweenStats.setSize(sf::Vector2f(800.f, 2.f));
-	this->lineBetweenStats.setPosition(sf::Vector2f(0, 30.f));
-	this->lineBetweenStats.setFillColor(sf::Color::White);
+	//this->m_interfaceText = this->createText(30, sf::Vector2f(10, 30), "Interface menu", sf::Color::White);
+	
 
 	this->interfaceView = new sf::View(sf::FloatRect(0.f, 0.f, 800.f, 900.f));
 	this->interfaceView->setViewport(sf::FloatRect(0.f, 0.85f, 1.f, 1.f));
 	
 
-
 	//Stats
 	this->m_valueOfWood = 0;
-	this->m_valueOfWoodString = "Wood: " + std::to_string(this->m_valueOfWood);
-	this->m_textValueOfWood = createText(25, sf::Vector2f(5, -5), this->m_valueOfWoodString, sf::Color::Green);
+	this->m_textValueOfWood = createText(23, sf::Vector2f(60, 4), this->m_valueOfWoodString, sf::Color::Green);
+	this->m_textValueOfWood.setString("0");
+	this->cursorPosition = createText(23, sf::Vector2f(745, 4), this->posOfCursorString, sf::Color::Yellow);
 
+	{
+		this->vec_dwarfData.push_back(this->createText(20, sf::Vector2f(525, 33), " ", sf::Color::Red));
+		this->vec_dwarfData.push_back(this->createText(20, sf::Vector2f(495, 53), " ", sf::Color::Red));
+		this->vec_dwarfData.push_back(this->createText(20, sf::Vector2f(515, 73), " ", sf::Color::Blue));
+		this->vec_dwarfData.push_back(this->createText(20, sf::Vector2f(520, 93), " ", sf::Color::Green));
+		this->vec_dwarfData.push_back(this->createText(20, sf::Vector2f(545, 113), " ", sf::Color::Cyan));
 
-	this->cursorPosition = createText(25, sf::Vector2f(600, -5), this->posOfCursorString, sf::Color::Yellow);
-	
-
+	}
 }
 
 Interface::~Interface()
@@ -38,10 +44,13 @@ Interface::~Interface()
 
 void Interface::render(sf::RenderTarget* target)
 {
-	target->draw(this->lineBetweenStats);
-	target->draw(this->m_interfaceText);
+	target->draw(this->interfaceSprite);
 	target->draw(this->m_textValueOfWood);
 	target->draw(this->cursorPosition);
+	for (auto& data : vec_dwarfData) {
+		target->draw(data);
+	}
+	
 }
 
 void Interface::update()
@@ -51,7 +60,7 @@ void Interface::update()
 
 void Interface::setCursorPosition(int posX, int posY)
 {
-	this->posOfCursorString = "Cursor pos: " + std::to_string(posX) + ":" + std::to_string(posY);
+	this->posOfCursorString = std::to_string(posX) + ":" + std::to_string(posY);
 	this->cursorPosition.setString(this->posOfCursorString);
 }
 
@@ -60,8 +69,22 @@ void Interface::updateWoodValue(int valueOfWood)
 {
 
 	this->m_valueOfWood += valueOfWood;
-	this->m_valueOfWoodString = "Wood: " + std::to_string(this->m_valueOfWood);
+	this->m_valueOfWoodString = std::to_string(this->m_valueOfWood);
 	this->m_textValueOfWood.setString(this->m_valueOfWoodString);
+}
+
+void Interface::setDataFromDwarf(int id, int hp, int job, int state, int strength, int lvl)
+{
+	vec_dwarfData[0].setString(std::to_string(id));
+	vec_dwarfData[1].setString(std::to_string(hp));
+
+	if (job == 0)this->dwarf_job = "Free"; if (job == 1)this->dwarf_job = "Lumberjack"; if (job == 2)this->dwarf_job = "Miner"; if (job == 3)this->dwarf_job = "Builder";
+	vec_dwarfData[2].setString(this->dwarf_job);
+
+	if (state == 0) this->dwarf_state = "Idle"; if (state == 1) this->dwarf_state = "Walking"; if (state == 2) this->dwarf_state = "Cutting";
+	vec_dwarfData[3].setString(this->dwarf_state);
+
+	vec_dwarfData[4].setString(std::to_string(strength));
 }
 
 sf::Text Interface::createText(int characterSize, sf::Vector2f pos, std::string stringText, sf::Color color)

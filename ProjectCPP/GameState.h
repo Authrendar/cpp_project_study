@@ -8,10 +8,10 @@
 #include "Map.h"
 #include "Tree.h"
 #include "Cursor.h"
-#include "ObjectRenderMenager.h"
 #include "Animal.h"
 #include "Beaver.h"
 #include "Bushes.h"
+#include "Stock.h"
 class GameState :
 	public State
 {
@@ -34,6 +34,7 @@ private:
 
 
 	void setTileToRemove();
+	void setBuildingToBuild(); //no niezla nazwa funkcji XD
 	//Map variables
 	Map *map;
 	sf::View *m_view;
@@ -47,13 +48,15 @@ private:
 	std::vector<Animal*> animals;
 	std::vector<Bushes*> bushes;
 
+	Building* m_preparedBuilding;
+
 	//Interface
 	Interface* m_interface;
 
 	Cursor *m_cursor;
 	sf::Clock gameClock;
 
-	ObjectRenderMenager objRenderMen;
+	
 	float gameTime;
 
 	sf::Clock pathFindingClock;

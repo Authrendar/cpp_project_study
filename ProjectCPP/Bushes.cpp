@@ -3,12 +3,12 @@
 Bushes::Bushes(sf::Vector2f pos, bool withBerries)
 {
 	if(!withBerries)
-		this->rectTexture = sf::IntRect(48, 12, 12, 12);
+		this->m_rectTexture = sf::IntRect(48, 12, 12, 12);
 	else
-		this->rectTexture = sf::IntRect(0, 24, 12, 12);
+		this->m_rectTexture = sf::IntRect(0, 24, 12, 12);
 
 
-	if (!this->m_texture.loadFromFile("tileset.png", this->rectTexture)) {
+	if (!this->m_texture.loadFromFile("tileset.png", this->m_rectTexture)) {
 		std::cout << "Couldn't find any texture" << std::endl;
 	}
 	this->m_sprite.setTexture(m_texture);
@@ -16,6 +16,11 @@ Bushes::Bushes(sf::Vector2f pos, bool withBerries)
 	this->m_sprite.setPosition(pos);
 
 	this->m_withBerries = withBerries;
+	this->m_canInteract = false;
+	if (withBerries)
+		this->m_nameOfObject = "bushesBerries";
+	else
+		this->m_nameOfObject = "bushesEmpty";
 }
 
 Bushes::~Bushes()
@@ -31,16 +36,32 @@ void Bushes::render(sf::RenderTarget* target)
 	target->draw(this->m_sprite);
 }
 
-float Bushes::getPosX()
+int Bushes::getPosX()
 {
-	return 0.0f;
+	return this->m_sprite.getPosition().x /12;
 }
 
-float Bushes::getPosY()
+int Bushes::getPosY()
 {
-	return 0.0f;
+	return this->m_sprite.getPosition().y / 12;
 }
 
-void Bushes::changeTexture(bool withBerries)
+std::string Bushes::getObjectType()
 {
+	return this->m_nameOfObject;
+}
+
+void Bushes::changeStateOfBushes(bool withBerries)
+{
+
+}
+
+void Bushes::changeTexture(sf::IntRect rectTexture)
+{
+	this->m_rectTexture = rectTexture;
+	if (!this->m_texture.loadFromFile("tileset.png", this->m_rectTexture)) {
+		std::cout << "Couldn't find any texture" << std::endl;
+	}
+	
+	this->m_sprite.setTexture(m_texture);
 }

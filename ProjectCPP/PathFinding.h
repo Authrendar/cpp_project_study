@@ -18,11 +18,10 @@ public:
 
 	void setLevelData(std::vector<int> map);
 
-	void setEntitySphere(int posX, int posY);
 	void setStartEndNodes(int x1, int y1, int x2, int y2);
 	void setObstacleNode(int posX, int posY);
 
-	bool SolveAStar(int nMapWidth, int nMapHeight);
+	bool SolveAStar();
 
 	void updateDataLevel();
 
