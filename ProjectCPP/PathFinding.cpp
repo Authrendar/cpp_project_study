@@ -1,6 +1,6 @@
 #include "PathFinding.h"
 
-PathFinding::PathFinding(sf::RenderWindow* window, sf::Vector2u WINDOW_SIZE):window{window}
+PathFinding::PathFinding()
 {
 	//this->WINDOW_SIZE = WINDOW_SIZE;
 

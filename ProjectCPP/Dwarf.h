@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "PathFinding.h"
 class Dwarf :public Entity
 {
 private:
@@ -33,6 +34,10 @@ public:
 	virtual float getPosX() { return this->m_sprite.getPosition().x /12; }
 	virtual float getPosY() { return this->m_sprite.getPosition().y/12; }
 
+	void path_setPositions(int x, int y);
+	void path_setMap(std::vector<int> map);
+	void path_findPath(int size);
+	void path_InstructionSolution();
 	void setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY, int index, int dwarfState);
 
 	void setDwarfState(int state);
@@ -61,6 +66,7 @@ public:
 	
 
 	void clearPathVec();
+	void path_clearPathVec();
 
 	bool isSelected;
 
@@ -76,10 +82,22 @@ public:
 		return this->m_isGoing;
 	}
 
+	void setUpdateInstructions(bool updateInstructions) {
+		this->m_updateInstructions = updateInstructions;
+	}
+
+	bool getUpdateInstructions() {
+		return this->m_updateInstructions;
+	}
+
 private:
 
 	void moveDwarf();
 	void setDwarfColor();
+
+
+
+	int m_index;
 
 	int velX, velY;
 	int m_number;
@@ -91,13 +109,14 @@ private:
 	sf::Clock pathDwarfClock;
 	float pathTime;
 
-	
+	PathFinding* findPath;
 	
 	sf::IntRect rectTexture;
 	sf::Texture m_texture;
 	sf::Sprite m_sprite;
 
 	bool m_isGoing;
+	bool m_updateInstructions;
 	
 	//Eq stats
 

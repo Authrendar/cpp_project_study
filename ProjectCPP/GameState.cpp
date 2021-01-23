@@ -56,17 +56,15 @@ void GameState::update(const float& dt)
 			this->m_interface->setCursorPosition(this->m_cursor->getPosX(), this->m_cursor->getPosY());
 
 		this->setTileToRemove();
-		
-		this->pathSystem->setLevelData(this->map->getLevelData());
-		//this->setBuildingToBuild(); // XD
-		
-		this->lumberjackUpdate();
 		this->setBuildingToBuild();
+		
+		
 		for (auto& dwarf : dwarves) {
+			this->cuttingTrees(dwarf);
 			dwarf->update(dt);
 			if (dwarf->getIsSelected())
 				this->m_interface->setDataFromDwarf(dwarf->getNumberOfDwarf(), dwarf->getDwarfHp(), dwarf->getCurrentJob(), dwarf->getCurrentState(), dwarf->getDwarfStrength(), dwarf->getDwarfLvl());
-			
+			dwarf->path_InstructionSolution();
 
 		}
 		for (auto& animal : animals) {
@@ -128,12 +126,8 @@ void GameState::initMap()
 
 	
 	
-	pathSystem = new PathFinding(this->window, sf::Vector2u(800.f, 600.f));
-	this->pathSystem->setLevelData(this->map->getLevelData());
-	
-
-	
-	
+	pathSystem = new PathFinding();
+	//this->pathSystem->setLevelData(this->map->getLevelData());
 
 }
 void GameState::initObjects()
@@ -232,6 +226,7 @@ void GameState::keyboardUpdate()
 					if (dwarf->getCurrentJob() != 1)
 					{
 						dwarf->setDwarfJob(1);
+						this->lumberjackUpdate(dwarf);
 					}
 					else {
 						dwarf->setDwarfJob(0);
@@ -245,6 +240,8 @@ void GameState::keyboardUpdate()
 					if (dwarf->getCurrentJob() != 3)
 					{
 						dwarf->setDwarfJob(3);
+						this->builderUpdate();
+						
 					}
 					else {
 						dwarf->setDwarfJob(0);
@@ -273,9 +270,7 @@ void GameState::setTileToRemove()
 
 	if (this->m_cursor->getIsQButtonClicked()) {
 		if (this->m_cursor->getCurrentTile() == 1) {
-			for (auto& dwarf : dwarves) {
-				dwarf->setIsGoing(false);
-			}
+			
 			for (int i = 0; i < trees.size(); i++) {
 				if ((this->m_cursor->getPosX() == trees[i]->getPosX()) && (this->m_cursor->getPosY() == trees[i]->getPosY())) {
 					trees.erase(trees.begin() + i);
@@ -283,6 +278,9 @@ void GameState::setTileToRemove()
 			}
 			if(this->trees.size()<6)
 				this->trees.push_back(new Tree(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0));
+
+			for(auto &dwarf: this->dwarves)
+				this->lumberjackUpdate(dwarf);
 			
 		}
 
@@ -302,65 +300,47 @@ void GameState::setBuildingToBuild()
 
 		if (this->m_cursor->getCurrentTile() == 2) {
 			this->m_preparedBuilding = new Stock(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0); // ostatnia liczba to typ skladu zapaso
-
-			
+			this->builderUpdate();
 		}
 		this->m_cursor->setButtonRState(false);
 	}
 	
 
-	for (auto& dwarf : dwarves) {
-		if (dwarf->getCurrentJob() == 3) {
-			if (this->m_preparedBuilding != nullptr) {
-				if (!dwarf->getIsGoing()) {
-					this->pathSystem->setStartEndNodes(this->m_preparedBuilding->getPosX(), this->m_preparedBuilding->getPosY(), dwarf->getPosX(), dwarf->getPosY());
-					this->pathSystem->SolveAStar();
-					this->pathSystem->update();
-
-					dwarf->setIsGoing(true);
-				}
-				
-				dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), 1, 1); 
-				
-				
-				
-				
-			}
-			dwarf->clearPathVec();
-		}
-	}
-
 
 	//Build the building
-	for (auto& dwarf : dwarves) {
+	for (auto& dwarf : this->dwarves) {
 		if (dwarf->getCurrentJob() == 3) {
 			if (this->m_preparedBuilding != nullptr) {
 				if ((this->m_preparedBuilding->getPosX() + 1 == int(dwarf->getPosX())) && (this->m_preparedBuilding->getPosY() == int(dwarf->getPosY())))
 				{
 					//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
-					std::cout << "No elo" << std::endl;
-					dwarf->setDwarfState(1);
+					//this->pathSystem->clearPathVector();
+					//std::cout << "No elo" << std::endl;
+					//dwarf->setDwarfState(4);
 					
 				}
 				if ((this->m_preparedBuilding->getPosX() - 1 == int(dwarf->getPosX())) && (this->m_preparedBuilding->getPosY() == int(dwarf->getPosY())))
 				{
-					std::cout << "No elo" << std::endl;
+					//std::cout << "No elo" << std::endl;
 					//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
-					dwarf->setDwarfState(1);
+					//this->pathSystem->clearPathVector();
+					//dwarf->setDwarfState(4);
 
 				}
 				if ((this->m_preparedBuilding->getPosY() - 1 == int(dwarf->getPosY())) && (this->m_preparedBuilding->getPosX() == int(dwarf->getPosX())))
 				{
-					std::cout << "No elo" << std::endl;
+					//std::cout << "No elo" << std::endl;
 					//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
-					dwarf->setDwarfState(1);
+				//	this->pathSystem->clearPathVector();
+					//dwarf->setDwarfState(4);
 
 				}
 				if ((this->m_preparedBuilding->getPosY() + 1 ==int( dwarf->getPosY())) && (this->m_preparedBuilding->getPosX() == int(dwarf->getPosX())))
 				{
-					std::cout << "No elo" << std::endl;
+					//std::cout << "No elo" << std::endl;
+					//this->pathSystem->clearPathVector();
 					//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
-					dwarf->setDwarfState(1);
+					//dwarf->setDwarfState(4);
 
 				}
 			}
@@ -371,101 +351,106 @@ void GameState::setBuildingToBuild()
 	
 }
 
-void GameState::lumberjackUpdate()
+void GameState::lumberjackUpdate(Dwarf * dwarf)
 {
-
-	for (auto& dwarf : dwarves) { //Path to tree
-		if (!dwarf->isDwarfMustPutAway()) {
-			if (dwarf->getCurrentJob() == 1)
-			{
-				for (int i = 0; i < trees.size(); i++) {
-
-					if (!dwarf->getIsGoing()) {
-						this->pathSystem->setStartEndNodes(trees[i]->getPosX(), trees[i]->getPosY(), dwarf->getPosX(), dwarf->getPosY());
-						this->pathSystem->SolveAStar();
-						this->pathSystem->update();
-					}
-					
-					dwarf->setInstructionsMove(this->pathSystem->getPathPosX(), this->pathSystem->getPathPosY(), this->trees.size(), 1); //2 to wartosc stanu dwarfa - w tym przypadku to CUTTING
-
-					if (i == trees.size() - 1)
-						dwarf->setIsGoing(true);
-
-					
-				}
-				dwarf->clearPathVec();
+		if (dwarf->getCurrentJob() == 1) {
+		dwarf->path_clearPathVec();
+		dwarf->clearPathVec();
+		
+		for (int i = 0; i < trees.size(); i++) {
 				
+				dwarf->setUpdateInstructions(true);
+				dwarf->path_setMap(this->map->getLevelData());
+				dwarf->path_setPositions(int(trees[i]->getPosX()), int(trees[i]->getPosY()));
+				dwarf->path_findPath(trees.size());
+				if (i == trees.size() - 1) {
+					dwarf->setUpdateInstructions(false);
+				}
 
 			}
 
+	}
+	
+
+}
+
+void GameState::builderUpdate()
+{
+	for (auto& dwarf : dwarves) {
+		if (dwarf->getCurrentJob() == 3) {
+			if (this->m_preparedBuilding != nullptr) {
+				dwarf->path_clearPathVec();
+				dwarf->clearPathVec();
+
+				dwarf->setUpdateInstructions(true);
+				dwarf->path_setMap(this->map->getLevelData());
+				dwarf->path_setPositions(this->m_preparedBuilding->getPosX(), this->m_preparedBuilding->getPosY());
+				dwarf->path_findPath(1);
+				dwarf->setUpdateInstructions(false);
+			}
 		}
 	}
-
-	/* #####################*/
-
-	//Cutting trees
-
-	for (auto& dwarf : dwarves) {
-		if (!dwarf->isDwarfMustPutAway()){
-			if ((dwarf->getCurrentJob() == 1) && (trees.size() > 0)) {
-				std::vector <int> indexVec;
-				for (int i = 0; i < trees.size(); i++) {
-
-
-					if ((this->trees[i]->getPosX() + 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
-					{
-						indexVec.push_back(i);
-						//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
-						dwarf->setDwarfState(2);
-						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
-					}
-					if ((this->trees[i]->getPosX() - 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
-					{
-						indexVec.push_back(i);
-						dwarf->setDwarfState(2);
-						//	std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
-						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
-					}
-					if ((this->trees[i]->getPosY() - 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
-					{
-						indexVec.push_back(i);
-						dwarf->setDwarfState(2);
-						//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
-						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
-					}
-					if ((this->trees[i]->getPosY() + 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
-					{
-						indexVec.push_back(i);
-						dwarf->setDwarfState(2);
-						//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
-						this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
-					}
-
-					if (trees[i]->getHpOfTree() == 0) {
-						this->map->updateMapTitle(trees[i]->getPosX(), trees[i]->getPosY(), 2);
-						//std::cout << "Trees: " << trees[i]->getPosX() << ":" << trees[i]->getPosY() << std::endl;
-						this->m_interface->updateWoodValue(trees[i]->getValueOfWood());
-						dwarf->setWoodValue(trees[i]->getValueOfWood());
-						this->trees.erase(trees.begin() + i);
-
-						this->pathSystem->clearPathVector();
-
-						dwarf->setDwarfState(0);
-						dwarf->setIsGoing(false);
-
-
-						indexVec.clear();
-
-					}
-
-
-				}
-			}
-			else
-			{
-				dwarf->setDwarfState(0);
-			}
-	}
 }
+
+void GameState::cuttingTrees(Dwarf *dwarf)
+{	
+		if (!dwarf->isDwarfMustPutAway()) {
+			if (dwarf->getCurrentJob() == 1) {
+				if (trees.size() > 0) {
+					std::vector <int> indexVec;
+					for (int i = 0; i < trees.size(); i++) {
+
+
+						if ((this->trees[i]->getPosX() + 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
+						{
+							indexVec.push_back(i);
+							//std::cout <<"Indeksik: "<< this->trees[i]->getIndexOfTree() << std::endl;
+							dwarf->setDwarfState(2);
+							this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
+						}
+						if ((this->trees[i]->getPosX() - 1 == dwarf->getPosX()) && (this->trees[i]->getPosY() == dwarf->getPosY()))
+						{
+							indexVec.push_back(i);
+							dwarf->setDwarfState(2);
+							//	std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
+							this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
+						}
+						if ((this->trees[i]->getPosY() - 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
+						{
+							indexVec.push_back(i);
+							dwarf->setDwarfState(2);
+							//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
+							this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
+						}
+						if ((this->trees[i]->getPosY() + 1 == dwarf->getPosY()) && (this->trees[i]->getPosX() == dwarf->getPosX()))
+						{
+							indexVec.push_back(i);
+							dwarf->setDwarfState(2);
+							//std::cout << "Indeksik: " << this->trees[i]->getIndexOfTree() << std::endl;
+							this->trees[indexVec[0]]->cutTheTree(dwarf->getDwarfStrength());
+						}
+
+						if (trees[i]->getHpOfTree() == 0) {
+							this->map->updateMapTitle(trees[i]->getPosX(), trees[i]->getPosY(), 2);
+							//std::cout << "Trees: " << trees[i]->getPosX() << ":" << trees[i]->getPosY() << std::endl;
+							this->m_interface->updateWoodValue(trees[i]->getValueOfWood());
+							dwarf->setWoodValue(trees[i]->getValueOfWood());
+
+							this->trees.erase(trees.begin() + i);
+
+							this->lumberjackUpdate(dwarf);
+							dwarf->setDwarfState(1);
+							indexVec.clear();
+
+
+						}
+
+
+					}
+				}
+				else
+					dwarf->setDwarfState(0);
+			}
+		}
 }
 

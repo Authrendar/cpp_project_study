@@ -43,6 +43,7 @@ Dwarf::~Dwarf()
 
 void Dwarf::update(const float& dt)
 {
+	
 	moveDwarf();
 	setDwarfColor();
 	this->m_sprite.move(this->velX, this->velY);
@@ -57,38 +58,64 @@ void Dwarf::render(sf::RenderTarget* target)
 	target->draw(this->m_sprite);
 }
 
+void Dwarf::path_setPositions(int x, int y)
+{
+	if(this->getUpdateInstructions())
+		this->findPath->setStartEndNodes(x, y, this->getPosX(),this->getPosY());
+
+}
+
+void Dwarf::path_setMap(std::vector<int> map)
+{
+	if (this->getUpdateInstructions()) {
+		this->findPath = new PathFinding();
+		this->findPath->setLevelData(map);
+	}
+}
+
+void Dwarf::path_findPath(int size)
+{
+	if (this->getUpdateInstructions()) {
+		this->findPath->SolveAStar();
+		this->findPath->update();
+		this->setInstructionsMove(this->findPath->getPathPosX(), this->findPath->getPathPosY(), size, 1);
+		this->setUpdateInstructions(false);
+			
+	}
+	
+}
+
 void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY, int index, int dwarfState)
 {	
-	
-		
-
 		this->vecSizes.push_back(pathPosX.size());
 		this->vecInsX.push_back(pathPosX);
 		this->vecInsY.push_back(pathPosY);
-
-		
-		
-		//if (this->vecInsX.size() > 0)
 		this->setDwarfState(dwarfState);
-		
-		if (vecSizes.size() == index) {
-			std::sort(this->vecSizes.begin(), std::partition(vecSizes.begin(), vecSizes.end(), [](int n) { return n != 0; }));
-			vecSizes.resize(1);
+		this->m_index = index;
+}
+
+void Dwarf::path_InstructionSolution()
+{
+	
+		if (m_index > 0) {
 			
-			for (int i = 0; i < this->vecInsX.size(); i++) {
-				if ((this->vecSizes[0] == this->vecInsX[i].size()) && (this->vecSizes[0] == this->vecInsY[i].size()))
-					for (int j = 1; j < this->vecInsX[i].size(); j++) {
-						if ((this->getPosX() == this->vecInsX[i][j - 1]) && (this->getPosY() == this->vecInsY[i][j - 1])) {
-							this->m_pathPosX = this->vecInsX[i][j];
-							this->m_pathPosY = this->vecInsY[i][j];
-							
-							
+				std::sort(this->vecSizes.begin(), std::partition(vecSizes.begin(), vecSizes.end(), [](int n) { return n != 0; }));
+				vecSizes.resize(1);
+	
+				for (int i = 0; i < this->vecInsX.size(); i++) {
+					if ((this->vecSizes[0] == this->vecInsX[i].size()) && (this->vecSizes[0] == this->vecInsY[i].size()))
+						for (int j = 1; j < this->vecInsX[i].size(); j++) {
+						//	std::cout << this->vecInsX[i].size() << std::endl;
+							if ((this->getPosX() == this->vecInsX[i][j - 1]) && (this->getPosY() == this->vecInsY[i][j - 1])) {
+								this->m_pathPosX = this->vecInsX[i][j];
+								this->m_pathPosY = this->vecInsY[i][j];
+								std::cout << m_pathPosX << ":" << m_pathPosY << std::endl;
+							}
 						}
-					}
-			}
+					
+				}
+			
 		}
-		
-		
 }
 
 void Dwarf::setDwarfState(int states)
@@ -128,7 +155,7 @@ void Dwarf::setWoodValue(int woodValue)
 {
 	this->m_woodValue += woodValue;
 
-	if (m_woodValue == 30)
+	if (m_woodValue == 1000)
 		this->mustPutAway = true;
 
 	std::cout << "Dwarf value of wood: " << this->m_woodValue << " is he must put away? " << this->mustPutAway << std::endl;
@@ -155,12 +182,20 @@ void Dwarf::setDwarfColor()
 	}
 }
 
+
+
 void Dwarf::clearPathVec()
 {
 	this->vecSizes.clear();
 	this->vecInsX.clear();
 	this->vecInsY.clear();
 	
+	
+}
+
+void Dwarf::path_clearPathVec()
+{	if(this->vecSizes.size()>0)
+		this->findPath->clearPathVector();
 }
 
 void Dwarf::moveDwarf()
@@ -169,12 +204,13 @@ void Dwarf::moveDwarf()
 	
 	switch (this->dwarf_states) {
 	case States::IDLE:
-		if (this->dwarf_job == BUILDER)
-			std::cout << "Stoi se " << std::endl;
+		
+		//this->setIsGoing(false);
+		
 		break;
 
 	case States::WALK:
-		std::cout << "no idzie" << std::endl;
+		
 		if ((m_pathPosX > 0) || (m_pathPosY > 0)) {
 			if (m_pathPosX < this->getPosX())
 			{
@@ -202,7 +238,8 @@ void Dwarf::moveDwarf()
 
 		break;
 	case States::CUTTING:
-	
+		//this->clearPathVec();
+		//this->findPath->clearPathVector();
 		break;
 	}
 

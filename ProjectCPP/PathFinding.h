@@ -14,7 +14,7 @@ using namespace std;
 class PathFinding {
 public:
 	
-	PathFinding(sf::RenderWindow* window, sf::Vector2u WINDOW_SIZE);
+	PathFinding();
 
 	void setLevelData(std::vector<int> map);
 
@@ -61,11 +61,6 @@ private:
 	sNode* nodeStart = nullptr;
 	sNode* nodeEnd = nullptr;
 
-
-	
-	sf::Vector2i mousePos;
-
-	sf::RenderWindow* window = nullptr;
 
 	bool b8Connection = false;
 

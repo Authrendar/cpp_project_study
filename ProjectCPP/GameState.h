@@ -3,7 +3,7 @@
 
 #include "State.h"
 #include "Interface.h"
-#include "PathFinding.h"
+//#include "PathFinding.h"
 #include "Dwarf.h"
 #include "Map.h"
 #include "Tree.h"
@@ -47,7 +47,7 @@ private:
 	std::vector<Tree*> trees;
 	std::vector<Animal*> animals;
 	std::vector<Bushes*> bushes;
-
+	std::vector<PathFinding*> vec_pathSystem;
 	Building* m_preparedBuilding;
 
 	//Interface
@@ -66,7 +66,10 @@ private:
 	sf::Clock keyPressClock;
 	float keyPressTime;
 
-	void lumberjackUpdate();
+	void lumberjackUpdate(Dwarf *dwarf);
+	void builderUpdate();
+	void cuttingTrees(Dwarf *dwarf);
+	//void resetPathInstructions();
 	//Dwarves variables
 	
 };
