@@ -8,14 +8,16 @@ private:
 		IDLE = 0,
 		WALK = 1,
 		CUTTING = 2,
-		BUILDING =3 
+		BUILDING =3,
+		WORKING = 4
 	};
 
 	enum Job :signed int {
 		FREE,
 		LUMBERJACK,
 		MINER,
-		BUILDER
+		BUILDER,
+		PORTER
 	};
 	struct stats {
 		int hp;
@@ -48,6 +50,7 @@ public:
 
 	//Stat set
 	void setWoodValue(int woodValue);
+	int getWoodValue() { return this->m_woodValue; }
 	void resetWoodValue();
 
 

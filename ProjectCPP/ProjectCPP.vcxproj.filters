@@ -123,6 +123,9 @@
     <ClCompile Include="Stock.cpp">
       <Filter>Source Files\Object\Buildings</Filter>
     </ClCompile>
+    <ClCompile Include="Sawmill.cpp">
+      <Filter>Source Files\Object\Buildings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -189,6 +192,9 @@
       <Filter>Header Files\Object\Buildings</Filter>
     </ClInclude>
     <ClInclude Include="Stock.h">
+      <Filter>Header Files\Object\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Sawmill.h">
       <Filter>Header Files\Object\Buildings</Filter>
     </ClInclude>
   </ItemGroup>

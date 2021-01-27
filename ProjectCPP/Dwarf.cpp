@@ -151,6 +151,9 @@ void Dwarf::setDwarfJob(int job)
 	case 3:
 		this->dwarf_job = BUILDER;
 		break;
+	case 4:
+		this->dwarf_job = PORTER;
+		break;
 	}
 }
 
@@ -161,8 +164,14 @@ void Dwarf::setWoodValue(int woodValue)
 	if (m_woodValue == 20)
 		this->mustPutAway = true;
 	
+	if (this->getCurrentJob() == 4) {
+		if (m_woodValue > 0) {
+			this->mustPutAway = true;
+			
+		}
+	}
 
-	std::cout << "Dwarf value of wood: " << this->m_woodValue << " is he must put away? " << this->mustPutAway << std::endl;
+	//std::cout << "Dwarf value of wood: " << this->m_woodValue << " is he must put away? " << this->mustPutAway << std::endl;
 }
 
 void Dwarf::resetWoodValue()
@@ -190,6 +199,13 @@ void Dwarf::setDwarfColor()
 			this->m_sprite.setColor(sf::Color(255, 69, 0));
 		if (this->getIsSelected())
 			this->m_sprite.setColor(sf::Color(165, 42, 42));
+	}
+
+	if (dwarf_job == PORTER) {
+		if (this->m_sprite.getColor() == sf::Color::Blue)
+			this->m_sprite.setColor(sf::Color(75, 0, 130));
+		if (this->getIsSelected())
+			this->m_sprite.setColor(sf::Color(238, 130, 238));
 	}
 }
 

@@ -23,6 +23,8 @@ public:
 	void setCurrnetTile(int tile);
 	int getCurrentTile() { return this->mn_currentTile; }
 
+
+
 	void setPosition(int x, int y) {
 		this->m_cursorSprite.setPosition(sf::Vector2f(x * 12, y * 12));
 	}
@@ -39,6 +41,8 @@ public:
 	void setButtonRState(bool button) { this->isButtonRClicked = button; }
 	bool getIsRButtonClicked() { return this->isButtonRClicked; }
 
+	void setButtonTState(bool button) { this->isButtonTClicked = button; }
+	bool getIsTButtonClicked() { return this->isButtonTClicked; }
 
 	bool getObjectCanBePlaced() { return this->m_objectCanBePlaced; }
 	void setObjectCanBePlaced(bool objCanBePlaced) { this->m_objectCanBePlaced = objCanBePlaced; }
@@ -69,6 +73,7 @@ private:
 	//Buttons
 	bool isButtonQClicked = false;
 	bool isButtonRClicked = false;
-	
+	bool isButtonTClicked = false;
+
 	bool m_objectCanBePlaced = true;
 };

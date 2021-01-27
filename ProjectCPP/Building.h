@@ -22,9 +22,16 @@ public:
 
 
 	virtual void changeTexture(int buildingState) = 0; //W zaleznosci od typu budynku, kazdy budynek ma swoje okreslone wartosci textur jakie moze zmieniac
+	virtual void changeLevelTypeTexture() = 0;
 
+	virtual void setLevelTypeOfBuilding(int type) = 0;
+	virtual int getLeveLTypeOfBuilding() = 0;
 
 	virtual void setBuildingStatus(int) = 0; //0 -> while building, 1->already built
 	virtual int getBuildingStatus() = 0; 
+
+
+	virtual int getBuildingGoods() = 0;
+	virtual void setBuildingGoods(int, bool) = 0; //add or sub
 };
 

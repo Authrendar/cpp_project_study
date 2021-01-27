@@ -12,6 +12,7 @@
 #include "Beaver.h"
 #include "Bushes.h"
 #include "Stock.h"
+#include "Sawmill.h"
 class GameState :
 	public State
 {
@@ -55,6 +56,7 @@ private:
 	//Counters
 	
 	int m_StockCounter = 0;
+	int m_SawmillCounter = 0;
 	//Interface
 	Interface* m_interface;
 
@@ -76,6 +78,8 @@ private:
 	void cuttingTrees(Dwarf *dwarf);
 	void setTileToRemove();
 	void setBuildingToBuild(Dwarf *dwarf); //no niezla nazwa funkcji XD
+	void porterUpdate(Dwarf* dwarf);
+	void carryingWood(Dwarf* dwarf);
 	//void resetPathInstructions();
 	//Dwarves variables
 	bool resetPaths = false;

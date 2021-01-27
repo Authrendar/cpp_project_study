@@ -1,17 +1,16 @@
 #pragma once
 #include "Building.h"
-
-class Stock :
+class Sawmill :
 	public Building
 {
 public:
-	Stock(sf::Vector2f pos, int typeOfStock);
-	virtual ~Stock();
+	Sawmill(sf::Vector2f pos);
+	virtual ~Sawmill();
 	virtual void update(const float& dt);
 	virtual void render(sf::RenderTarget* target);
 
-	virtual int getPosX() { return this->m_sprite.getPosition().x/12; }
-	virtual int getPosY() { return this->m_sprite.getPosition().y/12; }
+	virtual int getPosX() { return this->m_sprite.getPosition().x / 12; }
+	virtual int getPosY() { return this->m_sprite.getPosition().y / 12; }
 
 	virtual std::string getObjectType() { return this->buildingType; }
 
@@ -27,17 +26,16 @@ public:
 
 	virtual void checkIfDwarfNextToBuilding(Dwarf& dwarf);
 
-	virtual bool getIsDwarfNextToBuilding() { return this->m_nextToStock; }
+	virtual bool getIsDwarfNextToBuilding() { return this->m_nextToSawmill; }
 	virtual void changeLevelTypeTexture();
 
 	virtual void setLevelTypeOfBuilding(int type);
 	virtual int getLeveLTypeOfBuilding() {
 		return this->m_levelTypeOfBuilding;
 	}
+	virtual int getBuildingGoods() { return 0; }
+	virtual void setBuildingGoods(int, bool) { ; }
 
-	virtual void setBuildingGoods(int woodValue, bool);
-
-	virtual int getBuildingGoods() { return this->m_woodValue; }
 
 
 
@@ -50,17 +48,17 @@ private:
 	float buildingTimer;
 
 	bool m_canBeDeleted;
-	
 
-	std::string m_typeOfStock;
+
+	
 	std::string buildingType;
 
 	int m_buildStatus;
 	int m_buildingStatus;
 
-	bool m_nextToStock;
-	int m_woodValue;
-	
+	bool m_nextToSawmill;
+	//int m_woodValue;
+
 	int m_levelTypeOfBuilding;
 };
 

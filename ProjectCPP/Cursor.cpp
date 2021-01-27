@@ -54,6 +54,14 @@ void Cursor::update(const float &dt)
 
 				this->isButtonRClicked = true;
 
+				keyClock.restart();
+
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
+
+				this->isButtonTClicked = true;
+
 
 				keyClock.restart();
 
@@ -131,6 +139,7 @@ void Cursor::setCurrentObject(Object& obj)
 			this->setObjectCanBePlaced(false);
 
 		}
+		
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
 			if (obj.getObjectType() == "bushesBerries")

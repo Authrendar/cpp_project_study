@@ -63,8 +63,8 @@ void Stock::changeTexture(int buildingState)
 
 void Stock::checkIfDwarfNextToBuilding(Dwarf& dwarf)
 {
-	if ((dwarf.getCurrentJob() == 1) && (dwarf.isDwarfMustPutAway())) {
-
+	if ((((dwarf.getCurrentJob() == 1)&&(dwarf.isDwarfMustPutAway()))||(dwarf.getCurrentJob()==4))) {
+		
 		if ((this->getPosX() + 1 == int(dwarf.getPosX())) && (this->getPosY() == int(dwarf.getPosY())))
 			this->m_nextToStock = true;
 		
@@ -80,6 +80,35 @@ void Stock::checkIfDwarfNextToBuilding(Dwarf& dwarf)
 	}
 	else 
 		this->m_nextToStock = false;
+
+	
+}
+
+void Stock::changeLevelTypeTexture()
+{
+	if (this->getLeveLTypeOfBuilding() == 0)
+	{
+		this->rectTexture = sf::IntRect(48, 24, 12, 12);
+		if (!this->m_texture.loadFromFile("tileset.png", this->rectTexture)) {
+			std::cout << "Couldn't find any texture" << std::endl;
+		}
+
+		this->m_sprite.setTexture(m_texture);
+	}
+}
+
+void Stock::setLevelTypeOfBuilding(int type)
+{
+
+	this->m_levelTypeOfBuilding = type;
+	std::cout << this->getLeveLTypeOfBuilding() << std::endl;
+
+}
+
+void Stock::setBuildingGoods(int woodValue, bool add)
+{
+
+	this->m_woodValue += woodValue;
 	
 }
 

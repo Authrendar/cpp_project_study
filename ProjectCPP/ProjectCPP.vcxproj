@@ -152,6 +152,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PathFinding.cpp" />
     <ClCompile Include="PerlinNoiseGenerator.cpp" />
+    <ClCompile Include="Sawmill.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Stock.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="PathFinding.h" />
     <ClInclude Include="PerlinNoiseGenerator.h" />
+    <ClInclude Include="Sawmill.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Stock.h" />
     <ClInclude Include="Tile.h" />

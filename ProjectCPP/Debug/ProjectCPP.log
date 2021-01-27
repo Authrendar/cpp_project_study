@@ -89,16 +89,16 @@ D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(21,62): warning C4244:         w
 D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(21,62): warning C4244:         [
 D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(21,62): warning C4244:             T=float
 D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(21,62): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,59): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,59): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,59): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,59): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,59): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,51): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,51): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,51): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,51): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(27,51): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,59): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,59): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,59): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,59): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,59): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,51): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,51): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,51): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,51): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\Cursor.h(29,51): warning C4244:         ]
 D:\sfml projects\ProjectCPP\ProjectCPP\Stock.h(13,63): warning C4244:  'return': conversion from 'T' to 'int', possible loss of data
 D:\sfml projects\ProjectCPP\ProjectCPP\Stock.h(13,63): warning C4244:         with
 D:\sfml projects\ProjectCPP\ProjectCPP\Stock.h(13,63): warning C4244:         [
@@ -109,67 +109,89 @@ D:\sfml projects\ProjectCPP\ProjectCPP\Stock.h(14,63): warning C4244:         wi
 D:\sfml projects\ProjectCPP\ProjectCPP\Stock.h(14,63): warning C4244:         [
 D:\sfml projects\ProjectCPP\ProjectCPP\Stock.h(14,63): warning C4244:             T=float
 D:\sfml projects\ProjectCPP\ProjectCPP\Stock.h(14,63): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(12,64): warning C4244:  'return': conversion from 'T' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(12,64): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(12,64): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(12,64): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(12,64): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(13,64): warning C4244:  'return': conversion from 'T' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(13,64): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(13,64): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(13,64): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\Sawmill.h(13,64): warning C4244:         ]
 D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(10,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,97): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,97): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,97): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,97): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,97): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,69): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,69): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,69): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,69): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(157,69): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,98): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,98): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,98): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,98): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,98): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,71): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,71): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,71): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,71): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(168,71): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,98): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,98): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,98): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,98): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,98): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,70): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,70): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,70): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,70): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(182,70): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(207,66): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(207,48): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(219,66): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(219,48): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(231,66): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(231,48): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(288,22): warning C4018:  '<': signed/unsigned mismatch
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,124): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,124): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,124): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,124): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,124): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,75): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,75): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,75): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,75): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(294,75): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,132): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,132): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,132): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,132): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,132): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,83): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,83): warning C4244:         with
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,83): warning C4244:         [
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,83): warning C4244:             T=float
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(314,83): warning C4244:         ]
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(392,22): warning C4018:  '<': signed/unsigned mismatch
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(413,21): warning C4018:  '<': signed/unsigned mismatch
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(458,24): warning C4018:  '<': signed/unsigned mismatch
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(491,72): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(491,51): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,97): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,97): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,97): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,97): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,97): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,69): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,69): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,69): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,69): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(160,69): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,98): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,98): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,98): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,98): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,98): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,71): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,71): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,71): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,71): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(171,71): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,98): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,98): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,98): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,98): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,98): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,70): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,70): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,70): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,70): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(185,70): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(210,66): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(210,48): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(222,66): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(222,48): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(234,66): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(234,48): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(307,22): warning C4018:  '<': signed/unsigned mismatch
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,124): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,124): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,124): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,124): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,124): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,75): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,75): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,75): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,75): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(313,75): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,132): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,132): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,132): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,132): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,132): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,83): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,83): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,83): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,83): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(332,83): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,135): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,135): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,135): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,135): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,135): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,86): warning C4244:  'argument': conversion from 'int' to 'T', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,86): warning C4244:         with
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,86): warning C4244:         [
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,86): warning C4244:             T=float
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(357,86): warning C4244:         ]
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(435,22): warning C4018:  '<': signed/unsigned mismatch
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(457,21): warning C4018:  '<': signed/unsigned mismatch
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(516,22): warning C4018:  '<': signed/unsigned mismatch
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(537,21): warning C4018:  '<': signed/unsigned mismatch
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(578,24): warning C4018:  '<': signed/unsigned mismatch
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(611,72): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+D:\sfml projects\ProjectCPP\ProjectCPP\GameState.cpp(611,51): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
   ProjectCPP.vcxproj -> D:\sfml projects\ProjectCPP\Debug\ProjectCPP.exe

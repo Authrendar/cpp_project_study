@@ -79,6 +79,7 @@ void Interface::setDataFromDwarf(int id, int hp, int job, int state, int strengt
 	vec_dwarfData[1].setString(std::to_string(hp));
 
 	if (job == 0)this->dwarf_job = "Free"; if (job == 1)this->dwarf_job = "Lumberjack"; if (job == 2)this->dwarf_job = "Miner"; if (job == 3)this->dwarf_job = "Builder";
+	if (job == 4)this->dwarf_job = "Porter";
 	vec_dwarfData[2].setString(this->dwarf_job);
 
 	if (state == 0) this->dwarf_state = "Idle"; if (state == 1) this->dwarf_state = "Walking"; if (state == 2) this->dwarf_state = "Cutting"; if (state == 3) this->dwarf_state = "Building";

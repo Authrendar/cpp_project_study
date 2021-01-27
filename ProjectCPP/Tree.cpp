@@ -14,7 +14,7 @@ Tree::Tree(sf::Vector2f pos, int index)
 	//this->m_sprite.setColor(sf::Color::Green);
 
 	this->m_Stats.index = index;
-	this->m_Stats.hp = 50;
+	this->m_Stats.hp = 20;
 	this->m_Stats.valueOfWood = 10;
 }
 
