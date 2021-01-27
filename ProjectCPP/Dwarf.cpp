@@ -28,8 +28,8 @@ Dwarf::Dwarf(int number, sf::Vector2f pos)
 	this->m_stats.hp = 100;
 	this->m_stats.strength = 10;
 	this->m_stats.lvl = 1;
-
-
+	
+	this->isThereAnyStock = false;
 
 
 }
@@ -83,6 +83,7 @@ void Dwarf::path_findPath(int size)
 			
 	}
 	
+	
 }
 
 void Dwarf::setInstructionsMove(std::vector<int> pathPosX, std::vector<int> pathPosY, int index, int dwarfState)
@@ -109,7 +110,7 @@ void Dwarf::path_InstructionSolution()
 							if ((this->getPosX() == this->vecInsX[i][j - 1]) && (this->getPosY() == this->vecInsY[i][j - 1])) {
 								this->m_pathPosX = this->vecInsX[i][j];
 								this->m_pathPosY = this->vecInsY[i][j];
-								std::cout << m_pathPosX << ":" << m_pathPosY << std::endl;
+								
 							}
 						}
 					
@@ -129,6 +130,8 @@ void Dwarf::setDwarfState(int states)
 		break;
 	case 2:
 		this->dwarf_states = CUTTING;
+		break;
+	case 3: dwarf_states = BUILDING;
 		break;
 	}
 }
@@ -155,10 +158,18 @@ void Dwarf::setWoodValue(int woodValue)
 {
 	this->m_woodValue += woodValue;
 
-	if (m_woodValue == 1000)
+	if (m_woodValue == 20)
 		this->mustPutAway = true;
+	
 
 	std::cout << "Dwarf value of wood: " << this->m_woodValue << " is he must put away? " << this->mustPutAway << std::endl;
+}
+
+void Dwarf::resetWoodValue()
+{
+	this->m_woodValue = 0;
+	this->mustPutAway = false;
+
 }
 
 void Dwarf::setDwarfColor()
@@ -235,11 +246,13 @@ void Dwarf::moveDwarf()
 		
 		//std::cout << this->m_pathPosX << std::endl;
 		
-
 		break;
 	case States::CUTTING:
 		//this->clearPathVec();
 		//this->findPath->clearPathVector();
+		break;
+	case States::BUILDING:
+
 		break;
 	}
 

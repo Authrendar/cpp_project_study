@@ -29,6 +29,8 @@ public:
 
 	void setCurrentObject(Object &obj);
 
+
+	
 	
 	//buttons
 	void setButtonQState(bool button) { this->isButtonQClicked = button; }
@@ -37,6 +39,9 @@ public:
 	void setButtonRState(bool button) { this->isButtonRClicked = button; }
 	bool getIsRButtonClicked() { return this->isButtonRClicked; }
 
+
+	bool getObjectCanBePlaced() { return this->m_objectCanBePlaced; }
+	void setObjectCanBePlaced(bool objCanBePlaced) { this->m_objectCanBePlaced = objCanBePlaced; }
 	
 private:
 
@@ -65,4 +70,5 @@ private:
 	bool isButtonQClicked = false;
 	bool isButtonRClicked = false;
 	
+	bool m_objectCanBePlaced = true;
 };

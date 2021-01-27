@@ -34,6 +34,7 @@ public:
 	virtual float getPosX() { return this->m_sprite.getPosition().x /12; }
 	virtual float getPosY() { return this->m_sprite.getPosition().y/12; }
 
+	//Path finding functions
 	void path_setPositions(int x, int y);
 	void path_setMap(std::vector<int> map);
 	void path_findPath(int size);
@@ -47,7 +48,7 @@ public:
 
 	//Stat set
 	void setWoodValue(int woodValue);
-
+	void resetWoodValue();
 
 
 	bool isDwarfMustPutAway() { return this->mustPutAway; }
@@ -90,6 +91,14 @@ public:
 		return this->m_updateInstructions;
 	}
 
+	void setIsThereAnyStock(bool anyStock) {
+		this->isThereAnyStock = anyStock;
+	}
+
+	bool getIsThereAnyStock() {
+		return this->isThereAnyStock;
+	}
+
 private:
 
 	void moveDwarf();
@@ -122,7 +131,7 @@ private:
 
 	int m_woodValue, m_stoneValue, m_berriesValue, m_meatValue;
 	bool mustPutAway;
-
+	bool isThereAnyStock;
 	
 };
 

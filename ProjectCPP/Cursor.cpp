@@ -123,22 +123,30 @@ void Cursor::setCurrnetTile(int tile)
 
 void Cursor::setCurrentObject(Object& obj)
 {
+	
+
 	if ((this->getPosX() == obj.getPosX()) && (this->getPosY() == obj.getPosY()))
 	{
+		if (obj.getObjectType() == "Stock") {
+			this->setObjectCanBePlaced(false);
+
+		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
 			if (obj.getObjectType() == "bushesBerries")
 				if (!obj.getAbilityToInteraction())
 					obj.setAbilityToInteraction(true);
 				else
 					obj.setAbilityToInteraction(false);
-		
+
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 			if (obj.getObjectType() == "building")
 				obj.setAbilityToInteraction(true);
-				
+
 		}
 	}
+	
 }
 
 

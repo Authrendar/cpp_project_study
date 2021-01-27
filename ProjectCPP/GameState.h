@@ -33,8 +33,7 @@ private:
 	void keyboardUpdate();
 
 
-	void setTileToRemove();
-	void setBuildingToBuild(); //no niezla nazwa funkcji XD
+	
 	//Map variables
 	Map *map;
 	sf::View *m_view;
@@ -48,8 +47,14 @@ private:
 	std::vector<Animal*> animals;
 	std::vector<Bushes*> bushes;
 	std::vector<PathFinding*> vec_pathSystem;
+	std::vector<Building*> buildings;
 	Building* m_preparedBuilding;
 
+
+
+	//Counters
+	
+	int m_StockCounter = 0;
 	//Interface
 	Interface* m_interface;
 
@@ -67,10 +72,13 @@ private:
 	float keyPressTime;
 
 	void lumberjackUpdate(Dwarf *dwarf);
-	void builderUpdate();
+	void builderUpdate(Dwarf *dwarf);
 	void cuttingTrees(Dwarf *dwarf);
+	void setTileToRemove();
+	void setBuildingToBuild(Dwarf *dwarf); //no niezla nazwa funkcji XD
 	//void resetPathInstructions();
 	//Dwarves variables
+	bool resetPaths = false;
 	
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "Dwarf.h"
 class Building :
 	public Object
 {
@@ -15,7 +16,15 @@ public:
 	virtual void setAbilityToInteraction(bool) = 0;
 	virtual bool getAbilityToInteraction() = 0;
 
-	virtual int getBuildStatus() = 0;
+	virtual int getBuildStatus() = 0; 
+	virtual void checkIfDwarfNextToBuilding(Dwarf& dwarf) = 0;
+	virtual bool getIsDwarfNextToBuilding() = 0;
 
+
+	virtual void changeTexture(int buildingState) = 0; //W zaleznosci od typu budynku, kazdy budynek ma swoje okreslone wartosci textur jakie moze zmieniac
+
+
+	virtual void setBuildingStatus(int) = 0; //0 -> while building, 1->already built
+	virtual int getBuildingStatus() = 0; 
 };
 
