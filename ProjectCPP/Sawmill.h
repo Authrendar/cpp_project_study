@@ -33,8 +33,8 @@ public:
 	virtual int getLeveLTypeOfBuilding() {
 		return this->m_levelTypeOfBuilding;
 	}
-	virtual int getBuildingGoods() { return 0; }
-	virtual void setBuildingGoods(int, bool) { ; }
+	virtual int getBuildingGoods(int typeOfGoods) { if (typeOfGoods == 0)return this->m_planksValue; else return 0; }
+	virtual void setBuildingGoods(int woodValue,int typeOfGoods);
 
 
 
@@ -57,8 +57,8 @@ private:
 	int m_buildingStatus;
 
 	bool m_nextToSawmill;
-	//int m_woodValue;
-
+	int m_woodValue;
+	int m_planksValue;
 	int m_levelTypeOfBuilding;
 };
 

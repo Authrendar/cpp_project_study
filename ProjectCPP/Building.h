@@ -31,7 +31,7 @@ public:
 	virtual int getBuildingStatus() = 0; 
 
 
-	virtual int getBuildingGoods() = 0;
-	virtual void setBuildingGoods(int, bool) = 0; //add or sub
+	virtual int getBuildingGoods(int typeOfGoods) = 0; // int for type of goods
+ 	virtual void setBuildingGoods(int, int) = 0; //second in for type of goods
 };
 

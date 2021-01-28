@@ -35,9 +35,9 @@ public:
 		return this->m_levelTypeOfBuilding;
 	}
 
-	virtual void setBuildingGoods(int woodValue, bool);
+	virtual void setBuildingGoods(int woodValue, int);
 
-	virtual int getBuildingGoods() { return this->m_woodValue; }
+	virtual int getBuildingGoods(int) { return this->m_woodValue; }
 
 
 

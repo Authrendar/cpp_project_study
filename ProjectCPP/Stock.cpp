@@ -105,7 +105,7 @@ void Stock::setLevelTypeOfBuilding(int type)
 
 }
 
-void Stock::setBuildingGoods(int woodValue, bool add)
+void Stock::setBuildingGoods(int woodValue, int)
 {
 
 	this->m_woodValue += woodValue;

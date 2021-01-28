@@ -53,7 +53,7 @@ public:
 	int getWoodValue() { return this->m_woodValue; }
 	void resetWoodValue();
 
-
+	void setDwarfMustPutAway(bool mustPutAway) { this->mustPutAway = mustPutAway; }
 	bool isDwarfMustPutAway() { return this->mustPutAway; }
 	
 	

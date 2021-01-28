@@ -23,6 +23,9 @@ Sawmill::Sawmill(sf::Vector2f pos)
 
 	//this->m_woodValue = 0;
 	this->m_nextToSawmill = false;
+
+	this->m_woodValue = 0;
+	this->m_planksValue = 0;
 }
 
 Sawmill::~Sawmill()
@@ -86,4 +89,14 @@ void Sawmill::changeLevelTypeTexture()
 
 void Sawmill::setLevelTypeOfBuilding(int type)
 {
+}
+
+void Sawmill::setBuildingGoods(int woodValue, int typeOfGoods)
+{
+	if (typeOfGoods == 0) // wood
+	{
+		this->m_planksValue = this->m_planksValue +  woodValue + 10;
+		std::cout << "sawmill planks: " << m_planksValue << "\n";
+
+	}
 }

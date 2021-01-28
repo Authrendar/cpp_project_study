@@ -24,9 +24,13 @@ Interface::Interface()
 
 	//Stats
 	this->m_valueOfWood = 0;
+	this->m_valueOfPlanks = 0;
 	this->m_textValueOfWood = createText(23, sf::Vector2f(60, 4), this->m_valueOfWoodString, sf::Color::Green);
 	this->m_textValueOfWood.setString("0");
 	this->cursorPosition = createText(23, sf::Vector2f(745, 4), this->posOfCursorString, sf::Color::Yellow);
+	this->m_valueOfPlanksString = "0";
+	this->m_textValueOfPlanks = createText(23, sf::Vector2f(265, 4), this->m_valueOfPlanksString, sf::Color(205, 133, 63));
+
 
 	{
 		this->vec_dwarfData.push_back(this->createText(20, sf::Vector2f(525, 33), " ", sf::Color::Red));
@@ -47,6 +51,7 @@ void Interface::render(sf::RenderTarget* target)
 	target->draw(this->interfaceSprite);
 	target->draw(this->m_textValueOfWood);
 	target->draw(this->cursorPosition);
+	target->draw(this->m_textValueOfPlanks);
 	for (auto& data : vec_dwarfData) {
 		target->draw(data);
 	}
@@ -67,10 +72,21 @@ void Interface::setCursorPosition(int posX, int posY)
 
 void Interface::updateWoodValue(int valueOfWood)
 {
+	//std::cout <<"Value of wood w interfejsie przed: " <<valueOfWood << std::endl;
+	this->m_valueOfWood = valueOfWood;
+	//std::cout << "Value of wood w interfejsie po: " << valueOfWood << std::endl;
 
-	this->m_valueOfWood += valueOfWood;
 	this->m_valueOfWoodString = std::to_string(this->m_valueOfWood);
 	this->m_textValueOfWood.setString(this->m_valueOfWoodString);
+}
+
+void Interface::updatePlanksValue(int valueOfPlanks)
+{
+	this->m_valueOfPlanks = valueOfPlanks;
+	
+
+	this->m_valueOfPlanksString = std::to_string(this->m_valueOfPlanks);
+	this->m_textValueOfPlanks.setString(this->m_valueOfPlanksString);
 }
 
 void Interface::setDataFromDwarf(int id, int hp, int job, int state, int strength, int lvl)

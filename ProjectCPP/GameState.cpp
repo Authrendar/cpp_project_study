@@ -244,6 +244,7 @@ void GameState::keyboardUpdate()
 					{
 						dwarf->setDwarfJob(1);
 						this->lumberjackUpdate(dwarf);
+						this->builderUpdate(dwarf);
 					}
 					else {
 						dwarf->setDwarfJob(0);
@@ -257,7 +258,8 @@ void GameState::keyboardUpdate()
 					if (dwarf->getCurrentJob() != 3)
 					{
 						dwarf->setDwarfJob(3);
-						this->builderUpdate(dwarf);
+						
+						this->lumberjackUpdate(dwarf);
 						
 					}
 					else {
@@ -273,7 +275,11 @@ void GameState::keyboardUpdate()
 					if (dwarf->getCurrentJob() != 4)
 					{
 						dwarf->setDwarfJob(4);
+						
+						
 						this->porterUpdate(dwarf);
+						this->lumberjackUpdate(dwarf);
+
 
 					}
 					else {
@@ -312,13 +318,12 @@ void GameState::setTileToRemove()
 			if(this->trees.size()<6)
 				this->trees.push_back(new Tree(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0));
 
-			for(auto &dwarf: this->dwarves)
-				if(dwarf->getCurrentJob()==1)
-					this->lumberjackUpdate(dwarf);
+			
 			
 		}
 
-		
+		for (auto& dwarf : this->dwarves)
+			this->lumberjackUpdate(dwarf);
 		this->m_cursor->setButtonQState(false);
 		
 	}
@@ -329,56 +334,65 @@ void GameState::setTileToRemove()
 
 				if (this->m_cursor->getObjectCanBePlaced()) {
 					if (this->buildings.size() < 4) {
-						this->m_preparedBuilding = new Stock(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0); // ostatnia liczba to typ skladu zapaso
-						this->m_StockCounter++;
+						
+							this->m_preparedBuilding = new Stock(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size), 0); // ostatnia liczba to typ skladu zapaso
+							this->m_StockCounter++;
+							
+						
 					}
 					
-					for (auto& dwarf : this->dwarves)
-						this->builderUpdate(dwarf);
 				}
+				this->m_cursor->setButtonRState(false);
 			}
 			
-			this->m_cursor->setButtonRState(false);
-			
-				
 		}
 		this->m_cursor->setObjectCanBePlaced(true);
 
-		if (this->m_cursor->getIsTButtonClicked()) {
-
-			if (this->m_cursor->getCurrentTile() == 2) {
-
-				this->m_cursor->setCurrnetTile(this->map->getCurrentTile(this->m_cursor->getPosX()+1, this->m_cursor->getPosY()+1));
+		
+			if (this->m_cursor->getIsTButtonClicked()) {
+				if (this->m_interface->getWoodValue() >= 40) {
 				if (this->m_cursor->getCurrentTile() == 2) {
-					
 
-					if (this->m_cursor->getObjectCanBePlaced()) {
-						if (this->buildings.size() < 4) {
-							this->m_preparedBuilding = new Sawmill(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size));  
-							this->m_SawmillCounter++;
+					this->m_cursor->setCurrnetTile(this->map->getCurrentTile(this->m_cursor->getPosX() + 1, this->m_cursor->getPosY() + 1));
+					if (this->m_cursor->getCurrentTile() == 2) {
 
+
+						if (this->m_cursor->getObjectCanBePlaced()) {
+							if (this->buildings.size() < 4) {
+								this->m_preparedBuilding = new Sawmill(sf::Vector2f(this->m_cursor->getPosX() * this->grid_map_size, this->m_cursor->getPosY() * this->grid_map_size));
+								this->m_SawmillCounter++;
+
+							}
+
+							
 						}
-
-						for (auto& dwarf : this->dwarves)
-							this->builderUpdate(dwarf);
 					}
 				}
+
+				
+				
+
 			}
-
-			this->m_cursor->setButtonTState(false);
-
-
+				this->m_cursor->setButtonTState(false);
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+			for (auto& dwarf : this->dwarves)
+				this->builderUpdate(dwarf);
+		}
+		
+			
 		
 }
 
 void GameState::setBuildingToBuild(Dwarf *dwarf)
 {
-
 	//Build the building
 		if (dwarf->getCurrentJob() == 3) {
+
+			bool canBeDestroyed = false;
 			if (this->m_preparedBuilding != nullptr) {
-				bool canBeDestroyed = false;
+				
 				if ((this->m_preparedBuilding->getPosX() + 1 == int(dwarf->getPosX())) && (this->m_preparedBuilding->getPosY() == int(dwarf->getPosY())))
 				{
 					
@@ -413,14 +427,16 @@ void GameState::setBuildingToBuild(Dwarf *dwarf)
 					this->m_preparedBuilding->setBuildingStatus(2);
 					this->m_preparedBuilding->changeTexture(3);
 					this->buildings.push_back(m_preparedBuilding);
+					this->changeWoodValue(this->m_preparedBuilding->getObjectType());
 					canBeDestroyed = false;
-					
+
 					this->m_preparedBuilding = nullptr;
 					dwarf->setDwarfState(0);
+					this->lumberjackUpdate(dwarf);
+					
 				}
 			}
 	}
-
 
 		
 }
@@ -428,36 +444,40 @@ void GameState::setBuildingToBuild(Dwarf *dwarf)
 void GameState::porterUpdate(Dwarf* dwarf)
 {
 	if (dwarf->getCurrentJob() == 4) {
-		//if (dwarf->isDwarfMustPutAway()) {
+		if (!dwarf->isDwarfMustPutAway()) {
 			dwarf->path_clearPathVec();
 			dwarf->clearPathVec();
 
 			for (int i = 0; i < buildings.size(); i++) {
 
 				if (this->buildings[i]->getObjectType() == "Stock") {
-					dwarf->setIsThereAnyStock(true);
-					dwarf->setUpdateInstructions(true);
-					dwarf->path_setMap(this->map->getLevelData());
-					dwarf->path_setPositions(this->buildings[i]->getPosX(), this->buildings[i]->getPosY());
-					dwarf->path_findPath(this->m_StockCounter);
-					if (i == this->m_StockCounter) {
-						dwarf->setUpdateInstructions(false);
+					if (buildings[i]->getBuildingGoods(0) > 0) {
+						dwarf->setIsThereAnyStock(true);
+						dwarf->setUpdateInstructions(true);
+						dwarf->path_setMap(this->map->getLevelData());
+						dwarf->path_setPositions(this->buildings[i]->getPosX(), this->buildings[i]->getPosY());
+						dwarf->path_findPath(this->m_StockCounter);
+						if (i == this->m_StockCounter) {
+							dwarf->setUpdateInstructions(false);
+						}
 					}
+					
 				}
 				else
 					dwarf->setIsThereAnyStock(false);
 			}
+			
+			
 		}
+	}
 
 	if (dwarf->getCurrentJob() == 4) {
 		if (dwarf->isDwarfMustPutAway()) {
 		dwarf->path_clearPathVec();
 		dwarf->clearPathVec();
-
 		for (int i = 0; i < buildings.size(); i++) {
 
 			if (this->buildings[i]->getObjectType() == "Sawmill") {
-				std::cout << "instrukcja do sawmill\n";
 				dwarf->setUpdateInstructions(true);
 				dwarf->path_setMap(this->map->getLevelData());
 				dwarf->path_setPositions(this->buildings[i]->getPosX(), this->buildings[i]->getPosY());
@@ -465,44 +485,83 @@ void GameState::porterUpdate(Dwarf* dwarf)
 				if (i == this->m_SawmillCounter) {
 					dwarf->setUpdateInstructions(false);
 				}
+				
 			}
 			
 		}
+		
 	}
 	}
 }
 
 void GameState::carryingWood(Dwarf* dwarf)
 {
-	if (dwarf->getCurrentJob() == 4) {
-		if (!dwarf->isDwarfMustPutAway()) {
-			for (auto& stock : this->buildings) {
-				if (stock->getObjectType() == "Stock") {
-					stock->checkIfDwarfNextToBuilding(*dwarf);
-					
-					if (stock->getIsDwarfNextToBuilding()) {
-						
-						if (stock->getBuildingGoods() >= 20) {
-							dwarf->setWoodValue(20);
-							dwarf->setWoodValue(stock->getBuildingGoods());
-							this->m_interface->updateWoodValue(-stock->getBuildingGoods());
-							stock->setBuildingGoods(-dwarf->getWoodValue(), 0);
-						}
-						if (stock->getBuildingGoods() < 20) {
-							dwarf->setWoodValue(stock->getBuildingGoods());
-							this->m_interface->updateWoodValue(-stock->getBuildingGoods());
-							stock->setBuildingGoods(-dwarf->getWoodValue(), 0);
-						}
-						
+	
+			
+	for (auto& stock : this->buildings) {
+		if (stock->getObjectType() == "Stock") {
+			stock->checkIfDwarfNextToBuilding(*dwarf);
 
-						this->porterUpdate(dwarf);
+			if (stock->getIsDwarfNextToBuilding()) {
+				if (stock->getBuildingGoods(NULL) > 0) {
+					
+						if (!dwarf->isDwarfMustPutAway()) {
+							if (dwarf->getCurrentJob() == 4) {
+							stock->setBuildingGoods(-10, 0);
+							dwarf->setWoodValue(10);
+							this->m_interface->updateWoodValue(stock->getBuildingGoods(NULL));
+							dwarf->setDwarfMustPutAway(true);
+							this->porterUpdate(dwarf);
+
+
+						}
+							this->lumberjackUpdate(dwarf);
 					}
 				}
 			}
 		}
 	}
 	
+
 	
+			
+	for (auto& sawmill : this->buildings) {
+		if (sawmill->getObjectType() == "Sawmill") {
+			sawmill->checkIfDwarfNextToBuilding(*dwarf);
+
+			if (sawmill->getIsDwarfNextToBuilding()) {
+				if (dwarf->getCurrentJob() == 4) {
+					if (dwarf->isDwarfMustPutAway()) {
+						sawmill->setBuildingGoods(dwarf->getWoodValue(), 0);
+						this->m_interface->updatePlanksValue(sawmill->getBuildingGoods(0));
+						dwarf->resetWoodValue();
+						//dwarf->setDwarfMustPutAway(false);
+						dwarf->setDwarfState(0);
+						
+						this->porterUpdate(dwarf);
+						
+					}
+				}
+				this->lumberjackUpdate(dwarf);
+			}
+		}
+	}
+	 
+	
+}
+
+void GameState::changeWoodValue(std::string typeOfBuilding)
+{
+	for (auto& stock : this->buildings) {
+		if (stock->getObjectType() == "Stock") {
+			if (stock->getBuildingGoods(NULL) > 0) {
+				if (typeOfBuilding == "Sawmill") {
+					stock->setBuildingGoods(-40, 0);
+					this->m_interface->updateWoodValue(stock->getBuildingGoods(NULL));
+				}
+			}
+		}
+	}
 }
 
 void GameState::lumberjackUpdate(Dwarf* dwarf)
@@ -526,15 +585,17 @@ void GameState::lumberjackUpdate(Dwarf* dwarf)
 			}
 
 		}
-	}
-	
-	//Finding path for stockpile
-	if (dwarf->getCurrentJob() == 1) {
+
+		
+
+		//Finding path for stockpile
+
 		if (dwarf->isDwarfMustPutAway()) {
+			
 			dwarf->path_clearPathVec();
 			dwarf->clearPathVec();
-			
-			for (int i = 0; i<buildings.size(); i++) {
+
+			for (int i = 0; i < buildings.size(); i++) {
 
 				if (this->buildings[i]->getObjectType() == "Stock") {
 					dwarf->setIsThereAnyStock(true);
@@ -571,8 +632,9 @@ void GameState::builderUpdate(Dwarf *dwarf)
 
 void GameState::cuttingTrees(Dwarf *dwarf)
 {	
-		if (!dwarf->isDwarfMustPutAway()) {
+		
 			if (dwarf->getCurrentJob() == 1) {
+				if (!dwarf->isDwarfMustPutAway()) {
 				if (trees.size() > 0) {
 					std::vector <int> indexVec;
 					for (int i = 0; i < trees.size(); i++) {
@@ -614,10 +676,10 @@ void GameState::cuttingTrees(Dwarf *dwarf)
 
 							this->trees.erase(trees.begin() + i);
 							this->resetPaths = true;
-							this->lumberjackUpdate(dwarf);
+							
 							dwarf->setDwarfState(1);
 							indexVec.clear();
-
+							this->lumberjackUpdate(dwarf);
 
 						}
 
@@ -632,8 +694,8 @@ void GameState::cuttingTrees(Dwarf *dwarf)
 
 			}
 		}
-
-		if ((dwarf->isDwarfMustPutAway())&&(dwarf->getIsThereAnyStock()))
+		if(dwarf->getCurrentJob()==1)
+			if ((dwarf->isDwarfMustPutAway())&&(dwarf->getIsThereAnyStock()))
 				dwarf->setDwarfState(1);
 
 		//Check if dwarf is next to stock
@@ -641,19 +703,19 @@ void GameState::cuttingTrees(Dwarf *dwarf)
 			for (auto& stock : this->buildings) {
 
 				if (stock->getObjectType() == "Stock") {
-					stock->checkIfDwarfNextToBuilding(*dwarf);
+					if (dwarf->getCurrentJob() == 1) {
+						stock->checkIfDwarfNextToBuilding(*dwarf);
 
-					if (stock->getIsDwarfNextToBuilding()) {
-						if (dwarf->getCurrentJob() == 1) {
-						this->m_interface->updateWoodValue(dwarf->getWoodValue());
-						stock->setBuildingGoods(dwarf->getWoodValue(), 1);
-						dwarf->resetWoodValue();
-						//dwarf->setUpdateInstructions(true);
+						if (stock->getIsDwarfNextToBuilding()) {
+							if (dwarf->isDwarfMustPutAway()) {
 
-						this->lumberjackUpdate(dwarf);
-						stock->setLevelTypeOfBuilding(0);
-						stock->changeLevelTypeTexture();
-						
+								stock->setBuildingGoods(dwarf->getWoodValue(), 0);
+								this->m_interface->updateWoodValue(stock->getBuildingGoods(NULL));
+								dwarf->resetWoodValue();
+								stock->setLevelTypeOfBuilding(0);
+								stock->changeLevelTypeTexture();
+								this->lumberjackUpdate(dwarf);
+							}
 						}
 				}
 			}

@@ -80,6 +80,7 @@ private:
 	void setBuildingToBuild(Dwarf *dwarf); //no niezla nazwa funkcji XD
 	void porterUpdate(Dwarf* dwarf);
 	void carryingWood(Dwarf* dwarf);
+	void changeWoodValue(std::string typeOfBuilding);
 	//void resetPathInstructions();
 	//Dwarves variables
 	bool resetPaths = false;

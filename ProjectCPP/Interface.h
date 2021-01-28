@@ -21,7 +21,10 @@ public:
 
 
 	void updateWoodValue(int valueOfWood);
-	
+	int getWoodValue() { return this->m_valueOfWood; }
+
+	void updatePlanksValue(int valueOfPlanks);
+	int getPlanksValue() { return this->m_valueOfPlanks; }
 
 	void setDataFromDwarf(int id, int hp, int work,int state, int strength, int lvl);
 
@@ -45,8 +48,12 @@ private:
 	//Main stats of colony
 	sf::Text m_textValueOfWood;
 	std::string m_valueOfWoodString;
-	int m_valueOfWood;
 
+	sf::Text m_textValueOfPlanks;
+	std::string m_valueOfPlanksString;
+
+	int m_valueOfWood;
+	int m_valueOfPlanks;
 	std::vector<sf::Text> vec_dwarfData;
 
 	//strings
